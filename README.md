@@ -7,14 +7,14 @@ O sistema visa substituir controles manuais e descentralizados, oferecendo uma v
 
 ## 🚀 Tecnologias Utilizadas
 O projeto segue uma abordagem Design First e utiliza uma arquitetura moderna e escalável:
-Frontend
-Angular (Framework SPA)
-Tailwind CSS (Estilização e Responsividade)
-Backend
-NestJS (Framework Node.js)
+### Frontend
+Angular v21 (Framework SPA)
+Tailwind CSS v4 (Estilização e Responsividade)
+### Backend
+NestJS v11.1.9 (Framework Node.js)
 Prisma ORM (Camada de Dados)
-PostgreSQL (Banco de Dados Relacional)
-Infraestrutura & DevOps
+PostgreSQL 18 (Banco de Dados Relacional)
+### Infraestrutura & DevOps
 Docker (Containerização)
 
 ## 🎯 Módulos Principais (MVP)
