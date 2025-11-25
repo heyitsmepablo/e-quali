@@ -27,7 +27,7 @@ jobs:
         with:
           node-version: lts/*
       - name: Install dependencies
-        run: npm clean-install
+        run: npm install --no-cache
       - name: Verify the integrity
         run: npm audit signatures
       - name: Generating Release
