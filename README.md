@@ -8,14 +8,14 @@ O sistema visa substituir controles manuais e descentralizados, oferecendo uma v
 ## 🚀 Tecnologias Utilizadas
 O projeto segue uma abordagem Design First e utiliza uma arquitetura moderna e escalável:
 ### Frontend
-Angular v21 (Framework SPA)
-Tailwind CSS v4 (Estilização e Responsividade)
+- Angular v21 (Framework SPA)
+- Tailwind CSS v4 (Estilização e Responsividade)
 ### Backend
-NestJS v11.1.9 (Framework Node.js)
-Prisma ORM (Camada de Dados)
-PostgreSQL 18 (Banco de Dados Relacional)
+- NestJS v11.1.9 (Framework Node.js)
+- Prisma ORM (Camada de Dados)
+- PostgreSQL 18 (Banco de Dados Relacional)
 ### Infraestrutura & DevOps
-Docker (Containerização)
+- Docker (Containerização)
 
 ## 🎯 Módulos Principais (MVP)
 1. 🔐 Gestão de Identidade e Acesso
@@ -44,10 +44,10 @@ Docker (Containerização)
 | **Gestor de Unidade** | Preenchimento de dados operacionais e acompanhamento local. |
 
 ## ⚙️ Pré-requisitos e Instalação
-Para rodar o projeto localmente, você precisará ter instalado:
+### Para rodar o projeto localmente, você precisará ter instalado:
 Node.js (LTS)
 Docker & Docker Compose
-Passo a Passo
+### Passo a Passo
 Clone o repositório
 ```bash
 git clone [https://github.com/seu-usuario/e-Quali.git](https://github.com/seu-usuario/e-Quali.git)
@@ -82,14 +82,14 @@ Acesso
 
 
 ## 🛣️ Roadmap de Desenvolvimento
-O projeto segue um cronograma ágil dividido em Sprints:
-[ ] Sprint 1: Fundação, Segurança Básica e Docker.
-[ ] Sprint 2: Governança de Usuários (Auto-cadastro e Aprovação).
-[ ] Sprint 3: Núcleo de Indicadores (Modelagem e Distribuição).
-[ ] Sprint 4: Alimentação de Dados e Validações.
-[ ] Sprint 5: Dashboards Consolidados e Repositório de Arquivos.
-[ ] Sprint 6: Refinamento (Mobile, UX, Recuperação de Senha).
-[ ] Sprint 7: Auditoria e Entrega Final.
+O projeto segue um cronograma ágil dividido em Sprints: \
+[ ] Sprint 1: Fundação, Segurança Básica e Docker. \
+[ ] Sprint 2: Governança de Usuários (Auto-cadastro e Aprovação). \
+[ ] Sprint 3: Núcleo de Indicadores (Modelagem e Distribuição). \
+[ ] Sprint 4: Alimentação de Dados e Validações. \
+[ ] Sprint 5: Dashboards Consolidados e Repositório de Arquivos. \
+[ ] Sprint 6: Refinamento (Mobile, UX, Recuperação de Senha).\
+[ ] Sprint 7: Auditoria e Entrega Final. 
 
 ## 📝 Autoria e Referência
 ### Desenvolvimento: 
