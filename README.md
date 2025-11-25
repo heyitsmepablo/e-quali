@@ -1,8 +1,10 @@
 # e-Quali 🏥
 Sistema de Gestão da Qualidade da Secretaria Municipal de Saúde (SEMUS).
+
 ## 📄 Sobre o Projeto
 O e-Quali é uma solução Web desenvolvida para centralizar o monitoramento de indicadores de desempenho das unidades de saúde, gerenciar o acesso de usuários de forma hierárquica e prover um repositório seguro de documentação institucional.
 O sistema visa substituir controles manuais e descentralizados, oferecendo uma visão estratégica, tática e operacional para a SEMUS, garantindo a segurança dos dados e a facilidade de uso para gestores.
+
 ## 🚀 Tecnologias Utilizadas
 O projeto segue uma abordagem Design First e utiliza uma arquitetura moderna e escalável:
 Frontend
@@ -14,6 +16,7 @@ Prisma ORM (Camada de Dados)
 PostgreSQL (Banco de Dados Relacional)
 Infraestrutura & DevOps
 Docker (Containerização)
+
 ## 🎯 Módulos Principais (MVP)
 1. 🔐 Gestão de Identidade e Acesso
 - Autenticação Robusta: Login seguro com criptografia de ponta.
@@ -52,25 +55,32 @@ cd e-Quali
 ```
 
 Suba os containers (Banco de Dados)
+```bash
 docker-compose up -d
+```
 
 
 Backend (API)
+```bash
 cd backend
 npm install
 npx prisma migrate dev
 npm run start:dev
+```
 
 
 Frontend (Web)
+```bash
 cd frontend
 npm install
 ng serve
-
+```
 
 Acesso
-Frontend: http://localhost:4200
-API Swagger: http://localhost:3000/api
+- Frontend: http://localhost:4200
+- API Swagger: http://localhost:3000/api
+
+
 ## 🛣️ Roadmap de Desenvolvimento
 O projeto segue um cronograma ágil dividido em Sprints:
 [ ] Sprint 1: Fundação, Segurança Básica e Docker.
@@ -80,9 +90,12 @@ O projeto segue um cronograma ágil dividido em Sprints:
 [ ] Sprint 5: Dashboards Consolidados e Repositório de Arquivos.
 [ ] Sprint 6: Refinamento (Mobile, UX, Recuperação de Senha).
 [ ] Sprint 7: Auditoria e Entrega Final.
+
 ## 📝 Autoria e Referência
-Desenvolvimento: Pablo Eduardo Silva Santos (Engenheiro de Software Pleno / Líder Técnico).
-Baseado em:
-Documento de Requisitos de Software (DRS) v1.0
-Plano de Projeto Ágil - SEMUS
+### Desenvolvimento: 
+- Pablo Eduardo Silva Santos (Engenheiro de Software Pleno / Líder Técnico) - 25/11/2025.
+
+### Baseado em:
+- Documento de Requisitos de Software (DRS) v1.0
+- Plano de Projeto Ágil - SEMUS
 
