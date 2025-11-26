@@ -27,6 +27,7 @@
     "@prisma/adapter-pg": "^7.0.1",
     "@prisma/client": "^7.0.1",
     "dotenv": "^17.2.3",
+    "jest-extended": "^7.0.0",
     "pg": "^8.16.3",
     "reflect-metadata": "^0.2.2",
     "rxjs": "^7.8.1"
@@ -73,6 +74,28 @@
       "**/*.(t|j)s"
     ],
     "coverageDirectory": "../coverage",
-    "testEnvironment": "node"
+    "coveragePathIgnorePatterns": [
+      "singletons/*",
+      "handlers/*",
+      "database/*",
+      "main.ts",
+      "app.module.ts",
+      "__mock__/*",
+      "scripts/*",
+      "src/dtos",
+      "src/app.service.ts",
+      "src/decorators"
+    ],
+    "testEnvironment": "node",
+    "clearMocks": true,
+    "setupFilesAfterEnv": [
+      "<rootDir>/__mock__/singleton/prisma-singleton.ts",
+      "jest-extended/all"
+    ],
+    "moduleNameMapper": {
+      "^src/(.*)$": "<rootDir>/$1",
+      "^prisma/(.*)$": "<rootDir>/../prisma/$1",
+      "^generated/prisma$": "<rootDir>/../generated/prisma"
+    }
   }
 }

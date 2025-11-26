@@ -3,7 +3,7 @@ import { PrismaClient } from 'generated/prisma/client';
 import { DeepMockProxy, mockDeep, mockReset } from 'jest-mock-extended';
 import PrismaSingleton from 'src/singleton/prisma-singleton';
 
-jest.mock('../singletons/prisma-singleton/prisma-singleton', () => {
+jest.mock('src/singleton/prisma-singleton', () => {
   return {
     __esModule: true,
     default: {
