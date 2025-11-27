@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
-import { PrismaClient } from 'generated/prisma/client';
+
+import { PrismaClient } from 'generated/prisma/client.js';
 import { DeepMockProxy, mockDeep, mockReset } from 'jest-mock-extended';
 import PrismaSingleton from 'src/singleton/prisma-singleton';
 

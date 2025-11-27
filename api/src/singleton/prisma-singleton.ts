@@ -1,7 +1,7 @@
+import 'dotenv/config';
 import { PrismaPg } from '@prisma/adapter-pg';
 import { PrismaClient } from 'generated/prisma/client';
-import { env } from 'node:process';
-
+import { env } from 'process';
 export default class PrismaSingleton {
   static #instance: PrismaSingleton;
   #prisma: PrismaClient;

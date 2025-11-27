@@ -19,6 +19,7 @@ export class AuthService {
         matricula: true,
         cpf: true,
         email: true,
+        unidadeSetorAreaCargoId: true,
         unidadeSetorAreaCargo: {
           select: {
             unidade: { select: { id: true, nome: true, sigla: true } },
@@ -42,7 +43,19 @@ export class AuthService {
       throw new Error('Usuário ou senha incorretos.');
     }
 
-    return user;
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const { unidadeSetorAreaCargo, unidadeSetorAreaCargoId, ...rest } = user;
+    const { unidade, setor, area, cargo } = unidadeSetorAreaCargo;
+
+    const formatUser = {
+      ...rest,
+      unidade,
+      setor,
+      area,
+      cargo,
+    };
+
+    return { user: formatUser };
   }
 
   async changePassword(payload: { cpf: string; newPass: string }) {
@@ -54,6 +67,7 @@ export class AuthService {
     if (!user) {
       throw new Error('Usuario não encontrado');
     }
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const access = await this.#database.acesso.update({
       where: { usuarioId: user?.id },
       data: { senha: newPass },

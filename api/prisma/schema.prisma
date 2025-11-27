@@ -1,42 +1,25 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
-
 generator client {
-  provider = "prisma-client"
-  output   = "../generated/prisma"
+  provider     = "prisma-client"
+  output       = "../generated/prisma"
+  moduleFormat = "cjs"
 }
 
 datasource db {
   provider = "postgresql"
 }
 
-enum TipoServico {
-  URGENCIA_EMERGENCIA
-  ATENCAO_PRIMARIA
-  AMBULATORIO
-  HOSPITALAR
-  LABORATORIO
-
-  @@map("tipo_servico")
-}
-
 model Unidade {
-  id               Int       @id @default(autoincrement())
-  nome             String
-  sigla            String?
-  endereco         String?
-  cnes             String?
-  cnpj             String?
-  emailPrincipal   String?   @map("email_principal")
-  emailAlternativo String?   @map("email_alternativo")
-  unidadeTipoId    Int?      @map("unidade_tipo_id")
-  criadoEm         DateTime? @default(now()) @map("criado_em")
-  atualizadoEm     DateTime? @updatedAt @map("atualizado_em")
-
-  // Relacionamentos
+  id                     Int                     @id @default(autoincrement())
+  nome                   String
+  sigla                  String?
+  endereco               String?
+  cnes                   String?
+  cnpj                   String?
+  emailPrincipal         String?                 @map("email_principal")
+  emailAlternativo       String?                 @map("email_alternativo")
+  unidadeTipoId          Int?                    @map("unidade_tipo_id")
+  criadoEm               DateTime?               @default(now()) @map("criado_em")
+  atualizadoEm           DateTime?               @updatedAt @map("atualizado_em")
   unidadeTipo            UnidadeTipo?            @relation(fields: [unidadeTipoId], references: [id])
   unidadeHospitalar      UnidadeHospitalar?
   unidadeSetorAreaCargos UnidadeSetorAreaCargo[]
@@ -54,9 +37,7 @@ model UnidadeHospitalar {
   numeroLeitosCnesTotal              Int?      @map("numero_leitos_cnes_total")
   criadoEm                           DateTime? @default(now()) @map("criado_em")
   atualizadoEm                       DateTime? @updatedAt @map("atualizado_em")
-
-  // Relacionamento 1:1 com Unidade (Assumido pelo nome e PK, embora o SQL não tenha FK explicita no final)
-  unidade Unidade @relation(fields: [unidadeId], references: [id])
+  unidade                            Unidade   @relation(fields: [unidadeId], references: [id])
 
   @@map("unidade_hospitalar")
 }
@@ -66,49 +47,43 @@ model UnidadeTipo {
   nome         String    @unique
   criadoEm     DateTime? @default(now()) @map("criado_em")
   atualizadoEm DateTime? @updatedAt @map("atualizado_em")
-
-  unidades Unidade[]
+  unidades     Unidade[]
 
   @@map("unidade_tipo")
 }
 
 model Cargo {
-  id           Int       @id @default(autoincrement())
-  nome         String?
-  criadoEm     DateTime? @default(now()) @map("criado_em")
-  atualizadoEm DateTime? @updatedAt @map("atualizado_em")
-
+  id                     Int                     @id @default(autoincrement())
+  nome                   String?
+  criadoEm               DateTime?               @default(now()) @map("criado_em")
+  atualizadoEm           DateTime?               @updatedAt @map("atualizado_em")
   unidadeSetorAreaCargos UnidadeSetorAreaCargo[]
 
   @@map("cargo")
 }
 
 model Usuario {
-  id                      String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  id                      String                @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
   nome                    String
-  matricula               String    @unique
-  cpf                     String    @unique
+  matricula               String                @unique
+  cpf                     String                @unique
   email                   String?
-  unidadeSetorAreaCargoId Int       @map("unidade_setor_area_cargo_id")
-  criadoEm                DateTime? @default(now()) @map("criado_em")
-  atualizadoEm            DateTime? @updatedAt @map("atualizado_em")
-
-  // Relacionamentos
-  unidadeSetorAreaCargo UnidadeSetorAreaCargo @relation(fields: [unidadeSetorAreaCargoId], references: [id])
-  acesso                Acesso?
+  unidadeSetorAreaCargoId Int                   @map("unidade_setor_area_cargo_id")
+  criadoEm                DateTime?             @default(now()) @map("criado_em")
+  atualizadoEm            DateTime?             @updatedAt @map("atualizado_em")
+  acesso                  Acesso?
+  unidadeSetorAreaCargo   UnidadeSetorAreaCargo @relation(fields: [unidadeSetorAreaCargoId], references: [id])
 
   @@map("usuario")
 }
 
 model Acesso {
-  id           Int       @id @default(autoincrement())
-  usuarioId    String    @unique @map("usuario_id") @db.Uuid
-  senha        String
-  ultimoLogin  DateTime? @map("ultimo_login")
-  criadoEm     DateTime? @default(now()) @map("criado_em")
-  atualizadoEm DateTime? @updatedAt @map("atualizado_em")
-
-  // Relacionamentos
+  id             Int             @id @default(autoincrement())
+  usuarioId      String          @unique @map("usuario_id") @db.Uuid
+  senha          String
+  ultimoLogin    DateTime?       @map("ultimo_login")
+  criadoEm       DateTime?       @default(now()) @map("criado_em")
+  atualizadoEm   DateTime?       @updatedAt @map("atualizado_em")
   usuario        Usuario         @relation(fields: [usuarioId], references: [id])
   tokensDeAcesso TokenDeAcesso[]
 
@@ -123,81 +98,82 @@ model TokenDeAcesso {
   expiradoEm   DateTime? @map("expirado_em")
   criadoEm     DateTime? @default(now()) @map("criado_em")
   atualizadoEm DateTime? @updatedAt @map("atualizado_em")
-
-  acesso Acesso @relation(fields: [acessoId], references: [id])
+  acesso       Acesso    @relation(fields: [acessoId], references: [id])
 
   @@map("token_de_acesso")
 }
 
 model Setor {
-  id           Int       @id @default(autoincrement())
-  nome         String
-  criadoEm     DateTime? @default(now()) @map("criado_em")
-  atualizadoEm DateTime? @updatedAt @map("atualizado_em")
-
+  id                     Int                     @id @default(autoincrement())
+  nome                   String
+  criadoEm               DateTime?               @default(now()) @map("criado_em")
+  atualizadoEm           DateTime?               @updatedAt @map("atualizado_em")
   unidadeSetorAreaCargos UnidadeSetorAreaCargo[]
 
   @@map("setor")
 }
 
 model Area {
-  id           Int       @id @default(autoincrement())
-  nome         String
-  criadoEm     DateTime? @default(now()) @map("criado_em")
-  atualizadoEm DateTime? @updatedAt @map("atualizado_em")
-
+  id                     Int                     @id @default(autoincrement())
+  nome                   String
+  criadoEm               DateTime?               @default(now()) @map("criado_em")
+  atualizadoEm           DateTime?               @updatedAt @map("atualizado_em")
   unidadeSetorAreaCargos UnidadeSetorAreaCargo[]
 
   @@map("area")
 }
 
 model Modulo {
-  id           Int       @id @default(autoincrement())
-  nome         String
-  criadoEm     DateTime? @default(now()) @map("criado_em")
-  atualizadoEm DateTime? @updatedAt @map("atualizado_em")
-
+  id            Int            @id @default(autoincrement())
+  nome          String
+  criadoEm      DateTime?      @default(now()) @map("criado_em")
+  atualizadoEm  DateTime?      @updatedAt @map("atualizado_em")
   controlesRbac ControleRbac[]
 
   @@map("modulo")
 }
 
 model UnidadeSetorAreaCargo {
-  id           Int       @id @default(autoincrement())
-  unidadeId    Int       @map("unidade_id")
-  setorId      Int       @map("setor_id")
-  cargoId      Int       @map("cargo_id")
-  areaId       Int?      @map("area_id")
-  criadoEm     DateTime? @default(now()) @map("criado_em")
-  atualizadoEm DateTime? @updatedAt @map("atualizado_em")
-
-  // Relacionamentos
-  unidade Unidade @relation(fields: [unidadeId], references: [id])
-  setor   Setor   @relation(fields: [setorId], references: [id])
-  cargo   Cargo   @relation(fields: [cargoId], references: [id])
-  area    Area?   @relation(fields: [areaId], references: [id])
-
-  usuarios      Usuario[]
+  id            Int            @id @default(autoincrement())
+  unidadeId     Int            @map("unidade_id")
+  setorId       Int            @map("setor_id")
+  cargoId       Int            @map("cargo_id")
+  areaId        Int?           @map("area_id")
+  criadoEm      DateTime?      @default(now()) @map("criado_em")
+  atualizadoEm  DateTime?      @updatedAt @map("atualizado_em")
   controlesRbac ControleRbac[]
+  area          Area?          @relation(fields: [areaId], references: [id])
+  cargo         Cargo          @relation(fields: [cargoId], references: [id])
+  setor         Setor          @relation(fields: [setorId], references: [id])
+  unidade       Unidade        @relation(fields: [unidadeId], references: [id])
+  usuarios      Usuario[]
 
   @@map("unidade_setor_area_cargo")
 }
 
 model ControleRbac {
-  id                      Int       @id @default(autoincrement())
-  unidadeSetorAreaCargoId Int?      @map("unidade_setor_area_cargo_id")
-  moduloId                Int?      @map("modulo_id")
+  id                      Int                    @id @default(autoincrement())
+  unidadeSetorAreaCargoId Int?                   @map("unidade_setor_area_cargo_id")
+  moduloId                Int?                   @map("modulo_id")
   visualizar              Boolean?
   criar                   Boolean?
   editar                  Boolean?
   deletar                 Boolean?
-  criadoEm                DateTime? @default(now()) @map("criado_em")
-  atualizadoEm            DateTime? @updatedAt @map("atualizado_em")
-
-  // Relacionamentos
-  unidadeSetorAreaCargo UnidadeSetorAreaCargo? @relation(fields: [unidadeSetorAreaCargoId], references: [id])
-  modulo                Modulo?                @relation(fields: [moduloId], references: [id])
+  criadoEm                DateTime?              @default(now()) @map("criado_em")
+  atualizadoEm            DateTime?              @updatedAt @map("atualizado_em")
+  modulo                  Modulo?                @relation(fields: [moduloId], references: [id])
+  unidadeSetorAreaCargo   UnidadeSetorAreaCargo? @relation(fields: [unidadeSetorAreaCargoId], references: [id])
 
   @@unique([unidadeSetorAreaCargoId, moduloId])
   @@map("controle_rbac")
+}
+
+enum TipoServico {
+  URGENCIA_EMERGENCIA
+  ATENCAO_PRIMARIA
+  AMBULATORIO
+  HOSPITALAR
+  LABORATORIO
+
+  @@map("tipo_servico")
 }

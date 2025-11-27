@@ -5,10 +5,10 @@ import { LoginAuthDto } from 'src/controller/auth/dto/login.dto';
 @Controller('auth')
 export class AuthController {
   constructor(private authService: AuthService) {}
+  /** Rota para realizar login no sistema */
   @Post('login')
   async login(@Body() payload: LoginAuthDto) {
     const { cpf, senha } = payload;
-    await this.authService.login({ cpf, password: senha });
-    return { message: 'success' };
+    return await this.authService.login({ cpf, password: senha });
   }
 }
