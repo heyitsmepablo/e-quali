@@ -19,11 +19,11 @@ export class AuthService {
         matricula: true,
         cpf: true,
         email: true,
-        unidadeSetorAreaCargoId: true,
-        unidadeSetorAreaCargo: {
+        perfilFuncionalId: true,
+        perfilFuncional: {
           select: {
             unidade: { select: { id: true, nome: true, sigla: true } },
-            setor: { select: { id: true, nome: true } },
+            setor: { select: { id: true, nome: true, sigla: true } },
             area: { select: { id: true, nome: true } },
             cargo: { select: { id: true, nome: true } },
           },
@@ -44,16 +44,7 @@ export class AuthService {
     }
 
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const { unidadeSetorAreaCargo, unidadeSetorAreaCargoId, ...rest } = user;
-    const { unidade, setor, area, cargo } = unidadeSetorAreaCargo;
-
-    const formatUser = {
-      ...rest,
-      unidade,
-      setor,
-      area,
-      cargo,
-    };
+    const { perfilFuncionalId, ...formatUser } = user;
 
     return { user: formatUser };
   }

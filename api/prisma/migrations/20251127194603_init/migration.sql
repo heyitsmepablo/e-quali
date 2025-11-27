@@ -60,7 +60,7 @@ CREATE TABLE "usuario" (
     "matricula" TEXT NOT NULL,
     "cpf" TEXT NOT NULL,
     "email" TEXT,
-    "unidade_setor_area_cargo_id" INTEGER NOT NULL,
+    "perfil_funcional_id" INTEGER NOT NULL,
     "criado_em" TIMESTAMP(3) DEFAULT CURRENT_TIMESTAMP,
     "atualizado_em" TIMESTAMP(3),
 
@@ -106,7 +106,6 @@ CREATE TABLE "setor" (
 CREATE TABLE "area" (
     "id" SERIAL NOT NULL,
     "nome" TEXT NOT NULL,
-    "setor_id" INTEGER NOT NULL,
     "criado_em" TIMESTAMP(3) DEFAULT CURRENT_TIMESTAMP,
     "atualizado_em" TIMESTAMP(3),
 
@@ -124,7 +123,7 @@ CREATE TABLE "modulo" (
 );
 
 -- CreateTable
-CREATE TABLE "unidade_setor_area_cargo" (
+CREATE TABLE "perfil_funcional" (
     "id" SERIAL NOT NULL,
     "unidade_id" INTEGER NOT NULL,
     "setor_id" INTEGER NOT NULL,
@@ -133,13 +132,13 @@ CREATE TABLE "unidade_setor_area_cargo" (
     "criado_em" TIMESTAMP(3) DEFAULT CURRENT_TIMESTAMP,
     "atualizado_em" TIMESTAMP(3),
 
-    CONSTRAINT "unidade_setor_area_cargo_pkey" PRIMARY KEY ("id")
+    CONSTRAINT "perfil_funcional_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
 CREATE TABLE "controle_rbac" (
     "id" SERIAL NOT NULL,
-    "unidade_setor_area_cargo_id" INTEGER,
+    "perfil_funcional_id" INTEGER,
     "modulo_id" INTEGER,
     "visualizar" BOOLEAN,
     "criar" BOOLEAN,
@@ -167,7 +166,7 @@ CREATE UNIQUE INDEX "acesso_usuario_id_key" ON "acesso"("usuario_id");
 CREATE UNIQUE INDEX "token_de_acesso_token_key" ON "token_de_acesso"("token");
 
 -- CreateIndex
-CREATE UNIQUE INDEX "controle_rbac_unidade_setor_area_cargo_id_modulo_id_key" ON "controle_rbac"("unidade_setor_area_cargo_id", "modulo_id");
+CREATE UNIQUE INDEX "controle_rbac_perfil_funcional_id_modulo_id_key" ON "controle_rbac"("perfil_funcional_id", "modulo_id");
 
 -- AddForeignKey
 ALTER TABLE "unidade" ADD CONSTRAINT "unidade_unidade_tipo_id_fkey" FOREIGN KEY ("unidade_tipo_id") REFERENCES "unidade_tipo"("id") ON DELETE SET NULL ON UPDATE CASCADE;
@@ -176,7 +175,7 @@ ALTER TABLE "unidade" ADD CONSTRAINT "unidade_unidade_tipo_id_fkey" FOREIGN KEY 
 ALTER TABLE "unidade_hospitalar" ADD CONSTRAINT "unidade_hospitalar_unidade_id_fkey" FOREIGN KEY ("unidade_id") REFERENCES "unidade"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "usuario" ADD CONSTRAINT "usuario_unidade_setor_area_cargo_id_fkey" FOREIGN KEY ("unidade_setor_area_cargo_id") REFERENCES "unidade_setor_area_cargo"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "usuario" ADD CONSTRAINT "usuario_perfil_funcional_id_fkey" FOREIGN KEY ("perfil_funcional_id") REFERENCES "perfil_funcional"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "acesso" ADD CONSTRAINT "acesso_usuario_id_fkey" FOREIGN KEY ("usuario_id") REFERENCES "usuario"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
@@ -185,22 +184,19 @@ ALTER TABLE "acesso" ADD CONSTRAINT "acesso_usuario_id_fkey" FOREIGN KEY ("usuar
 ALTER TABLE "token_de_acesso" ADD CONSTRAINT "token_de_acesso_acesso_id_fkey" FOREIGN KEY ("acesso_id") REFERENCES "acesso"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "area" ADD CONSTRAINT "area_setor_id_fkey" FOREIGN KEY ("setor_id") REFERENCES "setor"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "perfil_funcional" ADD CONSTRAINT "perfil_funcional_area_id_fkey" FOREIGN KEY ("area_id") REFERENCES "area"("id") ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "unidade_setor_area_cargo" ADD CONSTRAINT "unidade_setor_area_cargo_unidade_id_fkey" FOREIGN KEY ("unidade_id") REFERENCES "unidade"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "perfil_funcional" ADD CONSTRAINT "perfil_funcional_cargo_id_fkey" FOREIGN KEY ("cargo_id") REFERENCES "cargo"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "unidade_setor_area_cargo" ADD CONSTRAINT "unidade_setor_area_cargo_setor_id_fkey" FOREIGN KEY ("setor_id") REFERENCES "setor"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "perfil_funcional" ADD CONSTRAINT "perfil_funcional_setor_id_fkey" FOREIGN KEY ("setor_id") REFERENCES "setor"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "unidade_setor_area_cargo" ADD CONSTRAINT "unidade_setor_area_cargo_cargo_id_fkey" FOREIGN KEY ("cargo_id") REFERENCES "cargo"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
-
--- AddForeignKey
-ALTER TABLE "unidade_setor_area_cargo" ADD CONSTRAINT "unidade_setor_area_cargo_area_id_fkey" FOREIGN KEY ("area_id") REFERENCES "area"("id") ON DELETE SET NULL ON UPDATE CASCADE;
-
--- AddForeignKey
-ALTER TABLE "controle_rbac" ADD CONSTRAINT "controle_rbac_unidade_setor_area_cargo_id_fkey" FOREIGN KEY ("unidade_setor_area_cargo_id") REFERENCES "unidade_setor_area_cargo"("id") ON DELETE SET NULL ON UPDATE CASCADE;
+ALTER TABLE "perfil_funcional" ADD CONSTRAINT "perfil_funcional_unidade_id_fkey" FOREIGN KEY ("unidade_id") REFERENCES "unidade"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "controle_rbac" ADD CONSTRAINT "controle_rbac_modulo_id_fkey" FOREIGN KEY ("modulo_id") REFERENCES "modulo"("id") ON DELETE SET NULL ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "controle_rbac" ADD CONSTRAINT "controle_rbac_perfil_funcional_id_fkey" FOREIGN KEY ("perfil_funcional_id") REFERENCES "perfil_funcional"("id") ON DELETE SET NULL ON UPDATE CASCADE;

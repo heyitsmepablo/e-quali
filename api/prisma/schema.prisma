@@ -9,20 +9,20 @@ datasource db {
 }
 
 model Unidade {
-  id                     Int                     @id @default(autoincrement())
-  nome                   String
-  sigla                  String?
-  endereco               String?
-  cnes                   String?
-  cnpj                   String?
-  emailPrincipal         String?                 @map("email_principal")
-  emailAlternativo       String?                 @map("email_alternativo")
-  unidadeTipoId          Int?                    @map("unidade_tipo_id")
-  criadoEm               DateTime?               @default(now()) @map("criado_em")
-  atualizadoEm           DateTime?               @updatedAt @map("atualizado_em")
-  unidadeTipo            UnidadeTipo?            @relation(fields: [unidadeTipoId], references: [id])
-  unidadeHospitalar      UnidadeHospitalar?
-  unidadeSetorAreaCargos UnidadeSetorAreaCargo[]
+  id                Int                @id @default(autoincrement())
+  nome              String
+  sigla             String?
+  endereco          String?
+  cnes              String?
+  cnpj              String?
+  emailPrincipal    String?            @map("email_principal")
+  emailAlternativo  String?            @map("email_alternativo")
+  unidadeTipoId     Int?               @map("unidade_tipo_id")
+  criadoEm          DateTime?          @default(now()) @map("criado_em")
+  atualizadoEm      DateTime?          @updatedAt @map("atualizado_em")
+  unidadeTipo       UnidadeTipo?       @relation(fields: [unidadeTipoId], references: [id])
+  unidadeHospitalar UnidadeHospitalar?
+  perfilFuncional   PerfilFuncional[]
 
   @@map("unidade")
 }
@@ -53,26 +53,26 @@ model UnidadeTipo {
 }
 
 model Cargo {
-  id                     Int                     @id @default(autoincrement())
-  nome                   String?
-  criadoEm               DateTime?               @default(now()) @map("criado_em")
-  atualizadoEm           DateTime?               @updatedAt @map("atualizado_em")
-  unidadeSetorAreaCargos UnidadeSetorAreaCargo[]
+  id              Int               @id @default(autoincrement())
+  nome            String?
+  criadoEm        DateTime?         @default(now()) @map("criado_em")
+  atualizadoEm    DateTime?         @updatedAt @map("atualizado_em")
+  perfilFuncional PerfilFuncional[]
 
   @@map("cargo")
 }
 
 model Usuario {
-  id                      String                @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  nome                    String
-  matricula               String                @unique
-  cpf                     String                @unique
-  email                   String?
-  unidadeSetorAreaCargoId Int                   @map("unidade_setor_area_cargo_id")
-  criadoEm                DateTime?             @default(now()) @map("criado_em")
-  atualizadoEm            DateTime?             @updatedAt @map("atualizado_em")
-  acesso                  Acesso?
-  unidadeSetorAreaCargo   UnidadeSetorAreaCargo @relation(fields: [unidadeSetorAreaCargoId], references: [id])
+  id                String          @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  nome              String
+  matricula         String          @unique
+  cpf               String          @unique
+  email             String?
+  perfilFuncionalId Int             @map("perfil_funcional_id")
+  criadoEm          DateTime?       @default(now()) @map("criado_em")
+  atualizadoEm      DateTime?       @updatedAt @map("atualizado_em")
+  acesso            Acesso?
+  perfilFuncional   PerfilFuncional @relation(fields: [perfilFuncionalId], references: [id])
 
   @@map("usuario")
 }
@@ -104,21 +104,22 @@ model TokenDeAcesso {
 }
 
 model Setor {
-  id                     Int                     @id @default(autoincrement())
-  nome                   String
-  criadoEm               DateTime?               @default(now()) @map("criado_em")
-  atualizadoEm           DateTime?               @updatedAt @map("atualizado_em")
-  unidadeSetorAreaCargos UnidadeSetorAreaCargo[]
+  id              Int               @id @default(autoincrement())
+  nome            String
+  sigla           String?
+  criadoEm        DateTime?         @default(now()) @map("criado_em")
+  atualizadoEm    DateTime?         @updatedAt @map("atualizado_em")
+  perfilFuncional PerfilFuncional[]
 
   @@map("setor")
 }
 
 model Area {
-  id                     Int                     @id @default(autoincrement())
-  nome                   String
-  criadoEm               DateTime?               @default(now()) @map("criado_em")
-  atualizadoEm           DateTime?               @updatedAt @map("atualizado_em")
-  unidadeSetorAreaCargos UnidadeSetorAreaCargo[]
+  id              Int               @id @default(autoincrement())
+  nome            String
+  criadoEm        DateTime?         @default(now()) @map("criado_em")
+  atualizadoEm    DateTime?         @updatedAt @map("atualizado_em")
+  perfilFuncional PerfilFuncional[]
 
   @@map("area")
 }
@@ -133,7 +134,7 @@ model Modulo {
   @@map("modulo")
 }
 
-model UnidadeSetorAreaCargo {
+model PerfilFuncional {
   id            Int            @id @default(autoincrement())
   unidadeId     Int            @map("unidade_id")
   setorId       Int            @map("setor_id")
@@ -148,23 +149,23 @@ model UnidadeSetorAreaCargo {
   unidade       Unidade        @relation(fields: [unidadeId], references: [id])
   usuarios      Usuario[]
 
-  @@map("unidade_setor_area_cargo")
+  @@map("perfil_funcional")
 }
 
 model ControleRbac {
-  id                      Int                    @id @default(autoincrement())
-  unidadeSetorAreaCargoId Int?                   @map("unidade_setor_area_cargo_id")
-  moduloId                Int?                   @map("modulo_id")
-  visualizar              Boolean?
-  criar                   Boolean?
-  editar                  Boolean?
-  deletar                 Boolean?
-  criadoEm                DateTime?              @default(now()) @map("criado_em")
-  atualizadoEm            DateTime?              @updatedAt @map("atualizado_em")
-  modulo                  Modulo?                @relation(fields: [moduloId], references: [id])
-  unidadeSetorAreaCargo   UnidadeSetorAreaCargo? @relation(fields: [unidadeSetorAreaCargoId], references: [id])
+  id                Int              @id @default(autoincrement())
+  perfilFuncionalId Int?             @map("perfil_funcional_id")
+  moduloId          Int?             @map("modulo_id")
+  visualizar        Boolean?
+  criar             Boolean?
+  editar            Boolean?
+  deletar           Boolean?
+  criadoEm          DateTime?        @default(now()) @map("criado_em")
+  atualizadoEm      DateTime?        @updatedAt @map("atualizado_em")
+  modulo            Modulo?          @relation(fields: [moduloId], references: [id])
+  PerfilFuncional   PerfilFuncional? @relation(fields: [perfilFuncionalId], references: [id])
 
-  @@unique([unidadeSetorAreaCargoId, moduloId])
+  @@unique([perfilFuncionalId, moduloId])
   @@map("controle_rbac")
 }
 
