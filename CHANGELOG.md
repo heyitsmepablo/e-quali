@@ -2,6 +2,13 @@
 
 Todas as mudanças notáveis neste projeto serão documentadas neste arquivo. Consulte [Conventional Commits](https://www.conventionalcommits.org/pt-br/v1.0.0/) para diretrizes de commits.
 
+# [1.0.0-alpha.2](https://github.com/heyitsmepablo/e-quali/compare/v1.0.0-alpha.1...v1.0.0-alpha.2) (2025-11-27)
+
+
+### Features
+
+* **api:**  Implementado rota de mudança de senha ([7191ece](https://github.com/heyitsmepablo/e-quali/commit/7191ece7896e4cf90b1f75f96f345682d5d3468b))
+
 # 1.0.0-alpha.1 (2025-11-27)
 
 
