@@ -44,4 +44,21 @@ export class AuthService {
 
     return user;
   }
+
+  async changePassword(payload: { cpf: string; newPass: string }) {
+    const { cpf, newPass } = payload;
+
+    const user = await this.#database.usuario.findUnique({
+      where: { cpf },
+    });
+    if (!user) {
+      throw new Error('Usuario não encontrado');
+    }
+    const access = await this.#database.acesso.update({
+      where: { usuarioId: user?.id },
+      data: { senha: newPass },
+    });
+
+    return { message: 'success' };
+  }
 }

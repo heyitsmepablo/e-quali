@@ -68,4 +68,33 @@ describe('AuthService', () => {
       await expect(service.login(args)).rejects.toThrow(expectedResponse);
     });
   });
+  describe('changePassword', () => {
+    const args = { cpf: '0000000000', newPass: 'nova-senha' };
+    it('Resolve: Deve resolver retornando payload', async () => {
+      const expectedResponse = { message: 'success' } as any;
+      prismaMock.usuario.findUnique.mockResolvedValue({ id: 'um-id' } as any);
+      prismaMock.acesso.update.mockResolvedValue({ message: 'success' } as any);
+
+      await expect(service.changePassword(args)).resolves.toEqual(
+        expectedResponse,
+      );
+    });
+    it('Reject: Deve rejeitar caso não encontre usuario com jogando mensagem de erro', async () => {
+      const expectedResponse = 'Usuario não encontrado';
+      prismaMock.usuario.findUnique.mockResolvedValue(null);
+      await expect(service.changePassword(args)).rejects.toBeInstanceOf(Error);
+      await expect(service.changePassword(args)).rejects.toThrow(
+        expectedResponse,
+      );
+    });
+    it('Reject: Deve rejeitar caso não prisma/acesso dê erro com jogando mensagem de erro', async () => {
+      const expectedResponse = 'erro generico';
+      prismaMock.usuario.findUnique.mockResolvedValue({ id: 'um-id' } as any);
+      prismaMock.acesso.update.mockRejectedValue(new Error(expectedResponse));
+      await expect(service.changePassword(args)).rejects.toBeInstanceOf(Error);
+      await expect(service.changePassword(args)).rejects.toThrow(
+        expectedResponse,
+      );
+    });
+  });
 });
