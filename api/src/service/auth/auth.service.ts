@@ -8,11 +8,26 @@ export class AuthService {
   async login(payload: {
     cpf: string;
     password: string;
-  }): Promise<Record<string, string>> {
+  }): Promise<Record<string, any>> {
     const { cpf, password } = payload;
 
     const user = await this.#database.usuario.findUnique({
       where: { cpf },
+      select: {
+        id: true,
+        nome: true,
+        matricula: true,
+        cpf: true,
+        email: true,
+        unidadeSetorAreaCargo: {
+          select: {
+            unidade: { select: { id: true, nome: true, sigla: true } },
+            setor: { select: { id: true, nome: true } },
+            area: { select: { id: true, nome: true } },
+            cargo: { select: { id: true, nome: true } },
+          },
+        },
+      },
     });
 
     if (!user) {
@@ -27,6 +42,6 @@ export class AuthService {
       throw new Error('Usuário ou senha incorretos.');
     }
 
-    return { message: 'success' };
+    return user;
   }
 }
