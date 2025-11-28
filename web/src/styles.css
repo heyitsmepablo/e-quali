@@ -1,3 +1,86 @@
 /* You can add global styles to this file, and also import other style files */
 
-@import "tailwindcss";
+@import 'tailwindcss';
+@theme {
+  /* Disable Default */
+  --color-grey-*: initial;
+  /* Color Light */
+  --color-primary-lighter: #c8facd;
+  --color-primary-light: #5be584;
+  --color-primary-main: #00ab55;
+  --color-primary-dark: #007b55;
+  --color-primary-darker: #005249;
+
+  --color-secundary-lighter: #d6e4ff;
+  --color-secundary-light: #84a9ff;
+  --color-secundary-main: #3366ff;
+  --color-secundary-dark: #1939b7;
+  --color-secundary-darker: #091a7a;
+
+  --color-info-lighter: #cafdf5;
+  --color-info-light: #61f3f3;
+  --color-info-main: #00b8d9;
+  --color-info-dark: #006c9c;
+  --color-info-darker: #003768;
+
+  --color-success-lighter: #d8fbde;
+  --color-success-light: #86e8ab;
+  --color-success-main: #36b37e;
+  --color-success-dark: #1b806a;
+  --color-success-darker: #0a5554;
+
+  --color-warning-lighter: #fff5cc;
+  --color-warning-light: #ffd666;
+  --color-warning-main: #ffab00;
+  --color-warning-dark: #b76e00;
+  --color-warning-darker: #7a4100;
+
+  --color-error-lighter: #ffe9d5;
+  --color-error-light: #ffac82;
+  --color-error-main: #ff5630;
+  --color-error-dark: #b71d18;
+  --color-error-darker: #7a0916;
+
+  --color-grey-100: #f9fafb;
+  --color-grey-200: #f4f6f8;
+  --color-grey-300: #dfe3e8;
+  --color-grey-400: #c4cdd5;
+  --color-grey-500: #919eab;
+  --color-grey-600: #637381;
+  --color-grey-700: #454f5b;
+  --color-grey-800: #212b36;
+  --color-grey-900: #161c24;
+
+  --color-common-black: #000000;
+  --color-common-white: #ffffff;
+
+  --color-text-primary: #212b36;
+  --color-text-secundary: #637381;
+  --color-text-disabled: #919eab;
+
+  --color-divider: #919eab;
+
+  --color-background-default: #ffffff;
+  --color-background-paper: #ffffff;
+  --color-background-neutral: #f4f6f8;
+
+  --color-action-active: #637381;
+  --color-action-hover: #919eab;
+  --color-action-selected: #919eab;
+  --color-action-disabled: #919eab;
+  --color-action-disabled-background: #919eab;
+  --color-action-focus: #919eab;
+
+  /* Color Dark */
+
+  --color-background-dark-default: #161c24;
+  --color-background-dark-paper: #212b36;
+  --color-background-dark-neutral: #919eab;
+
+  --color-action-active: #919eab;
+  --color-action-hover: #919eab;
+  --color-action-selected: #919eab;
+  --color-action-disabled: #919eab;
+  --color-action-disabled-background: #919eab;
+  --color-action-focus: #919eab;
+}
