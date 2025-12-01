@@ -1,4 +1,13 @@
-<label for="id" class="text-field text-field-standard">
-  <input type="text" id="id" placeholder=" " />
+<label for="id" class="text-field text-field-outlined">
+  <input
+    type="text"
+    id="id"
+    [placeholder]="placeholder()"
+    [value]="innerValue"
+    (input)="updateValue($event)"
+    (blur)="onBlur()"
+  />
+  @if(hasLabel()){
   <span class="label">Label</span>
+  }
 </label>

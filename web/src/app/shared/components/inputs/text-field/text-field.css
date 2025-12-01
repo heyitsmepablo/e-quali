@@ -29,7 +29,6 @@
   input {
     @apply items-center gap-2 self-stretch;
   }
-
   /* Label grande (campo vazio) */
   input:placeholder-shown + .label {
     @apply top-4 text-base;
@@ -157,3 +156,9 @@
 }
 
 /* ---------- */
+
+/* Estados de erro do angular*/
+
+:host.ng-invalid.ng-touched .text-field-outlined {
+  @apply border-error-main;
+}
