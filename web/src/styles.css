@@ -1,14 +1,14 @@
 /* You can add global styles to this file, and also import other style files */
+@import url('https://fonts.googleapis.com/css2?family=Public+Sans:ital,wght@0,100..900;1,100..900&display=swap');
 
 @import 'tailwindcss';
-@import url('https://fonts.googleapis.com/css2?family=Public+Sans:ital,wght@0,100..900;1,100..900&display=swap');
 
 @theme {
   /* Default Font */
   --font-sans: 'Public Sans', sans-serif;
 
   /* Disable Default */
-  --color-grey-*: initial;
+  --color-gray-*: initial;
   /* Color Light */
   --color-primary-lighter: #c8facd;
   --color-primary-light: #5be584;
@@ -86,6 +86,8 @@
   --shadow-dialog: -40px 40px 80px -8px rgba(145, 158, 171, 0.24);
   --shadow-dropdown: 0px 0px 2px rgba(145, 158, 171, 0.24),
     -20px 20px 40px -4px rgba(145, 158, 171, 0.24);
+
+  --color-input-outlined: rgba(145, 158, 171, 0.32);
 
   /* Color Dark */
 
