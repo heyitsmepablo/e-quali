@@ -1,4 +1,4 @@
-<label for="id" class="text-field text-field-outlined">
+<label for="id" class="label text-field" [attr.variant]="variant()" [class.disabled]="disabled">
   <input
     type="text"
     id="id"
@@ -6,8 +6,9 @@
     [value]="innerValue"
     (input)="updateValue($event)"
     (blur)="onBlur()"
+    [disabled]="disabled"
   />
   @if(hasLabel()){
-  <span class="label">Label</span>
+  <span class="label-text">{{ label() }}</span>
   }
 </label>

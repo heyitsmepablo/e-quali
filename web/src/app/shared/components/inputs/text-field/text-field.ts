@@ -20,7 +20,10 @@ export class TextField implements ControlValueAccessor {
   label: InputSignal<string> = input<string>('Label');
   hasLabel: InputSignal<boolean> = input<boolean>(false);
   placeholder: InputSignal<string> = input<string>('');
-
+  disabled: boolean = false;
+  variant: InputSignal<'outlined' | 'filled' | 'standard'> = input<
+    'outlined' | 'filled' | 'standard'
+  >('outlined');
   //Values Internos
   innerValue: string | Record<string, any> = '';
   private usingForms = false;
@@ -49,7 +52,9 @@ export class TextField implements ControlValueAccessor {
     this.onTouched = fn;
   }
 
-  setDisabledState(isDisabled: boolean): void {}
+  setDisabledState(isDisabled: boolean): void {
+    this.disabled = isDisabled;
+  }
 
   onBlur(): void {
     this.onTouched();

@@ -12,6 +12,6 @@ export class Login {
   loginForm!: FormGroup;
 
   constructor(private formBuilder: FormBuilder) {
-    this.loginForm = this.formBuilder.group({ cpf: ['cpf', Validators.minLength(4)] });
+    this.loginForm = this.formBuilder.group({ cpf: ['cpfsss', Validators.minLength(4)] });
   }
 }

@@ -67,14 +67,14 @@
 
   --color-background-default: #ffffff;
   --color-background-paper: #ffffff;
-  --color-background-neutral: #f4f6f8;
+  --color-background-neutral: rgba(145, 158, 171, 0.16);
 
-  --color-action-active: #637381;
-  --color-action-hover: #919eab;
-  --color-action-selected: #919eab;
-  --color-action-disabled: #919eab;
-  --color-action-disabled-background: #919eab;
-  --color-action-focus: #919eab;
+  --color-action-active: rgba(99, 115, 129, 1);
+  --color-action-hover: rgba(145, 158, 171, 0.08);
+  --color-action-selected: rgba(145, 158, 171, 0.16);
+  --color-action-disabled: rgba(145, 158, 171, 0.8);
+  --color-action-disabled-background:rgba(145, 158, 171, 0.24);
+  --color-action-focus: rgba(145, 158, 171, 0.24);
 
   --shadow-z1: 0 1px 2px rgba(145, 158, 171, 0.16);
   --shadow-z8: 0px 8px 16px rgba(145, 158, 171, 0.16);
@@ -93,14 +93,14 @@
 
   --color-dark-background-default: #161c24;
   --color-dark-background-paper: #212b36;
-  --color-dark-background-neutral: #919eab;
+  --color-dark-background-neutral: rgba(145, 158, 171, 0.16)
 
-  --color-dark-action-active: #919eab;
-  --color-dark-action-hover: #919eab;
-  --color-dark-action-selected: #919eab;
-  --color-dark-action-disabled: #919eab;
-  --color-dark-action-disabled-background: #919eab;
-  --color-dark-action-focus: #919eab;
+  --color-dark-action-active: rgba(145, 158, 171, 1)
+  --color-dark-action-hover: rgba(145, 158, 171, 0.08)
+  --color-dark-action-selected: rgba(145, 158, 171, 0.16)
+  --color-dark-action-disabled: rgba(145, 158, 171, 0.8)
+  --color-dark-action-disabled-background: rgba(145, 158, 171, 0.24)
+  --color-dark-action-focus: rgba(145, 158, 171, 0.24)
 
   --dark-shadow-z1: 0px 1px 2px rgba(0, 0, 0, 0.16);
   --dark-shadow-z8: 0px 8px 16px rgba(0, 0, 0, 0.16);
