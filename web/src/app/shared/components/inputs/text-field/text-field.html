@@ -1,6 +1,6 @@
-<label for="id" class="label text-field" [attr.variant]="variant()" [class.disabled]="disabled">
+<label for="id" class="text-field" [attr.variant]="variant()" [class.disabled]="disabled">
   <input
-    type="text"
+    [type]="type"
     id="id"
     [placeholder]="placeholder()"
     [value]="innerValue"
@@ -8,7 +8,9 @@
     (blur)="onBlur()"
     [disabled]="disabled"
   />
-  <button>olhinho</button>
+  <button (click)="showPass()">
+    <app-icon-eye class="icon-eye" [on]="eyeOn"></app-icon-eye>
+  </button>
   @if(hasLabel()){
   <span class="label-text">{{ label() }}</span>
   }

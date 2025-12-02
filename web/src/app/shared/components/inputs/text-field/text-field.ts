@@ -1,5 +1,6 @@
 import { Component, effect, forwardRef, input, InputSignal } from '@angular/core';
 import { ControlValueAccessor, FormsModule, NG_VALUE_ACCESSOR } from '@angular/forms';
+import { IconEye } from '../../../icons/icon-eye/icon-eye';
 
 const TEXT_FIELD_ACCESSOR = {
   provide: NG_VALUE_ACCESSOR,
@@ -9,7 +10,7 @@ const TEXT_FIELD_ACCESSOR = {
 
 @Component({
   selector: 'app-text-field',
-  imports: [FormsModule],
+  imports: [FormsModule, IconEye],
   providers: [TEXT_FIELD_ACCESSOR],
   templateUrl: './text-field.html',
   styleUrl: './text-field.css',
@@ -24,6 +25,8 @@ export class TextField implements ControlValueAccessor {
   variant: InputSignal<'outlined' | 'filled' | 'standard'> = input<
     'outlined' | 'filled' | 'standard'
   >('outlined');
+  eyeOn: boolean = true;
+  type: string = 'password';
   //Values Internos
   innerValue: string | Record<string, any> = '';
   private usingForms = false;
@@ -34,6 +37,12 @@ export class TextField implements ControlValueAccessor {
         this.innerValue = this.value();
       }
     });
+  }
+  // Funções auxiliares
+
+  showPass(): void {
+    this.eyeOn = !this.eyeOn;
+    this.type = this.type === 'password' ? 'text' : 'password';
   }
 
   // Funções do CVA
@@ -67,5 +76,4 @@ export class TextField implements ControlValueAccessor {
       this.onChange(newValue);
     }
   }
-  
 }

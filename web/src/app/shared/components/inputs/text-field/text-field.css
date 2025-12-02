@@ -218,3 +218,8 @@ label[variant='standard'] {
     @apply text-text-disabled;
   }
 }
+
+/* icones */
+.icon-eye {
+  @apply text-action-active;
+}
