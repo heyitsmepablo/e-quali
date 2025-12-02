@@ -3,7 +3,7 @@
 /* Default */
 
 .text-field {
-  @apply relative flex flex-col px-3.5 py-4 h-14 w-80 rounded-lg;
+  @apply relative flex  px-3.5 py-4 h-14 w-80 rounded-lg;
 
   input {
     @apply flex items-start text-text-primary w-full h-full outline-none;
