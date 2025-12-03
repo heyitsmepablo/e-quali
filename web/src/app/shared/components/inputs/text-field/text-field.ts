@@ -1,4 +1,4 @@
-import { Component, effect, forwardRef, input, InputSignal } from '@angular/core';
+import { Component, effect, forwardRef, input, InputSignal, signal, Signal } from '@angular/core';
 import { ControlValueAccessor, FormsModule, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { IconEye } from '../../../icons/icon-eye/icon-eye';
 
@@ -20,15 +20,19 @@ export class TextField implements ControlValueAccessor {
   value: InputSignal<string> = input<string>('');
   label: InputSignal<string> = input<string>('Label');
   hasLabel: InputSignal<boolean> = input<boolean>(false);
-  placeholder: InputSignal<string> = input<string>('');
-  disabled: boolean = false;
+  placeholder: InputSignal<string> = input<string>(' ');
   variant: InputSignal<'outlined' | 'filled' | 'standard'> = input<
     'outlined' | 'filled' | 'standard'
   >('outlined');
-  eyeOn: boolean = true;
-  type: string = 'password';
+  type: InputSignal<string> = input('text');
+  showPasswordToggle: InputSignal<boolean> = input<boolean>(false);
+  id: InputSignal<string> = input('');
+  name: InputSignal<string> = input('');
   //Values Internos
+  disabled: boolean = false;
+  eyeOn: boolean = true;
   innerValue: string | Record<string, any> = '';
+  innerType = signal(this.type());
   private usingForms = false;
 
   constructor() {
@@ -36,13 +40,15 @@ export class TextField implements ControlValueAccessor {
       if (!this.usingForms) {
         this.innerValue = this.value();
       }
+      this.innerType.set(this.type());
     });
   }
   // Funções auxiliares
 
   showPass(): void {
+    const newType = this.innerType() === 'password' ? 'text' : 'password';
+    this.innerType.set(newType);
     this.eyeOn = !this.eyeOn;
-    this.type = this.type === 'password' ? 'text' : 'password';
   }
 
   // Funções do CVA

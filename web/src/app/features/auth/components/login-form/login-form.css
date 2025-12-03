@@ -1,0 +1,16 @@
+@reference './../../../../../styles.css';
+
+.form-wrapper {
+  @apply flex flex-col items-center gap-10 bg-background-default;
+}
+.head {
+  @apply flex flex-col items-start self-stretch gap-4;
+}
+
+.content {
+  @apply flex flex-col items-center self-stretch gap-5;
+}
+
+.button-login {
+  @apply flex py-3 px-6 justify-center items-center gap-2 self-stretch rounded-lg text-common-white bg-text-primary hover:shadow-z8 hover:cursor-pointer transition-all;
+}

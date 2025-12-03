@@ -1,0 +1,29 @@
+<form class="form-wrapper">
+  <div class="head">
+    <h1 class="text-2xl text-text-primary font-bold leading-9 not-italic">Entrar no e-Quali</h1>
+    <h2 class="text-right text-sm text-text-primary not-italic font-normal leading-[1.38rem]">
+      Usuario novo?
+      <a href="" class="text-primary-main text-sm not-italic font-semibold leading-[1.38rem]"
+        >Solicite acesso</a
+      >
+    </h2>
+  </div>
+  <div class="content">
+    <app-text-field [hasLabel]="true" label="CPF" id="cpf" name="cpf"></app-text-field>
+    <app-text-field
+      [hasLabel]="true"
+      label="Senha"
+      [showPasswordToggle]="true"
+      type="password"
+      id="senha"
+      name="senha"
+    ></app-text-field>
+    <span class="flex w-full justify-end">
+      <a
+        class="text-right text-sm underline font-normal leading-[1.38rem] decoration-auto underline-offset-auto decoration-solid hover:cursor-pointer"
+        >Esqueceu a senha?</a
+      >
+    </span>
+    <button class="button-login">Login</button>
+  </div>
+</form>

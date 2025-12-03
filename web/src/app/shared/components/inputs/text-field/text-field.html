@@ -1,17 +1,20 @@
-<label for="id" class="text-field" [attr.variant]="variant()" [class.disabled]="disabled">
+<label [for]="id()" class="text-field" [attr.variant]="variant()" [class.disabled]="disabled">
   <input
-    [type]="type"
-    id="id"
+    [type]="innerType()"
+    [id]="id()"
     [placeholder]="placeholder()"
     [value]="innerValue"
     (input)="updateValue($event)"
     (blur)="onBlur()"
     [disabled]="disabled"
+    [name]="name()"
   />
-  <button (click)="showPass()">
-    <app-icon-eye class="icon-eye" [on]="eyeOn"></app-icon-eye>
-  </button>
   @if(hasLabel()){
   <span class="label-text">{{ label() }}</span>
   }
+  <button type="button" (click)="showPass()">
+    @if(showPasswordToggle()){
+    <app-icon-eye class="icon-eye" [on]="eyeOn"></app-icon-eye>
+    }
+  </button>
 </label>
