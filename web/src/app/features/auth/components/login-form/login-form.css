@@ -1,7 +1,7 @@
 @reference './../../../../../styles.css';
 
 .form-wrapper {
-  @apply flex flex-col items-center gap-10 bg-background-default max-md:p-5 max-md:border max-md:border-action-active/20 max-md:shadow-z1 max-md:rounded-lg;
+  @apply flex flex-col items-center gap-10 bg-background-default max-sm:p-5 max-sm:border max-sm:border-action-active/20 max-sm:shadow-z1 max-sm:rounded-lg;
 }
 .head {
   @apply flex flex-col items-start self-stretch gap-4;

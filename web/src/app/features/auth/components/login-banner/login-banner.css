@@ -1,7 +1,7 @@
 @reference './../../../../../styles.css';
 
 .banner-wrapper {
-  @apply flex w-[60rem] h-full shrink-0 items-center;
+  @apply flex w-full h-full shrink-0 items-center;
 }
 .overlay {
   @apply flex items-center justify-center w-full h-full relative bg-[url('/assets/png/login-bg.png')] bg-cover bg-center before:absolute before:inset-0 before:bg-common-white/[91%];

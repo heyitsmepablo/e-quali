@@ -1,5 +1,5 @@
 @reference './../../../../../styles.css';
 
 .form-container {
-  @apply flex h-full w-full pt-60 px-16 justify-center self-stretch;
+  @apply flex h-full w-[30rem] shrink pt-60 px-16 justify-center self-stretch;
 }
