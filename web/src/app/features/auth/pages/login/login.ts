@@ -3,10 +3,11 @@ import { TextField } from '../../../../shared/components/inputs/text-field/text-
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { LoginForm } from '../../components/login-form/login-form';
 import { LoginBanner } from '../../components/login-banner/login-banner';
+import { Button } from '../../../../shared/components/buttons/button/button';
 
 @Component({
   selector: 'app-login',
-  imports: [TextField, ReactiveFormsModule, LoginForm, LoginBanner],
+  imports: [TextField, ReactiveFormsModule, LoginForm, LoginBanner, Button],
   templateUrl: './login.html',
   styleUrl: './login.css',
 })

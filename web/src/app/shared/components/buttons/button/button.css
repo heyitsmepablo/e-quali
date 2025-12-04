@@ -1,0 +1,131 @@
+@reference './../../../../../styles.css';
+/* default */
+:host {
+  @apply rounded-lg h-fit;
+}
+.button {
+  @apply inline-flex w-full justify-center items-center h-fit  rounded-lg transition-all  font-bold not-italic;
+}
+/* sizes */
+button[size='lg'] {
+  @apply gap-2 py-3 px-6 text-lg leading-7;
+}
+
+button[size='md'] {
+  @apply gap-2 py-2 px-4;
+}
+
+button[size='sm'] {
+  @apply gap-2 py-1 px-3;
+}
+/* variants */
+button[variant='contained'] {
+  /* colors */
+  &[color='inherit'] {
+    @apply bg-inherit;
+  }
+  &[color='primary'] {
+    @apply bg-primary-main text-text-contrast hover:bg-primary-dark hover:shadow-primary;
+  }
+  &[color='secundary'] {
+    @apply bg-secundary-main text-text-contrast hover:bg-secundary-dark hover:shadow-secundary;
+  }
+  &[color='info'] {
+    @apply bg-info-main text-text-contrast hover:bg-info-dark hover:shadow-info;
+  }
+  &[color='success'] {
+    @apply bg-success-main text-text-contrast hover:bg-success-dark hover:shadow-success;
+  }
+  &[color='warning'] {
+    @apply bg-warning-main text-text-contrast hover:bg-warning-dark hover:shadow-warning;
+  }
+  &[color='error'] {
+    @apply bg-error-main text-text-contrast hover:bg-error-dark hover:shadow-error;
+  }
+  &[disabled] {
+    @apply bg-action-disabled-background text-action-disabled hover:bg-action-disabled-background hover:shadow-none;
+  }
+}
+button[variant='outlined'] {
+  @apply border border-button-outlined hover:border-text-primary;
+  /* colors */
+  &[color='inherit'] {
+    @apply bg-inherit;
+  }
+  &[color='primary'] {
+    @apply border-primary-main/48 text-primary-main hover:bg-primary-main/8 hover:border-primary-main;
+  }
+  &[color='secundary'] {
+    @apply border-secundary-main/48 text-secundary-main hover:bg-secundary-main/8 hover:border-secundary-main;
+  }
+  &[color='info'] {
+    @apply border-info-main/48 text-info-main hover:bg-info-main/8 hover:border-info-main;
+  }
+  &[color='success'] {
+    @apply border-success-main/48 text-success-main hover:bg-success-main/8 hover:border-success-main;
+  }
+  &[color='warning'] {
+    @apply border-warning-main/48 text-warning-main hover:bg-warning-main/8 hover:border-warning-main;
+  }
+  &[color='error'] {
+    @apply border-error-main/48 text-error-main hover:bg-error-main/8 hover:border-error-main;
+  }
+  &[disabled] {
+    @apply border-action-disabled-background text-action-disabled hover:border-action-disabled-background hover:bg-transparent;
+  }
+}
+
+button[variant='text'] {
+  /* colors */
+  &[color='inherit'] {
+    @apply bg-inherit;
+  }
+  &[color='primary'] {
+    @apply text-primary-main hover:bg-primary-main/8;
+  }
+  &[color='secundary'] {
+    @apply text-secundary-main hover:bg-secundary-main/8;
+  }
+  &[color='info'] {
+    @apply text-info-main hover:bg-info-main/8;
+  }
+  &[color='success'] {
+    @apply text-success-main hover:bg-success-main/8;
+  }
+  &[color='warning'] {
+    @apply text-warning-main hover:bg-warning-main/8;
+  }
+  &[color='error'] {
+    @apply text-error-main hover:bg-error-main/8;
+  }
+  &[disabled] {
+    @apply text-action-disabled hover:bg-transparent;
+  }
+}
+button[variant='soft'] {
+  /* colors */
+  &[color='inherit'] {
+    @apply bg-inherit;
+  }
+  &[color='primary'] {
+    @apply bg-primary-main/16 text-primary-dark hover:bg-primary-main/32;
+  }
+  &[color='secundary'] {
+    @apply bg-secundary-main/16 text-secundary-dark hover:bg-secundary-main/32;
+  }
+  &[color='info'] {
+    @apply bg-info-main/16 text-info-dark hover:bg-info-main/32;
+  }
+  &[color='success'] {
+    @apply bg-success-main/16 text-success-dark hover:bg-success-main/32;
+  }
+  &[color='warning'] {
+    @apply bg-warning-main/16 text-warning-dark hover:bg-warning-main/32;
+  }
+  &[color='error'] {
+    @apply bg-error-main/16 text-error-dark hover:bg-error-main/32;
+  }
+  &[disabled] {
+    @apply bg-action-disabled-background text-action-disabled hover:bg-action-disabled-background;
+  }
+}

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input, input, InputSignal } from '@angular/core';
 
 @Component({
   selector: 'app-button',
@@ -7,5 +7,14 @@ import { Component } from '@angular/core';
   styleUrl: './button.css',
 })
 export class Button {
-
+  //inputs
+  type: InputSignal<'button' | 'submit' | 'reset'> = input<'button' | 'submit' | 'reset'>('button');
+  variant: InputSignal<'contained' | 'outlined' | 'text' | 'soft'> = input<
+    'contained' | 'outlined' | 'text' | 'soft'
+  >('contained');
+  color: InputSignal<'inherit' | 'primary' | 'secundary' | 'info' | 'warning' | 'error'> = input<
+    'inherit' | 'primary' | 'secundary' | 'info' | 'warning' | 'error'
+  >('primary');
+  size: InputSignal<'lg' | 'md' | 'sm'> = input<'lg' | 'md' | 'sm'>('md');
+  disabled: InputSignal<boolean> = input<boolean>(false);
 }
