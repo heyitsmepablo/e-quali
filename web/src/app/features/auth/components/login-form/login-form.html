@@ -8,8 +8,9 @@
       >
     </h2>
   </div>
-  <div class="content">
+  <form class="content" [formGroup]="loginForm">
     <app-text-field
+      formControlName="cpf"
       [hasLabel]="true"
       label="CPF"
       id="cpf"
@@ -17,6 +18,7 @@
       class="w-full"
     ></app-text-field>
     <app-text-field
+      formControlName="password"
       [hasLabel]="true"
       label="Senha"
       [showPasswordToggle]="true"
@@ -31,6 +33,6 @@
         >Esqueceu a senha?</a
       >
     </span>
-    <button class="button-login">Login</button>
-  </div>
+    <button class="button-login" (click)="onSubmit()">Login</button>
+  </form>
 </form>
