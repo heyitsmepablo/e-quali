@@ -9,7 +9,13 @@
     </h2>
   </div>
   <div class="content">
-    <app-text-field [hasLabel]="true" label="CPF" id="cpf" name="cpf"></app-text-field>
+    <app-text-field
+      [hasLabel]="true"
+      label="CPF"
+      id="cpf"
+      name="cpf"
+      class="w-full"
+    ></app-text-field>
     <app-text-field
       [hasLabel]="true"
       label="Senha"
@@ -17,6 +23,7 @@
       type="password"
       id="senha"
       name="senha"
+      class="w-full"
     ></app-text-field>
     <span class="flex w-full justify-end">
       <a
