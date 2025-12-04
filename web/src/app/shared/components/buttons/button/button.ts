@@ -17,4 +17,5 @@ export class Button {
   >('primary');
   size: InputSignal<'lg' | 'md' | 'sm'> = input<'lg' | 'md' | 'sm'>('md');
   disabled: InputSignal<boolean> = input<boolean>(false);
+  label: InputSignal<string> = input<string>('Label');
 }

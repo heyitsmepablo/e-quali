@@ -2,16 +2,20 @@
 
 /* Default */
 
+.button {
+  @apply z-20;
+}
+
 .text-field {
-  @apply relative flex  px-3.5 py-4 h-14 w-80 rounded-lg;
+  @apply relative flex  px-3.5 py-4 h-14 w-full rounded-lg z-0;
 
   input {
-    @apply flex items-start text-text-primary w-full h-full outline-none;
+    @apply flex items-start text-text-primary w-full h-full outline-none z-2;
   }
 }
 
 .label-text {
-  @apply absolute focus:-top-3 focus:left-3.5 bg-background-paper px-1 py-0 focus:text-xs text-text-disabled transition-all;
+  @apply absolute focus:-top-3 focus:left-3.5 bg-background-paper px-1 py-0 focus:text-xs text-text-disabled transition-all z-1;
 }
 /* ---------- */
 

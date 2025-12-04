@@ -20,7 +20,7 @@ export class TextField implements ControlValueAccessor {
   value: InputSignal<string> = input<string>('');
   label: InputSignal<string> = input<string>('Label');
   hasLabel: InputSignal<boolean> = input<boolean>(false);
-  placeholder: InputSignal<string> = input<string>(' ');
+  placeholder: InputSignal<string> = input<string>('');
   variant: InputSignal<'outlined' | 'filled' | 'standard'> = input<
     'outlined' | 'filled' | 'standard'
   >('outlined');

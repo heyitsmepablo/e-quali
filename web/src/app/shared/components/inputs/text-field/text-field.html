@@ -12,7 +12,7 @@
   @if(hasLabel()){
   <span class="label-text">{{ label() }}</span>
   }
-  <button type="button" (click)="showPass()">
+  <button class="button" type="button" (click)="showPass()">
     @if(showPasswordToggle()){
     <app-icon-eye class="icon-eye" [on]="eyeOn"></app-icon-eye>
     }
