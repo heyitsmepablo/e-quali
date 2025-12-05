@@ -8,6 +8,8 @@
     (blur)="onBlur()"
     [disabled]="disabled"
     [name]="name()"
+    [mask]="mask()"
+    [dropSpecialCharacters]="dropSpecialCharacters()"
   />
   @if(hasLabel()){
   <span class="label-text">{{ label() }}</span>

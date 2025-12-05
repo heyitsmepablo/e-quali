@@ -1,6 +1,7 @@
 import { Component, effect, forwardRef, input, InputSignal, signal, Signal } from '@angular/core';
 import { ControlValueAccessor, FormsModule, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { IconEye } from '../../../icons/icon-eye/icon-eye';
+import { NgxMaskDirective, provideNgxMask } from 'ngx-mask';
 
 const TEXT_FIELD_ACCESSOR = {
   provide: NG_VALUE_ACCESSOR,
@@ -10,8 +11,8 @@ const TEXT_FIELD_ACCESSOR = {
 
 @Component({
   selector: 'app-text-field',
-  imports: [FormsModule, IconEye],
-  providers: [TEXT_FIELD_ACCESSOR],
+  imports: [FormsModule, IconEye, NgxMaskDirective],
+  providers: [TEXT_FIELD_ACCESSOR, provideNgxMask()],
   templateUrl: './text-field.html',
   styleUrl: './text-field.css',
 })
@@ -28,6 +29,9 @@ export class TextField implements ControlValueAccessor {
   showPasswordToggle: InputSignal<boolean> = input<boolean>(false);
   id: InputSignal<string> = input('');
   name: InputSignal<string> = input('');
+  mask: InputSignal<string> = input('');
+  dropSpecialCharacters: InputSignal<boolean> = input<boolean>(false);
+
   //Values Internos
   disabled: boolean = false;
   eyeOn: boolean = true;

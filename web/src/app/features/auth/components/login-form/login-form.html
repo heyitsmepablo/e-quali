@@ -8,15 +8,21 @@
       >
     </h2>
   </div>
-  <form class="content" [formGroup]="loginForm">
-    <app-text-field
-      formControlName="cpf"
-      [hasLabel]="true"
-      label="CPF"
-      id="cpf"
-      name="cpf"
-      class="w-full"
-    ></app-text-field>
+  <form class="content" [formGroup]="loginForm" (submit)="onSubmit()">
+    <div class="flex flex-col w-full">
+      <app-text-field
+        formControlName="cpf"
+        [hasLabel]="true"
+        label="CPF"
+        id="cpf"
+        name="cpf"
+        class="w-full"
+        mask="000.000.000-00"
+      ></app-text-field>
+      @if ( cpfShouldShowError ) {
+      <small class="text-error-main">Insira um cpf valido.</small>
+      }
+    </div>
     <app-text-field
       formControlName="password"
       [hasLabel]="true"
@@ -33,6 +39,6 @@
         >Esqueceu a senha?</a
       >
     </span>
-    <button class="button-login" (click)="onSubmit()">Login</button>
+    <button class="button-login">Login</button>
   </form>
 </form>
