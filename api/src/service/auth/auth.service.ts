@@ -1,4 +1,6 @@
 import { Injectable } from '@nestjs/common';
+import { RecordNotFoundError } from 'src/common/errors/record-not-found.error';
+import { UnauthorizedError } from 'src/common/errors/unauthorized.error';
 import PrismaSingleton from 'src/singleton/prisma-singleton';
 
 @Injectable()
@@ -32,7 +34,7 @@ export class AuthService {
     });
 
     if (!user) {
-      throw new Error('Usuário ou senha incorretos.');
+      throw new UnauthorizedError('Usuário ou senha incorretos.');
     }
 
     const access = await this.#database.acesso.findUnique({
@@ -40,7 +42,7 @@ export class AuthService {
     });
 
     if (access?.senha != password) {
-      throw new Error('Usuário ou senha incorretos.');
+      throw new UnauthorizedError('Usuário ou senha incorretos.');
     }
 
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -56,7 +58,7 @@ export class AuthService {
       where: { cpf },
     });
     if (!user) {
-      throw new Error('Usuario não encontrado');
+      throw new RecordNotFoundError('Usuario não encontrado');
     }
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const access = await this.#database.acesso.update({

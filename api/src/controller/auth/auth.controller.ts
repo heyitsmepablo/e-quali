@@ -16,6 +16,7 @@ export class AuthController {
   @Post('update/password')
   async updatePassword(@Body() payload: UpdatePasswordAuthDto) {
     const { cpf, newPassword } = payload;
+
     return await this.authService.changePassword({ cpf, newPass: newPassword });
   }
 }
