@@ -3,12 +3,13 @@ import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { AppModule } from './app.module';
 import { env } from 'process';
 import { DomainErrorFilter } from './filter/domain-error-filter/domain-error-filter.filter';
+import 'dotenv/config';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule, {
     cors: {
       origin: env.CLIENT_WEB_URL,
-      methods: '*',
+      methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
       credentials: true,
     },
   });

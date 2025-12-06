@@ -21,6 +21,7 @@ export class DomainErrorFilter implements ExceptionFilter {
     }
 
     response.status(status).json({
+      code: exception.code,
       message: exception.message,
     });
   }

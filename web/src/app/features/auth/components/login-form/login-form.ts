@@ -1,14 +1,6 @@
-import { Component, signal, Signal } from '@angular/core';
+import { Component, output, signal, Signal } from '@angular/core';
 import { TextField } from '../../../../shared/components/inputs/text-field/text-field';
-import {
-  AbstractControl,
-  FormBuilder,
-  FormControl,
-  FormGroup,
-  ReactiveFormsModule,
-  Validators,
-} from '@angular/forms';
-import { AuthService } from '../../auth-service';
+import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-login-form',
@@ -19,8 +11,9 @@ import { AuthService } from '../../auth-service';
 export class LoginForm {
   loginForm!: FormGroup;
   submitted = signal(false);
+  loginSubmit = output<any>();
 
-  constructor(private formBuilder: FormBuilder, private authService: AuthService) {
+  constructor(private formBuilder: FormBuilder) {
     this.loginForm = this.formBuilder.group({
       cpf: ['', Validators.minLength(14)],
       password: [''],
@@ -35,8 +28,7 @@ export class LoginForm {
   async onSubmit() {
     if (this.loginForm.valid) {
       const formValues = this.loginForm.value;
-      console.log(formValues);
-      await this.authService.login(formValues);
+      this.loginSubmit.emit(formValues);
     }
     this.submitted.set(true);
   }
