@@ -2,7 +2,7 @@ import { NestFactory } from '@nestjs/core';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { AppModule } from './app.module';
 import { env } from 'process';
-import { DomainErrorFilter } from './filter/domain-error-filter/domain-error-filter.filter';
+import { DomainErrorFilter } from './filter/domain-error/domain-error.filter';
 import 'dotenv/config';
 
 async function bootstrap() {

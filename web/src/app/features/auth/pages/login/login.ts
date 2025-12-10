@@ -5,6 +5,7 @@ import { LoginBanner } from '../../components/login-banner/login-banner';
 import { AuthService } from '../../auth-service';
 import { ToastModule } from 'primeng/toast';
 import { MessageService } from 'primeng/api';
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-login',
   imports: [ReactiveFormsModule, LoginForm, LoginBanner, ToastModule],
@@ -15,12 +16,28 @@ import { MessageService } from 'primeng/api';
 export class Login {
   loginForm!: FormGroup;
 
-  constructor(private authService: AuthService, private messageService: MessageService) {}
+  constructor(
+    private authService: AuthService,
+    private messageService: MessageService,
+    private route: Router
+  ) {}
 
   async loginRequestHandler(formValues: any) {
     try {
-      const apiRes = await this.authService.login(formValues);
-      console.log(apiRes);
+      const loginRes = await this.authService.login({
+        cpf: formValues?.cpf,
+        senha: formValues?.password,
+      });
+      console.log(loginRes);
+
+      const { user } = loginRes;
+
+      if (!user.ultimoLogin) {
+        localStorage.setItem('user', JSON.stringify(user, null, 2));
+        this.route.navigate(['/', 'reset-password']);
+      }
+
+      return 'Futuro Redirect pro APP';
     } catch (error: any) {
       this.messageService.clear();
       this.messageService.add({
@@ -29,6 +46,7 @@ export class Login {
         detail: error.message,
         life: 3000,
       });
+      throw error;
     }
   }
 }

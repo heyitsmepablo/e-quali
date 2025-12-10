@@ -3,13 +3,14 @@
     [type]="innerType()"
     [id]="id()"
     [placeholder]="placeholder()"
-    [value]="innerValue"
-    (input)="updateValue($event)"
+    [(ngModel)]="innerValue"
+    (ngModelChange)="updateValue($event)"
     (blur)="onBlur()"
     [disabled]="disabled"
     [name]="name()"
     [mask]="mask()"
     [dropSpecialCharacters]="dropSpecialCharacters()"
+    [specialCharacters]="specialCharacters()"
   />
   @if(hasLabel()){
   <span class="label-text">{{ label() }}</span>

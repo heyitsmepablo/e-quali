@@ -18,6 +18,8 @@
         name="cpf"
         class="w-full"
         mask="000.000.000-00"
+        [dropSpecialCharacters]="true"
+        [specialCharacters]="['.', '-']"
       ></app-text-field>
       @if ( cpfShouldShowError ) {
       <small class="text-error-main">Insira um cpf valido.</small>

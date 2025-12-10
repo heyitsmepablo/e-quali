@@ -1,4 +1,14 @@
-import { Component, effect, forwardRef, input, InputSignal, signal, Signal } from '@angular/core';
+import {
+  Component,
+  computed,
+  effect,
+  forwardRef,
+  input,
+  InputSignal,
+  signal,
+  Signal,
+  WritableSignal,
+} from '@angular/core';
 import { ControlValueAccessor, FormsModule, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { IconEye } from '../../../icons/icon-eye/icon-eye';
 import { NgxMaskDirective, provideNgxMask } from 'ngx-mask';
@@ -18,7 +28,7 @@ const TEXT_FIELD_ACCESSOR = {
 })
 export class TextField implements ControlValueAccessor {
   //Inputs
-  value: InputSignal<string> = input<string>('');
+  value: string = '';
   label: InputSignal<string> = input<string>('Label');
   hasLabel: InputSignal<boolean> = input<boolean>(false);
   placeholder: InputSignal<string> = input<string>('');
@@ -31,7 +41,7 @@ export class TextField implements ControlValueAccessor {
   name: InputSignal<string> = input('');
   mask: InputSignal<string> = input('');
   dropSpecialCharacters: InputSignal<boolean> = input<boolean>(false);
-
+  specialCharacters: InputSignal<string[]> = input(['']);
   //Values Internos
   disabled: boolean = false;
   eyeOn: boolean = true;
@@ -41,9 +51,9 @@ export class TextField implements ControlValueAccessor {
 
   constructor() {
     effect(() => {
-      if (!this.usingForms) {
-        this.innerValue = this.value();
-      }
+      // if (!this.usingForms) {
+      //   this.innerValue = this.value();
+      // }
       this.innerType.set(this.type());
     });
   }
@@ -80,8 +90,8 @@ export class TextField implements ControlValueAccessor {
   }
 
   updateValue(event: any) {
-    const newValue = event.target.value;
-    this.innerValue = newValue;
+    const newValue: string = `${this.innerValue}`;
+    this.value = newValue;
     if (this.usingForms) {
       this.onChange(newValue);
     }

@@ -29,7 +29,7 @@ export interface paths {
         };
         get?: never;
         put?: never;
-        /** Realizar login no sistema */
+        /** Realiza o Login do Usuário */
         post: operations["AuthController_login"];
         delete?: never;
         options?: never;
@@ -62,9 +62,43 @@ export interface components {
             cpf: string;
             senha: string;
         };
+        LoginAuthResponseDto: {
+            user: {
+                cpf: string;
+                id: string;
+                matricula: string;
+                nome: string;
+                email: string | null;
+                perfilFuncional: {
+                    area?: {
+                        id?: number;
+                        nome?: string;
+                    };
+                    cargo?: {
+                        id?: number;
+                        nome?: string | null;
+                    };
+                    setor?: {
+                        id?: number;
+                        nome?: string;
+                        sigla?: string | null;
+                    };
+                    unidade?: {
+                        id?: number;
+                        nome?: string;
+                        sigla?: string | null;
+                    };
+                };
+                /** Format: date-time */
+                ultimoLogin: string | null;
+            };
+        };
         UpdatePasswordAuthDto: {
             cpf: string;
             newPassword: string;
+        };
+        UpdatePasswordAuthResponseDto: {
+            message: string;
         };
     };
     responses: never;
@@ -107,12 +141,12 @@ export interface operations {
             };
         };
         responses: {
-            201: {
+            200: {
                 headers: {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": Record<string, never>;
+                    "application/json": components["schemas"]["LoginAuthResponseDto"];
                 };
             };
         };
@@ -134,7 +168,9 @@ export interface operations {
                 headers: {
                     [name: string]: unknown;
                 };
-                content?: never;
+                content: {
+                    "application/json": components["schemas"]["UpdatePasswordAuthResponseDto"];
+                };
             };
         };
     };

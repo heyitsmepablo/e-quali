@@ -3,6 +3,7 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { AuthService } from './auth.service';
 import { prismaMock } from 'src/__mock__/singleton/prisma-singleton';
+import { LoginAuthResponseDto } from 'src/common/dtos/auth/login.dto';
 
 describe('AuthService', () => {
   let service: AuthService;
@@ -23,12 +24,40 @@ describe('AuthService', () => {
     const args = { cpf: '123', password: '123' };
 
     it('Resolve: Deve resolver retornando payload', async () => {
-      const expectedResponse = { message: 'success' } as any;
+      const mockUser = {
+        id: '1',
+        nome: 'Fulano',
+        matricula: '123',
+        cpf: args.cpf,
+        email: 'teste@teste.com',
+        perfilFuncionalId: 99,
+        perfilFuncional: {
+          unidade: { id: 1, nome: 'Unidade X', sigla: 'UX' },
+          setor: { id: 2, nome: 'Setor Y', sigla: 'SY' },
+          area: { id: 3, nome: 'Area Z' },
+          cargo: { id: 4, nome: 'Cargo A' },
+        },
+      };
 
-      prismaMock.usuario.findUnique.mockResolvedValue(expectedResponse);
-      prismaMock.acesso.findUnique.mockResolvedValue({
+      const mockAccess = {
         senha: args.password,
-      } as any);
+        ultimoLogin: null,
+      };
+
+      prismaMock.usuario.findUnique.mockResolvedValue(mockUser as any);
+      prismaMock.acesso.findUnique.mockResolvedValue(mockAccess as any);
+
+      const expectedResponse: LoginAuthResponseDto = {
+        user: {
+          id: '1',
+          nome: 'Fulano',
+          matricula: '123',
+          cpf: args.cpf,
+          email: 'teste@teste.com',
+          perfilFuncional: mockUser.perfilFuncional,
+          ultimoLogin: null,
+        },
+      };
 
       await expect(service.login(args)).resolves.toEqual(expectedResponse);
     });

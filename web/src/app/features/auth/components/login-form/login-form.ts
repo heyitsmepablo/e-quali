@@ -15,7 +15,7 @@ export class LoginForm {
 
   constructor(private formBuilder: FormBuilder) {
     this.loginForm = this.formBuilder.group({
-      cpf: ['', Validators.minLength(14)],
+      cpf: ['', Validators.minLength(11)],
       password: [''],
     });
   }
@@ -26,8 +26,10 @@ export class LoginForm {
   }
 
   async onSubmit() {
+    console.log(this.loginForm.value);
     if (this.loginForm.valid) {
       const formValues = this.loginForm.value;
+      console.log('valores enviados pelo form-login: ' + JSON.stringify(formValues, null, 2));
       this.loginSubmit.emit(formValues);
     }
     this.submitted.set(true);
