@@ -97,17 +97,48 @@ describe('AuthService', () => {
       await expect(service.login(args)).rejects.toThrow(expectedResponse);
     });
   });
+
   describe('changePassword', () => {
     const args = { cpf: '0000000000', newPass: 'nova-senha' };
     it('Resolve: Deve resolver retornando payload', async () => {
       const expectedResponse = { message: 'success' } as any;
-      prismaMock.usuario.findUnique.mockResolvedValue({ id: 'um-id' } as any);
+
+      prismaMock.usuario.findUnique.mockResolvedValue({
+        id: 'um-id',
+      } as any);
+
+      prismaMock.acesso.findUnique.mockResolvedValue({
+        ultimoLogin: null,
+      } as any);
+
       prismaMock.acesso.update.mockResolvedValue({ message: 'success' } as any);
 
-      await expect(service.changePassword(args)).resolves.toEqual(
-        expectedResponse,
-      );
+      const args = { cpf: '12345678900', newPass: 'new-password' };
+
+      // --- executa só uma vez ---
+      const result = await service.changePassword(args);
+
+      // valida retorno
+      expect(result).toEqual(expectedResponse);
+
+      // valida chamadas do prisma
+      // eslint-disable-next-line @typescript-eslint/unbound-method
+      expect(prismaMock.usuario.findUnique).toHaveBeenCalledWith({
+        where: { cpf: args.cpf },
+      });
+
+      // eslint-disable-next-line @typescript-eslint/unbound-method
+      expect(prismaMock.acesso.findUnique).toHaveBeenCalledWith({
+        where: { usuarioId: 'um-id' },
+      });
+
+      // eslint-disable-next-line @typescript-eslint/unbound-method
+      expect(prismaMock.acesso.update).toHaveBeenCalledWith({
+        where: { usuarioId: 'um-id' },
+        data: { senha: args.newPass },
+      });
     });
+
     it('Reject: Deve rejeitar caso não encontre usuario com jogando mensagem de erro', async () => {
       const expectedResponse = 'Usuario não encontrado';
       prismaMock.usuario.findUnique.mockResolvedValue(null);

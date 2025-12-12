@@ -48,6 +48,7 @@ export class AuthService {
       console.log('senha incorreta');
       throw new UnauthorizedError('Usuário ou senha incorretos.');
     }
+
     const { ultimoLogin } = access;
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const { perfilFuncionalId, ...formatUser } = user;
@@ -64,11 +65,20 @@ export class AuthService {
     const user = await this.#database.usuario.findUnique({
       where: { cpf },
     });
+
     if (!user) {
       throw new RecordNotFoundError('Usuario não encontrado');
     }
+    const access = await this.#database.acesso.findUnique({
+      where: { usuarioId: user.id },
+    });
+
+    if (access?.ultimoLogin) {
+      throw new UnauthorizedError('Não Autoriazdo');
+    }
+
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const access = await this.#database.acesso.update({
+    await this.#database.acesso.update({
       where: { usuarioId: user?.id },
       data: { senha: newPass },
     });
