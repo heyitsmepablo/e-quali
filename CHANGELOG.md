@@ -2,6 +2,13 @@
 
 Todas as mudanças notáveis neste projeto serão documentadas neste arquivo. Consulte [Conventional Commits](https://www.conventionalcommits.org/pt-br/v1.0.0/) para diretrizes de commits.
 
+# [1.0.0-alpha.3](https://github.com/heyitsmepablo/e-quali/compare/v1.0.0-alpha.2...v1.0.0-alpha.3) (2025-12-10)
+
+
+### Features
+
+* login e reset de senha do primeiro acesso ([773aa95](https://github.com/heyitsmepablo/e-quali/commit/773aa950246d5d57add8407dd10aa0229ac9b004))
+
 # [1.0.0-alpha.2](https://github.com/heyitsmepablo/e-quali/compare/v1.0.0-alpha.1...v1.0.0-alpha.2) (2025-11-27)
 
 
