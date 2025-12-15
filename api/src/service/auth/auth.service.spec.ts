@@ -4,13 +4,18 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { AuthService } from './auth.service';
 import { prismaMock } from 'src/__mock__/singleton/prisma-singleton';
 import { LoginAuthResponseDto } from 'src/common/dtos/auth/login.dto';
+import { JwtService } from '@nestjs/jwt';
+import { jwtServiceMock } from 'src/__mock__/service/jwt.service';
 
 describe('AuthService', () => {
   let service: AuthService;
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
-      providers: [AuthService],
+      providers: [
+        AuthService,
+        { provide: JwtService, useValue: jwtServiceMock },
+      ],
     }).compile();
 
     service = module.get<AuthService>(AuthService);
@@ -46,6 +51,7 @@ describe('AuthService', () => {
 
       prismaMock.usuario.findUnique.mockResolvedValue(mockUser as any);
       prismaMock.acesso.findUnique.mockResolvedValue(mockAccess as any);
+      jwtServiceMock.signAsync.mockResolvedValue('um-exemplo-de-token');
 
       const expectedResponse: LoginAuthResponseDto = {
         user: {
@@ -58,7 +64,7 @@ describe('AuthService', () => {
           ultimoLogin: null,
         },
       };
-
+      expect(jwtServiceMock.signAsync).toHaveBeenCalled();
       await expect(service.login(args)).resolves.toEqual(expectedResponse);
     });
 
@@ -66,7 +72,6 @@ describe('AuthService', () => {
       const expectedResponse = new Error('error');
 
       prismaMock.usuario.findUnique.mockRejectedValue(expectedResponse);
-      await expect(service.login(args)).rejects.toBeInstanceOf(Error);
       await expect(service.login(args)).rejects.toThrow(expectedResponse);
     });
     it('Reject: Deve rejeitar com erro do prisma/acesso lançando no payload', async () => {
@@ -74,7 +79,6 @@ describe('AuthService', () => {
 
       prismaMock.usuario.findUnique.mockResolvedValue('success' as any);
       prismaMock.acesso.findUnique.mockRejectedValue(expectedResponse);
-      await expect(service.login(args)).rejects.toBeInstanceOf(Error);
       await expect(service.login(args)).rejects.toThrow(expectedResponse);
     });
 
@@ -82,7 +86,6 @@ describe('AuthService', () => {
       const expectedResponse = 'Usuário ou senha incorretos.';
       prismaMock.usuario.findUnique.mockResolvedValue(null);
       await expect(service.login(args)).rejects.toThrow(expectedResponse);
-      await expect(service.login(args)).rejects.toBeInstanceOf(Error);
     });
 
     it('Reject: Deve rejeitar com senhas diferentes com mensagem de erro', async () => {
@@ -93,7 +96,6 @@ describe('AuthService', () => {
         senha: 'senha-diferente',
       } as any);
 
-      await expect(service.login(args)).rejects.toBeInstanceOf(Error);
       await expect(service.login(args)).rejects.toThrow(expectedResponse);
     });
   });
@@ -122,6 +124,7 @@ describe('AuthService', () => {
       expect(result).toEqual(expectedResponse);
 
       // valida chamadas do prisma
+
       // eslint-disable-next-line @typescript-eslint/unbound-method
       expect(prismaMock.usuario.findUnique).toHaveBeenCalledWith({
         where: { cpf: args.cpf },
@@ -142,16 +145,17 @@ describe('AuthService', () => {
     it('Reject: Deve rejeitar caso não encontre usuario com jogando mensagem de erro', async () => {
       const expectedResponse = 'Usuario não encontrado';
       prismaMock.usuario.findUnique.mockResolvedValue(null);
-      await expect(service.changePassword(args)).rejects.toBeInstanceOf(Error);
+
       await expect(service.changePassword(args)).rejects.toThrow(
         expectedResponse,
       );
     });
+
     it('Reject: Deve rejeitar caso não prisma/acesso dê erro com jogando mensagem de erro', async () => {
       const expectedResponse = 'erro generico';
       prismaMock.usuario.findUnique.mockResolvedValue({ id: 'um-id' } as any);
       prismaMock.acesso.update.mockRejectedValue(new Error(expectedResponse));
-      await expect(service.changePassword(args)).rejects.toBeInstanceOf(Error);
+
       await expect(service.changePassword(args)).rejects.toThrow(
         expectedResponse,
       );

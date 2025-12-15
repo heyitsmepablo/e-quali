@@ -4,9 +4,11 @@ import { UnauthorizedError } from 'src/common/errors/unauthorized.error';
 import { LoginAuthResponseDto } from 'src/common/dtos/auth/login.dto';
 import PrismaSingleton from 'src/singleton/prisma-singleton';
 import { UpdatePasswordAuthResponseDto } from 'src/common/dtos/auth/updatePassword.dto';
+import { JwtService } from '@nestjs/jwt';
 
 @Injectable()
 export class AuthService {
+  constructor(private jwtService: JwtService) {}
   #database = PrismaSingleton.instance.client;
 
   async login(payload: {
@@ -50,6 +52,7 @@ export class AuthService {
     }
 
     const { ultimoLogin } = access;
+
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const { perfilFuncionalId, ...formatUser } = user;
 

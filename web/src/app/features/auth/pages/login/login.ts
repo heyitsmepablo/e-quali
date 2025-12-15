@@ -28,6 +28,7 @@ export class Login {
         cpf: formValues?.cpf,
         senha: formValues?.password,
       });
+
       console.log(loginRes);
 
       const { user } = loginRes;
