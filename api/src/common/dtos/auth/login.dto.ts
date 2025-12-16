@@ -4,7 +4,11 @@ export class LoginAuthDto {
 }
 
 export class LoginAuthResponseDto {
-  user: {
+  token: string;
+  tipo: string;
+  expira_em_milisegundos: number;
+  valido_ate_timestamp: number;
+  usuario: {
     cpf: string;
     id: string;
     matricula: string;
@@ -30,6 +34,6 @@ export class LoginAuthResponseDto {
         sigla: string | null;
       };
     };
-    ultimoLogin: Date | null;
   };
+  ultimo_login: Date | null;
 }

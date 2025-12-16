@@ -5,9 +5,9 @@ import {
   LoginAuthResponseDto,
 } from 'src/common/dtos/auth/login.dto';
 import {
-  UpdatePasswordAuthDto,
-  UpdatePasswordAuthResponseDto,
-} from '../../common/dtos/auth/updatePassword.dto';
+  FirstAccessPasswordAuthDto,
+  FirstAccessPasswordAuthResponseDto,
+} from '../../common/dtos/auth/firstAccess';
 
 @Controller('auth')
 export class AuthController {
@@ -26,11 +26,14 @@ export class AuthController {
   }
 
   /** Mudar Senha  */
-  @Post('update/password')
-  async updatePassword(
-    @Body() payload: UpdatePasswordAuthDto,
-  ): Promise<UpdatePasswordAuthResponseDto> {
-    const { cpf, newPassword } = payload;
-    return await this.authService.changePassword({ cpf, newPass: newPassword });
+  @Post('/login/firstAccess')
+  async firstAccess(
+    @Body() payload: FirstAccessPasswordAuthDto,
+  ): Promise<FirstAccessPasswordAuthResponseDto> {
+    const { userId, newPassword } = payload;
+    return await this.authService.firstAccess({
+      userId,
+      newPassword,
+    });
   }
 }

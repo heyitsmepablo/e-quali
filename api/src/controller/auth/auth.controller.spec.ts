@@ -3,7 +3,7 @@ import { AuthController } from './auth.controller';
 import { LoginAuthDto } from 'src/common/dtos/auth/login.dto';
 import { AuthService } from 'src/service/auth/auth.service';
 import { authServiceMock } from 'src/__mock__/service/auth.service';
-import { UpdatePasswordAuthDto } from '../../common/dtos/auth/updatePassword.dto';
+import { FirstAccessPasswordAuthDto } from '../../common/dtos/auth/firstAccess';
 
 describe('AuthController', () => {
   let controller: AuthController;
@@ -40,12 +40,12 @@ describe('AuthController', () => {
       );
     });
   });
-  describe('update', () => {
-    const requestPayload = new UpdatePasswordAuthDto();
+  describe('firstAccess', () => {
+    const requestPayload = new FirstAccessPasswordAuthDto();
     it('Resolve: Deve resolver com sucesso retornando mensagem', async () => {
       const expectResponse = { message: 'success' };
       authServiceMock.changePassword.mockResolvedValue(expectResponse);
-      await expect(controller.updatePassword(requestPayload)).resolves.toEqual(
+      await expect(controller.firstAccess(requestPayload)).resolves.toEqual(
         expectResponse,
       );
     });
@@ -55,9 +55,9 @@ describe('AuthController', () => {
         new Error(expectResponse),
       );
       await expect(
-        controller.updatePassword(requestPayload),
+        controller.firstAccess(requestPayload),
       ).rejects.toBeInstanceOf(Error);
-      await expect(controller.updatePassword(requestPayload)).rejects.toThrow(
+      await expect(controller.firstAccess(requestPayload)).rejects.toThrow(
         expectResponse,
       );
     });

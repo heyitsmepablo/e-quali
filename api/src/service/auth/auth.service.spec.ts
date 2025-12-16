@@ -6,6 +6,9 @@ import { prismaMock } from 'src/__mock__/singleton/prisma-singleton';
 import { LoginAuthResponseDto } from 'src/common/dtos/auth/login.dto';
 import { JwtService } from '@nestjs/jwt';
 import { jwtServiceMock } from 'src/__mock__/service/jwt.service';
+import { configServiceMock } from 'src/__mock__/service/utils.service';
+import { ConfigService } from '@nestjs/config';
+import { FirstAccessPasswordAuthDto } from 'src/common/dtos/auth/firstAccess';
 
 describe('AuthService', () => {
   let service: AuthService;
@@ -15,6 +18,7 @@ describe('AuthService', () => {
       providers: [
         AuthService,
         { provide: JwtService, useValue: jwtServiceMock },
+        { provide: ConfigService, useValue: configServiceMock },
       ],
     }).compile();
 
@@ -49,23 +53,28 @@ describe('AuthService', () => {
         ultimoLogin: null,
       };
 
-      prismaMock.usuario.findUnique.mockResolvedValue(mockUser as any);
-      prismaMock.acesso.findUnique.mockResolvedValue(mockAccess as any);
-      jwtServiceMock.signAsync.mockResolvedValue('um-exemplo-de-token');
-
       const expectedResponse: LoginAuthResponseDto = {
-        user: {
+        token: 'um-token',
+        tipo: 'Bearer',
+        expira_em_milisegundos: expect.any(Number),
+        valido_ate_timestamp: expect.any(Number),
+        usuario: {
           id: '1',
           nome: 'Fulano',
           matricula: '123',
           cpf: args.cpf,
           email: 'teste@teste.com',
           perfilFuncional: mockUser.perfilFuncional,
-          ultimoLogin: null,
         },
+        ultimo_login: null,
       };
-      expect(jwtServiceMock.signAsync).toHaveBeenCalled();
+
+      prismaMock.usuario.findUnique.mockResolvedValue(mockUser as any);
+      prismaMock.acesso.findUnique.mockResolvedValue(mockAccess as any);
+      configServiceMock.getOrThrow.mockReturnValue('1h');
+      jwtServiceMock.signAsync.mockResolvedValue(expectedResponse.token);
       await expect(service.login(args)).resolves.toEqual(expectedResponse);
+      expect(jwtServiceMock.signAsync).toHaveBeenCalled();
     });
 
     it('Reject: Deve rejeitar com erro do prisma/usuario lançando no payload', async () => {
@@ -100,13 +109,16 @@ describe('AuthService', () => {
     });
   });
 
-  describe('changePassword', () => {
-    const args = { cpf: '0000000000', newPass: 'nova-senha' };
+  describe('firstAccess', () => {
+    const args: FirstAccessPasswordAuthDto = {
+      userId: '0000000000',
+      newPassword: 'nova-senha',
+    };
     it('Resolve: Deve resolver retornando payload', async () => {
       const expectedResponse = { message: 'success' } as any;
 
       prismaMock.usuario.findUnique.mockResolvedValue({
-        id: 'um-id',
+        id: args.userId,
       } as any);
 
       prismaMock.acesso.findUnique.mockResolvedValue({
@@ -115,10 +127,8 @@ describe('AuthService', () => {
 
       prismaMock.acesso.update.mockResolvedValue({ message: 'success' } as any);
 
-      const args = { cpf: '12345678900', newPass: 'new-password' };
-
       // --- executa só uma vez ---
-      const result = await service.changePassword(args);
+      const result = await service.firstAccess(args);
 
       // valida retorno
       expect(result).toEqual(expectedResponse);
@@ -127,18 +137,18 @@ describe('AuthService', () => {
 
       // eslint-disable-next-line @typescript-eslint/unbound-method
       expect(prismaMock.usuario.findUnique).toHaveBeenCalledWith({
-        where: { cpf: args.cpf },
+        where: { id: args.userId },
       });
 
       // eslint-disable-next-line @typescript-eslint/unbound-method
       expect(prismaMock.acesso.findUnique).toHaveBeenCalledWith({
-        where: { usuarioId: 'um-id' },
+        where: { usuarioId: args.userId },
       });
 
       // eslint-disable-next-line @typescript-eslint/unbound-method
       expect(prismaMock.acesso.update).toHaveBeenCalledWith({
-        where: { usuarioId: 'um-id' },
-        data: { senha: args.newPass },
+        where: { usuarioId: args.userId },
+        data: { senha: args.newPassword },
       });
     });
 
@@ -146,9 +156,7 @@ describe('AuthService', () => {
       const expectedResponse = 'Usuario não encontrado';
       prismaMock.usuario.findUnique.mockResolvedValue(null);
 
-      await expect(service.changePassword(args)).rejects.toThrow(
-        expectedResponse,
-      );
+      await expect(service.firstAccess(args)).rejects.toThrow(expectedResponse);
     });
 
     it('Reject: Deve rejeitar caso não prisma/acesso dê erro com jogando mensagem de erro', async () => {
@@ -156,9 +164,7 @@ describe('AuthService', () => {
       prismaMock.usuario.findUnique.mockResolvedValue({ id: 'um-id' } as any);
       prismaMock.acesso.update.mockRejectedValue(new Error(expectedResponse));
 
-      await expect(service.changePassword(args)).rejects.toThrow(
-        expectedResponse,
-      );
+      await expect(service.firstAccess(args)).rejects.toThrow(expectedResponse);
     });
   });
 });

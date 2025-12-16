@@ -3,12 +3,21 @@ import { RecordNotFoundError } from 'src/common/errors/record-not-found.error';
 import { UnauthorizedError } from 'src/common/errors/unauthorized.error';
 import { LoginAuthResponseDto } from 'src/common/dtos/auth/login.dto';
 import PrismaSingleton from 'src/singleton/prisma-singleton';
-import { UpdatePasswordAuthResponseDto } from 'src/common/dtos/auth/updatePassword.dto';
+import {
+  FirstAccessPasswordAuthDto,
+  FirstAccessPasswordAuthResponseDto,
+} from 'src/common/dtos/auth/firstAccess';
 import { JwtService } from '@nestjs/jwt';
+import ms from 'ms';
+import { ConfigService } from '@nestjs/config';
 
 @Injectable()
 export class AuthService {
-  constructor(private jwtService: JwtService) {}
+  constructor(
+    private jwtService: JwtService,
+    private configService: ConfigService,
+  ) {}
+
   #database = PrismaSingleton.instance.client;
 
   async login(payload: {
@@ -16,6 +25,9 @@ export class AuthService {
     password: string;
   }): Promise<LoginAuthResponseDto> {
     const { cpf, password } = payload;
+
+    const jwtExpireIn =
+      this.configService.getOrThrow<ms.StringValue>('JWT_EXPIRES_IN');
 
     const user = await this.#database.usuario.findUnique({
       where: { cpf },
@@ -52,21 +64,29 @@ export class AuthService {
     }
 
     const { ultimoLogin } = access;
-
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const { perfilFuncionalId, ...formatUser } = user;
+    const token = await this.jwtService.signAsync({ ...formatUser });
+    const expira_em_milisegundos = ms(jwtExpireIn);
+    const valido_ate_timestamp = Date.now() + expira_em_milisegundos;
 
-    return { user: { ...formatUser, ultimoLogin } };
+    return {
+      token: token,
+      tipo: 'Bearer',
+      expira_em_milisegundos: expira_em_milisegundos,
+      valido_ate_timestamp: valido_ate_timestamp,
+      usuario: formatUser,
+      ultimo_login: ultimoLogin,
+    };
   }
 
-  async changePassword(payload: {
-    cpf: string;
-    newPass: string;
-  }): Promise<UpdatePasswordAuthResponseDto> {
-    const { cpf, newPass } = payload;
+  async firstAccess(
+    payload: FirstAccessPasswordAuthDto,
+  ): Promise<FirstAccessPasswordAuthResponseDto> {
+    const { userId, newPassword } = payload;
 
     const user = await this.#database.usuario.findUnique({
-      where: { cpf },
+      where: { id: userId },
     });
 
     if (!user) {
@@ -83,7 +103,7 @@ export class AuthService {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     await this.#database.acesso.update({
       where: { usuarioId: user?.id },
-      data: { senha: newPass },
+      data: { senha: newPassword },
     });
 
     return { message: 'success' };
