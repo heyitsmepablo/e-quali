@@ -6,7 +6,7 @@ import PrismaSingleton from 'src/singleton/prisma-singleton';
 import {
   FirstAccessPasswordAuthDto,
   FirstAccessPasswordAuthResponseDto,
-} from 'src/common/dtos/auth/firstAccess';
+} from 'src/common/dtos/auth/firstAccess.dto';
 import { JwtService } from '@nestjs/jwt';
 import ms from 'ms';
 import { ConfigService } from '@nestjs/config';

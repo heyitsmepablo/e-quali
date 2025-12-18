@@ -7,7 +7,7 @@ import {
 import {
   FirstAccessPasswordAuthDto,
   FirstAccessPasswordAuthResponseDto,
-} from '../../common/dtos/auth/firstAccess';
+} from '../../common/dtos/auth/firstAccess.dto';
 
 @Controller('auth')
 export class AuthController {
@@ -27,6 +27,7 @@ export class AuthController {
 
   /** Mudar Senha  */
   @Post('/login/firstAccess')
+  @HttpCode(HttpStatus.OK)
   async firstAccess(
     @Body() payload: FirstAccessPasswordAuthDto,
   ): Promise<FirstAccessPasswordAuthResponseDto> {

@@ -31,10 +31,10 @@ export class Login {
 
       console.log(loginRes);
 
-      const { user } = loginRes;
+      const { ultimo_login } = loginRes;
 
-      if (!user.ultimoLogin) {
-        localStorage.setItem('user', JSON.stringify(user, null, 2));
+      if (!ultimo_login) {
+        localStorage.setItem('user', JSON.stringify(loginRes.usuario, null, 2));
         this.route.navigate(['/', 'reset-password']);
       }
 

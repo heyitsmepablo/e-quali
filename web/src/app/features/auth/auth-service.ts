@@ -26,4 +26,24 @@ export class AuthService {
       throw { status: 500, error };
     }
   }
+
+  async firstAccess(
+    body: paths['/auth/login/firstAccess']['post']['requestBody']['content']['application/json']
+  ): Promise<
+    paths['/auth/login/firstAccess']['post']['responses']['200']['content']['application/json']
+  > {
+    try {
+      const res = await this.http.instance.post('/auth/login/firstAccess', body);
+      return res.data;
+    } catch (error: any) {
+      if (this.http.isAxiosError(error)) {
+        throw {
+          status: error.status,
+          code: error.response?.data?.code,
+          message: error.response?.data?.message,
+        };
+      }
+      throw { status: 500, error };
+    }
+  }
 }

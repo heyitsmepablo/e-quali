@@ -3,7 +3,7 @@ import { AuthController } from './auth.controller';
 import { LoginAuthDto } from 'src/common/dtos/auth/login.dto';
 import { AuthService } from 'src/service/auth/auth.service';
 import { authServiceMock } from 'src/__mock__/service/auth.service';
-import { FirstAccessPasswordAuthDto } from '../../common/dtos/auth/firstAccess';
+import { FirstAccessPasswordAuthDto } from '../../common/dtos/auth/firstAccess.dto';
 
 describe('AuthController', () => {
   let controller: AuthController;

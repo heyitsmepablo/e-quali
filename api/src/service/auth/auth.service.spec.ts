@@ -8,7 +8,7 @@ import { JwtService } from '@nestjs/jwt';
 import { jwtServiceMock } from 'src/__mock__/service/jwt.service';
 import { configServiceMock } from 'src/__mock__/service/utils.service';
 import { ConfigService } from '@nestjs/config';
-import { FirstAccessPasswordAuthDto } from 'src/common/dtos/auth/firstAccess';
+import { FirstAccessPasswordAuthDto } from 'src/common/dtos/auth/firstAccess.dto';
 
 describe('AuthService', () => {
   let service: AuthService;

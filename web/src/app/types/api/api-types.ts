@@ -37,7 +37,7 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/auth/update/password": {
+    "/auth/login/firstAccess": {
         parameters: {
             query?: never;
             header?: never;
@@ -47,7 +47,7 @@ export interface paths {
         get?: never;
         put?: never;
         /** Mudar Senha */
-        post: operations["AuthController_updatePassword"];
+        post: operations["AuthController_firstAccess"];
         delete?: never;
         options?: never;
         head?: never;
@@ -63,7 +63,11 @@ export interface components {
             senha: string;
         };
         LoginAuthResponseDto: {
-            user: {
+            token: string;
+            tipo: string;
+            expira_em_milisegundos: number;
+            valido_ate_timestamp: number;
+            usuario: {
                 cpf: string;
                 id: string;
                 matricula: string;
@@ -89,15 +93,15 @@ export interface components {
                         sigla?: string | null;
                     };
                 };
-                /** Format: date-time */
-                ultimoLogin: string | null;
             };
+            /** Format: date-time */
+            ultimo_login: string | null;
         };
-        UpdatePasswordAuthDto: {
-            cpf: string;
+        FirstAccessPasswordAuthDto: {
+            userId: string;
             newPassword: string;
         };
-        UpdatePasswordAuthResponseDto: {
+        FirstAccessPasswordAuthResponseDto: {
             message: string;
         };
     };
@@ -151,7 +155,7 @@ export interface operations {
             };
         };
     };
-    AuthController_updatePassword: {
+    AuthController_firstAccess: {
         parameters: {
             query?: never;
             header?: never;
@@ -160,16 +164,16 @@ export interface operations {
         };
         requestBody: {
             content: {
-                "application/json": components["schemas"]["UpdatePasswordAuthDto"];
+                "application/json": components["schemas"]["FirstAccessPasswordAuthDto"];
             };
         };
         responses: {
-            201: {
+            200: {
                 headers: {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["UpdatePasswordAuthResponseDto"];
+                    "application/json": components["schemas"]["FirstAccessPasswordAuthResponseDto"];
                 };
             };
         };
