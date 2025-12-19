@@ -1,4 +1,4 @@
 export const authServiceMock = {
   login: jest.fn(),
-  changePassword: jest.fn(),
+  firstAccess: jest.fn(),
 };

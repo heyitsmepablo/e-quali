@@ -1,1 +1,13 @@
-<p></p>
+<h1>Bem vindo {{ (user?.nome?.split(' ') ?? [''])[0] }} a futura pagina do app</h1>
+
+<h2>Segue seu perfil completo</h2>
+<p>Nome: {{ user?.nome }}</p>
+<p>CPF: {{ user?.cpf }}</p>
+<p>Matricula: {{ user?.matricula }}</p>
+<p>Email {{ user?.email }}</p>
+<p>Sua unidade é: {{ unidade }}</p>
+<p>Seu setor é: {{ setor }}</p>
+@if(area){
+<p>Pertencente a: {{ area }}</p>
+}
+<p>Seu cargo é :{{ cargo }}</p>

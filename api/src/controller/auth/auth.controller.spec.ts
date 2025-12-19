@@ -44,16 +44,14 @@ describe('AuthController', () => {
     const requestPayload = new FirstAccessPasswordAuthDto();
     it('Resolve: Deve resolver com sucesso retornando mensagem', async () => {
       const expectResponse = { message: 'success' };
-      authServiceMock.changePassword.mockResolvedValue(expectResponse);
+      authServiceMock.firstAccess.mockResolvedValue(expectResponse);
       await expect(controller.firstAccess(requestPayload)).resolves.toEqual(
         expectResponse,
       );
     });
     it('Reject: Deve rejeitar ao authService dar erro, jogando mensagem', async () => {
       const expectResponse = 'uma mensagem de erro';
-      authServiceMock.changePassword.mockRejectedValue(
-        new Error(expectResponse),
-      );
+      authServiceMock.firstAccess.mockRejectedValue(new Error(expectResponse));
       await expect(
         controller.firstAccess(requestPayload),
       ).rejects.toBeInstanceOf(Error);
