@@ -6,7 +6,10 @@
   >
   <app-login-banner class="max-sm:hidden w-full"></app-login-banner>
   <div class="form-container">
-    <app-login-form (loginSubmit)="loginRequestHandler($event)"></app-login-form>
+    <app-login-form
+      (loginSubmit)="loginRequestHandler($event)"
+      [isLoading]="loading"
+    ></app-login-form>
   </div>
   <p-toast></p-toast>
 </div>

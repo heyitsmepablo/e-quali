@@ -1,10 +1,10 @@
-import { Component, output, signal, Signal } from '@angular/core';
+import { Component, input, output, signal, Signal } from '@angular/core';
 import { TextField } from '../../../../shared/components/inputs/text-field/text-field';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-
+import { ProgressSpinnerModule } from 'primeng/progressspinner';
 @Component({
   selector: 'app-login-form',
-  imports: [TextField, ReactiveFormsModule],
+  imports: [TextField, ReactiveFormsModule, ProgressSpinnerModule],
   templateUrl: './login-form.html',
   styleUrl: './login-form.css',
 })
@@ -12,6 +12,7 @@ export class LoginForm {
   loginForm!: FormGroup;
   submitted = signal(false);
   loginSubmit = output<any>();
+  isLoading = input<boolean>(false);
 
   constructor(private formBuilder: FormBuilder) {
     this.loginForm = this.formBuilder.group({

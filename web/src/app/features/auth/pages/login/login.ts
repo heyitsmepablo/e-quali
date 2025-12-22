@@ -15,7 +15,7 @@ import { Router } from '@angular/router';
 })
 export class Login {
   loginForm!: FormGroup;
-
+  loading = false;
   constructor(
     private authService: AuthService,
     private messageService: MessageService,
@@ -24,6 +24,7 @@ export class Login {
 
   async loginRequestHandler(formValues: any) {
     try {
+      this.loading = !this.loading;
       const loginRes = await this.authService.login({
         cpf: formValues?.cpf,
         senha: formValues?.password,
@@ -40,6 +41,7 @@ export class Login {
 
       return 'Futuro Redirect pro APP';
     } catch (error: any) {
+      this.loading = !this.loading;
       this.messageService.clear();
       this.messageService.add({
         severity: 'error',
