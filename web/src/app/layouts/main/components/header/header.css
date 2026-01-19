@@ -1,0 +1,5 @@
+@reference '../../../../../styles.css';
+
+.header-wrapper {
+  @apply block w-full h-16 border border-red-500;
+}

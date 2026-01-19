@@ -1,2 +1,5 @@
+@reference '../../../../../styles.css';
+
 .icons-wrapper {
+  @apply flex items-center gap-4;
 }

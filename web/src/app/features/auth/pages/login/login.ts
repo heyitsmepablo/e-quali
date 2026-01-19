@@ -30,8 +30,6 @@ export class Login {
         senha: formValues?.password,
       });
 
-      console.log(loginRes);
-
       const { ultimo_login } = loginRes;
 
       if (!ultimo_login) {

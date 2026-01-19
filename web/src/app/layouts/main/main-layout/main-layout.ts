@@ -1,9 +1,10 @@
 import { Component } from '@angular/core';
 import { UserPayloadStorage } from '../../../shared/types/user.type';
+import { Header } from '../components/header/header';
 
 @Component({
   selector: 'app-main-layout',
-  imports: [],
+  imports: [Header],
   templateUrl: './main-layout.html',
   styleUrl: './main-layout.css',
 })
