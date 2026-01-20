@@ -1,6 +1,41 @@
 <div class="nav-wrapper">
   <div class="items-wrapper">
     <app-dashboard-subheader title="geral"></app-dashboard-subheader>
-    <div class="accordion-item-wrapper"></div>
+    <div class="accordion-item-wrapper">
+      <button
+        class="flex w-full justify-between border items-center pl-4 pr-3 focus:outline-none cursor-pointer"
+        (click)="toggle()"
+      >
+        <span>Usuario</span>
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke-width="1.5"
+          stroke="currentColor"
+          class="w-5 h-5 transition-transform duration-300 -rotate-90"
+          [class.-rotate-90]="!isOpen()"
+        >
+          <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
+        </svg>
+      </button>
+      <div
+        class="grid transition-[grid-template-rows] duration-300 ease-in-out"
+        [class.grid-rows-[0fr]]="!isOpen()"
+        [class.grid-rows-[1fr]]="isOpen()"
+      >
+        <div class="overflow-hidden pl-3">
+          <ul class="ml-6 my-2 border-l border-dashed border-gray-300 space-y-1">
+            <li>
+              <a
+                class="relative flex items-center py-2 pl-4 cursor-pointer text-gray-800 font-medium /* A BOLINHA (Configuração Base) */ before:absolute before:top-1/2 before:-translate-y-1/2 before:left-0 before:-translate-x-1/2 before:content-[''] before:rounded-full before:transition-all before:duration-300 /* TAMANHO E COR (Ativo) */ before:w-3 before:h-3 before:bg-green-600"
+              >
+                <span>Analytics</span>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
   </div>
 </div>

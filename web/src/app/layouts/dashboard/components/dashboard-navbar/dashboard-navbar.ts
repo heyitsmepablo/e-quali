@@ -1,9 +1,10 @@
 import { Component, signal } from '@angular/core';
 import { DashboardSubheader } from '../dashboard-subheader/dashboard-subheader';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-dashboard-navbar',
-  imports: [DashboardSubheader],
+  imports: [DashboardSubheader, CommonModule],
   templateUrl: './dashboard-navbar.html',
   styleUrl: './dashboard-navbar.css',
 })
