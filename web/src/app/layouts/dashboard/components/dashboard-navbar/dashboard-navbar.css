@@ -1,7 +1,7 @@
 @reference '../../../../../styles.css';
 
 .nav-wrapper {
-  @apply flex flex-col h-full w-72 border-4;
+  @apply flex flex-col h-full w-72  bg-background-default;
 }
 
 .items-wrapper {

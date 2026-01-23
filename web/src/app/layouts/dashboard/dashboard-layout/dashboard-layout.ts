@@ -8,4 +8,10 @@ import { DashboardNavbar } from '../components/dashboard-navbar/dashboard-navbar
   templateUrl: './dashboard-layout.html',
   styleUrl: './dashboard-layout.css',
 })
-export class DashboardLayout {}
+export class DashboardLayout {
+  navbarOpened = false;
+
+  navbarToggle() {
+    this.navbarOpened = !this.navbarOpened;
+  }
+}

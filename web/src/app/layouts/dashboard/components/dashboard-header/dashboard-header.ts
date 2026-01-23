@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, output } from '@angular/core';
 import { IconMenu } from '../../../../shared/icons/icon-menu/icon-menu';
 import { IconSearch } from '../../../../shared/icons/icon-search/icon-search';
 import { IconBell } from '../../../../shared/icons/icon-bell/icon-bell';
@@ -9,4 +9,10 @@ import { Bagde } from '../../../../shared/components/bagde/bagde';
   templateUrl: './dashboard-header.html',
   styleUrl: './dashboard-header.css',
 })
-export class DashboardHeader {}
+export class DashboardHeader {
+  menuClickEvent = output<boolean>();
+
+  emitMenuClick() {
+    this.menuClickEvent.emit(true);
+  }
+}
