@@ -1,6 +1,12 @@
-<span class="flex w-full justify-between h-16 py-3 px-4 border-4 border-blue-500">
+<header
+  class="flex w-full justify-between h-16 py-3 px-4 fixed inste-y-0 lg:pr-80 trasition-transparent duration-300 z-20"
+  [ngClass]="{
+    'bg-grey-100/70 backdrop-blur-sm shadow-sm': isScrolled(),
+    'bg-transparent backdrop-blur-none': !isScrolled(),
+  }"
+>
   <span class="icons-wrapper">
-    <button (click)="emmitMenuClick()">
+    <button (click)="emitMenuClick()" class="lg:hidden">
       <app-icon-menu class="fill-action-active"></app-icon-menu>
     </button>
     <app-icon-search class="fill-action-active"></app-icon-search>
@@ -11,4 +17,4 @@
       <app-bagde class="absolute bottom-3.5 left-3"></app-bagde>
     </div>
   </span>
-</span>
+</header>
