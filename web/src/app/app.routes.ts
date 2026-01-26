@@ -13,12 +13,16 @@ export const routes: Routes = [
     path: '',
     component: DashboardLayout,
     children: [
-      { path: '', component: Home, data: { breadcrumb: 'Dashboard' } },
+      { path: '', component: Home, data: { breadcrumb: { label: 'Dashboard' } } },
       {
         path: 'usuario',
-        data: { breadcrumb: 'Usuário' },
+        data: { breadcrumb: { label: 'Usuário', isGroup: true } },
         children: [
-          { path: 'solicitacao', component: UserRequest, data: { breadcrumb: 'Solicitação' } },
+          {
+            path: 'solicitacao',
+            component: UserRequest,
+            data: { breadcrumb: { label: 'Solicitação' } },
+          },
         ],
       },
     ],

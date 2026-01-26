@@ -1,3 +1,4 @@
+import { CommonModule } from '@angular/common';
 import { Component, DestroyRef, inject, OnInit, signal } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ActivatedRoute, NavigationEnd, Router, RouterLink } from '@angular/router';
@@ -6,19 +7,17 @@ import { filter } from 'rxjs';
 export interface BreadcrumbItem {
   label: string;
   url: string;
+  isGroup?: boolean;
 }
 
 @Component({
   selector: 'app-breadcrumb',
-  imports: [RouterLink],
+  imports: [RouterLink, CommonModule],
   templateUrl: './breadcrumb.html',
   styleUrl: './breadcrumb.css',
 })
 export class Breadcrumb implements OnInit {
   breadcrumbs = signal<BreadcrumbItem[]>([]);
-
-  // O último item da lista geralmente é o título da página
-  pageTitle = signal<string>('');
 
   private router = inject(Router);
   private activatedRoute = inject(ActivatedRoute);
@@ -36,7 +35,6 @@ export class Breadcrumb implements OnInit {
       )
       .subscribe(() => {
         // Reseta para garantir que o array comece limpo a cada navegação
-        this.pageTitle.set('');
         this.breadcrumbs.set([]);
 
         this.createBreadcrumbs(this.activatedRoute.root);
@@ -51,24 +49,26 @@ export class Breadcrumb implements OnInit {
 
     if (children.length === 0) {
       this.breadcrumbs.set(breadcrumbs);
-      if (breadcrumbs.length > 0) {
-        this.pageTitle.set(breadcrumbs[breadcrumbs.length - 1].label);
-      }
+
       return;
     }
 
     for (const child of children) {
       const routeURL: string = child.snapshot.url.map((segment) => segment.path).join('/');
-
       if (routeURL !== '') {
         url += `/${routeURL}`;
       }
 
-      // IMPORTANTE: Verifica se existe 'data: { breadcrumb: ... }' na rota
-      const label = child.snapshot.data['breadcrumb'];
+      const breadcrumbData = child.snapshot.data['breadcrumb'];
 
-      if (label) {
-        breadcrumbs.push({ label, url });
+      // 2. Verificamos se o objeto existe e se tem um label
+      if (breadcrumbData && breadcrumbData.label) {
+        breadcrumbs.push({
+          label: breadcrumbData.label,
+          url: url,
+          // 3. Extraímos o isGroup do objeto (ou false se não existir)
+          isGroup: breadcrumbData.isGroup ?? false,
+        });
       }
 
       // Passa o array atualizado para o próximo nível

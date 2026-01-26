@@ -1,21 +1,23 @@
-<div class="flex flex-col gap-2 mb-6 border">
+<div class="flex flex-col border">
   <nav class="flex items-center text-sm text-gray-500">
-    <ol class="flex items-center gap-2">
+    <ol class="flex items-center gap-4">
       @for (crumb of breadcrumbs(); track crumb.url; let last = $last) {
-        <li class="flex items-center gap-2">
+        <li class="flex items-center gap-4">
           @if (last) {
-            <span class="text-gray-400 cursor-default">
+            <span class="text-text-disabled cursor-default">
               {{ crumb.label }}
             </span>
           } @else {
             <a
-              [routerLink]="crumb.url"
-              class="hover:text-primary-main hover:underline transition-colors"
+              [routerLink]="crumb.isGroup ? null : crumb.url"
+              class="text-text-primary text-sm leading-6 font-normal hover:text-primary-main hover:underline transition-colors"
             >
               {{ crumb.label }}
             </a>
 
-            <span class="w-1 h-1 rounded-full bg-gray-300 mx-1"></span>
+            <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <circle cx="12" cy="12" class="fill-[#637381]" r="2" />
+            </svg>
           }
         </li>
       }

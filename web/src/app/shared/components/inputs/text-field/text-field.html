@@ -1,4 +1,8 @@
 <label [for]="id()" class="text-field" [attr.variant]="variant()" [class.disabled]="disabled">
+  <div class="pr-2 fill-action-active">
+    <ng-content></ng-content>
+  </div>
+
   <input
     [type]="innerType()"
     [id]="id()"
@@ -12,12 +16,13 @@
     [dropSpecialCharacters]="dropSpecialCharacters()"
     [specialCharacters]="specialCharacters()"
   />
-  @if(hasLabel()){
-  <span class="label-text">{{ label() }}</span>
+  @if (hasLabel()) {
+    <span class="label-text">{{ label() }}</span>
   }
+
   <button class="button" type="button" (click)="showPass()">
-    @if(showPasswordToggle()){
-    <app-icon-eye class="icon-eye" [on]="eyeOn"></app-icon-eye>
+    @if (showPasswordToggle()) {
+      <app-icon-eye class="icon-eye" [on]="eyeOn"></app-icon-eye>
     }
   </button>
 </label>

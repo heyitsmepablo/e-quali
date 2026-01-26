@@ -1,0 +1,106 @@
+<div class="w-full bg-background-paper rounded-2xl shadow-card overflow-hidden items-start">
+  <div class="w-full h-full flex flex-col items-center justify-between">
+    <ng-content select="[toolbar]"></ng-content>
+  </div>
+
+  <div class="overflow-x-auto">
+    <table class="w-full min-w-[800px]">
+      <thead class="bg-background-neutral">
+        <tr>
+          <th class="py-3 px-4 w-12 text-left">
+            <input
+              type="checkbox"
+              class="rounded text-primary-main focus:ring-primary-main"
+              [checked]="allSelected()"
+              (change)="toggleAll($event)"
+            />
+          </th>
+          @for (col of columns; track col.label) {
+            <th
+              class="py-3 px-4 text-sm font-semibold text-text-secundary leading-6 normal-case"
+              [ngClass]="col.class || 'text-left'"
+            >
+              {{ col.label }}
+            </th>
+          }
+        </tr>
+      </thead>
+
+      <tbody>
+        @for (item of paginatedData(); track item) {
+          <tr
+            class="hover:bg-gray-50/50 transition-colors"
+            [class.bg-primary-main-8]="item['selected']"
+          >
+            <td class="py-3 px-4">
+              <!-- <input
+                type="checkbox"
+                class="rounded text-primary-main focus:ring-primary-main"
+                [checked]="item['selected']"
+                (change)="toggleOne(item)"
+              /> -->
+              <app-checkbox></app-checkbox>
+            </td>
+            <ng-container
+              [ngTemplateOutlet]="rowTemplate"
+              [ngTemplateOutletContext]="{ $implicit: item }"
+            ></ng-container>
+          </tr>
+        }
+        @if (paginatedData().length === 0) {
+          <tr>
+            <td [attr.colspan]="columns.length + 1" class="py-8 text-center text-gray-500">
+              Nenhum dado encontrado.
+            </td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  </div>
+
+  <div class="border-t border-grey-200 py-3 pr-2 pl-6 flex items-center justify-end gap-4 sm:gap-6">
+    <div class="flex items-center gap-2 text-sm text-gray-600">
+      <span>Rows per page:</span>
+      <select
+        class="bg-transparent font-medium focus:outline-none cursor-pointer"
+        [ngModel]="pageSize()"
+        (ngModelChange)="changePageSize($event)"
+      >
+        <option [value]="5">5</option>
+        <option [value]="10">10</option>
+        <option [value]="25">25</option>
+      </select>
+    </div>
+
+    <span class="text-sm text-gray-600">
+      {{ startIndex() + 1 }}-{{ endIndex() }} of {{ totalItems() }}
+    </span>
+
+    <div class="flex items-center gap-1">
+      <button
+        class="p-1 rounded-full hover:bg-gray-100 disabled:opacity-30 disabled:cursor-not-allowed text-gray-500"
+        [disabled]="currentPage() === 1"
+        (click)="prevPage()"
+      >
+        <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M15 19l-7-7 7-7"
+          />
+        </svg>
+      </button>
+
+      <button
+        class="p-1 rounded-full hover:bg-gray-100 disabled:opacity-30 disabled:cursor-not-allowed text-gray-500"
+        [disabled]="endIndex() === totalItems()"
+        (click)="nextPage()"
+      >
+        <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+        </svg>
+      </button>
+    </div>
+  </div>
+</div>
