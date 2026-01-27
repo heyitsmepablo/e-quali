@@ -10,11 +10,12 @@ import {
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { Checkbox } from '../inputs/checkbox/checkbox';
+import { Checkbox } from '../inputs/checkbox/checkbox'; // Verifique o caminho
+
 export interface TableColumn {
   label: string;
   sortable?: boolean;
-  class?: string; // Para alinhar texto (text-right, text-center) ou definir largura
+  class?: string;
 }
 
 @Component({
@@ -26,13 +27,15 @@ export interface TableColumn {
 export class Table {
   @Input({ required: true }) columns: TableColumn[] = [];
 
-  // O set é interceptado para resetar a página quando os dados mudam (ex: busca)
   @Input({ required: true }) set data(value: any[]) {
+    // Ao receber novos dados, preservamos a seleção se os objetos forem os mesmos,
+    // ou resetamos se preferir. Aqui estou resetando a paginação.
     this._data.set(value);
-    this.currentPage.set(1); // Resetar para página 1 se filtrar
+    this.currentPage.set(1);
   }
-
-  // Signal privado para os dados brutos
+  id = input<string>(`table-${Math.random().toString(36).substr(2, 9)}`);
+  selectionMode = input<'checkbox' | 'none'>('none');
+  selectionChange = output<any[]>();
   _data = signal<any[]>([]);
 
   @ContentChild(TemplateRef) rowTemplate!: TemplateRef<any>;
@@ -42,21 +45,17 @@ export class Table {
   currentPage = signal(1);
   pageSize = signal(5);
 
-  // Computed: Total de itens
   totalItems = computed(() => this._data().length);
 
-  // Computed: Fatia os dados para mostrar só a página atual
   paginatedData = computed(() => {
     const start = (this.currentPage() - 1) * this.pageSize();
     const end = start + this.pageSize();
     return this._data().slice(start, end);
   });
 
-  // Auxiliares para mostrar "1-5 of 10"
   startIndex = computed(() => (this.currentPage() - 1) * this.pageSize());
   endIndex = computed(() => Math.min(this.startIndex() + this.pageSize(), this.totalItems()));
 
-  // Ações de Paginação
   nextPage() {
     if (this.endIndex() < this.totalItems()) {
       this.currentPage.update((p) => p + 1);
@@ -74,17 +73,42 @@ export class Table {
     this.currentPage.set(1);
   }
 
-  // --- LÓGICA EXISTENTE ---
-  allSelected = computed(() => this._data().length > 0 && this._data().every((u) => u.selected));
+  // --- LÓGICA DE SELEÇÃO (CHECKBOX) ---
 
-  toggleAll(event: any) {
-    const isChecked = event.target.checked;
+  // 1. Todos estão selecionados?
+  allSelected = computed(() => {
+    const data = this._data();
+    return data.length > 0 && data.every((u) => u.selected);
+  });
+
+  // 2. Estado Indeterminado (Alguns selecionados, mas não todos)
+  indeterminate = computed(() => {
+    const data = this._data();
+    const count = data.filter((u) => u.selected).length;
+    return count > 0 && count < data.length;
+  });
+
+  toggleAll(isChecked: boolean) {
+    // Atualiza os dados
     this._data.update((items) => items.map((i) => ({ ...i, selected: isChecked })));
+
+    // Avisa o pai
+    this.emitSelection();
   }
 
-  toggleOne(item: any) {
+  toggleOne(item: any, isChecked: boolean) {
+    // Atualiza os dados
     this._data.update((items) =>
-      items.map((i) => (i === item ? { ...i, selected: !i.selected } : i)),
+      items.map((i) => (i === item ? { ...i, selected: isChecked } : i)),
     );
+
+    // Avisa o pai
+    this.emitSelection();
+  }
+
+  // Método auxiliar privado para filtrar e emitir
+  private emitSelection() {
+    const selectedItems = this._data().filter((item) => item.selected);
+    this.selectionChange.emit(selectedItems);
   }
 }

@@ -8,16 +8,19 @@
       <thead class="bg-background-neutral">
         <tr>
           <th class="py-3 px-4 w-12 text-left">
-            <input
-              type="checkbox"
-              class="rounded text-primary-main focus:ring-primary-main"
-              [checked]="allSelected()"
-              (change)="toggleAll($event)"
-            />
+            <app-checkbox
+              [binary]="true"
+              [ngModel]="allSelected()"
+              [indeterminate]="indeterminate()"
+              (ngModelChange)="toggleAll($event)"
+              [hidden]="selectionMode() === 'none'"
+              inputId="checkAllTable"
+            ></app-checkbox>
           </th>
+
           @for (col of columns; track col.label) {
             <th
-              class="py-3 px-4 text-sm font-semibold text-text-secundary leading-6 normal-case"
+              class="py-3 px-4 text-sm font-semibold text-text-secondary leading-6 normal-case"
               [ngClass]="col.class || 'text-left'"
             >
               {{ col.label }}
@@ -33,14 +36,15 @@
             [class.bg-primary-main-8]="item['selected']"
           >
             <td class="py-3 px-4">
-              <!-- <input
-                type="checkbox"
-                class="rounded text-primary-main focus:ring-primary-main"
-                [checked]="item['selected']"
-                (change)="toggleOne(item)"
-              /> -->
-              <app-checkbox></app-checkbox>
+              <app-checkbox
+                [binary]="true"
+                [ngModel]="item['selected']"
+                (ngModelChange)="toggleOne(item, $event)"
+                [hidden]="selectionMode() === 'none'"
+                [inputId]="id() + '-row-' + item.id"
+              ></app-checkbox>
             </td>
+
             <ng-container
               [ngTemplateOutlet]="rowTemplate"
               [ngTemplateOutletContext]="{ $implicit: item }"

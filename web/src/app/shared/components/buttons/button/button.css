@@ -27,8 +27,8 @@ button[variant='contained'] {
   &[color='primary'] {
     @apply bg-primary-main text-text-contrast hover:bg-primary-dark hover:shadow-primary;
   }
-  &[color='secundary'] {
-    @apply bg-secundary-main text-text-contrast hover:bg-secundary-dark hover:shadow-secundary;
+  &[color='secondary'] {
+    @apply bg-secondary-main text-text-contrast hover:bg-secondary-dark hover:shadow-secondary;
   }
   &[color='info'] {
     @apply bg-info-main text-text-contrast hover:bg-info-dark hover:shadow-info;
@@ -55,8 +55,8 @@ button[variant='outlined'] {
   &[color='primary'] {
     @apply border-primary-main/48 text-primary-main hover:bg-primary-main/8 hover:border-primary-main;
   }
-  &[color='secundary'] {
-    @apply border-secundary-main/48 text-secundary-main hover:bg-secundary-main/8 hover:border-secundary-main;
+  &[color='secondary'] {
+    @apply border-secondary-main/48 text-secondary-main hover:bg-secondary-main/8 hover:border-secondary-main;
   }
   &[color='info'] {
     @apply border-info-main/48 text-info-main hover:bg-info-main/8 hover:border-info-main;
@@ -83,8 +83,8 @@ button[variant='text'] {
   &[color='primary'] {
     @apply text-primary-main hover:bg-primary-main/8;
   }
-  &[color='secundary'] {
-    @apply text-secundary-main hover:bg-secundary-main/8;
+  &[color='secondary'] {
+    @apply text-secondary-main hover:bg-secondary-main/8;
   }
   &[color='info'] {
     @apply text-info-main hover:bg-info-main/8;
@@ -110,8 +110,8 @@ button[variant='soft'] {
   &[color='primary'] {
     @apply bg-primary-main/16 text-primary-dark hover:bg-primary-main/32;
   }
-  &[color='secundary'] {
-    @apply bg-secundary-main/16 text-secundary-dark hover:bg-secundary-main/32;
+  &[color='secondary'] {
+    @apply bg-secondary-main/16 text-secondary-dark hover:bg-secondary-main/32;
   }
   &[color='info'] {
     @apply bg-info-main/16 text-info-dark hover:bg-info-main/32;

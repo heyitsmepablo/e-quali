@@ -1,16 +1,35 @@
-<label class="inline-flex items-center cursor-pointer">
-  <input type="checkbox" class="peer hidden" />
-
+<label class="relative z-0 inline-flex group items-center cursor-pointer p-2">
+  <input
+    type="checkbox"
+    class="peer hidden"
+    [id]="inputId()"
+    [name]="name()"
+    [disabled]="disabled()"
+    [checked]="checked()"
+    (change)="onInputChange($event)"
+    (blur)="onTouched()"
+  />
   <div
-    class="w-5 h-5 border-2 border-action-active rounded-md bg-white flex justify-center items-center transition-all duration-200 /* CORES QUANDO MARCADO (Aqui é onde a mágica acontece) */ peer-checked:bg-action-active"
+    [attr.size]="size()"
+    [attr.color]="color()"
+    [attr.indeterminate]="indeterminate()"
+    [attr.disabled]="disabled()"
+    class="w-5 h-5 border-2 border-action-active rounded-md bg-white flex justify-center items-center transition-all duration-200 text-white group-has-checked:bg-action-active halo"
   >
-    <svg class="w-full h-full" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <path
-        fill-rule="evenodd"
-        clip-rule="evenodd"
-        d="M7 2C4.23858 2 2 4.23858 2 7V17C2 19.7614 4.23858 22 7 22H17C19.7614 22 22 19.7614 22 17V7C22 4.23858 19.7614 2 17 2H7ZM11.865 15.245L16.615 10.495C16.955 10.155 16.955 9.605 16.615 9.255C16.275 8.915 15.715 8.915 15.375 9.255L11.245 13.385L9.495 11.635C9.155 11.295 8.595 11.295 8.255 11.635C7.915 11.975 7.915 12.525 8.255 12.875L10.635 15.245C10.805 15.415 11.025 15.495 11.245 15.495C11.475 15.495 11.695 15.415 11.865 15.245Z"
-        fill="#637381"
-      />
+    <svg
+      class="w-3.5 h-3.5 opacity-0 transition-opacity scale-50 duration-200 group-has-checked:opacity-100 group-has-checked:scale-100"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="4"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+    >
+      @if (indeterminate()) {
+        <line x1="5" y1="12" x2="19" y2="12"></line>
+      } @else {
+        <polyline points="20 6 9 17 4 12"></polyline>
+      }
     </svg>
   </div>
 </label>

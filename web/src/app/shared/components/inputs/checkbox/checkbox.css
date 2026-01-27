@@ -1,0 +1,52 @@
+@reference '../../../../../styles.css';
+
+[size='s'] {
+  @apply w-4 h-4;
+}
+
+[color='primary'] {
+  @apply group-has-checked:bg-primary-main group-has-checked:border-primary-main;
+  &.halo {
+    @apply group-hover:before:bg-primary-main/8;
+  }
+}
+
+[color='secondary'] {
+  @apply group-has-checked:bg-secondary-main group-has-checked:border-secondary-main;
+  &.halo {
+    @apply group-hover:before:bg-secondary-main/8;
+  }
+}
+
+[color='info'] {
+  @apply group-has-checked:bg-info-main group-has-checked:border-info-main;
+  &.halo {
+    @apply group-hover:before:bg-info-main/8;
+  }
+}
+[color='success'] {
+  @apply group-has-checked:bg-success-main group-has-checked:border-success-main;
+  &.halo {
+    @apply group-hover:before:bg-success-main/8;
+  }
+}
+[color='warning'] {
+  @apply group-has-checked:bg-warning-main group-has-checked:border-warning-main;
+  &.halo {
+    @apply group-hover:before:bg-warning-main/8;
+  }
+}
+[color='error'] {
+  @apply group-has-checked:bg-error-main group-has-checked:border-error-main;
+  &.halo {
+    @apply group-hover:before:bg-error-main/8;
+  }
+}
+[disabled='true'] {
+  &[color='default'] {
+    @apply group-has-checked:bg-action-disabled border-action-disabled group-has-checked:border-action-disabled/12 cursor-default group-hover:before:bg-transparent;
+  }
+}
+.halo {
+  @apply before:w-full before:h-full before:absolute before:bg-transparent before:-z-10 before:rounded-full before:transition-colors before:duration-200 group-hover:before:bg-action-hover before:inset-0;
+}

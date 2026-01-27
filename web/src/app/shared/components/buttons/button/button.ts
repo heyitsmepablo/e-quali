@@ -12,8 +12,8 @@ export class Button {
   variant: InputSignal<'contained' | 'outlined' | 'text' | 'soft'> = input<
     'contained' | 'outlined' | 'text' | 'soft'
   >('contained');
-  color: InputSignal<'inherit' | 'primary' | 'secundary' | 'info' | 'warning' | 'error'> = input<
-    'inherit' | 'primary' | 'secundary' | 'info' | 'warning' | 'error'
+  color: InputSignal<'inherit' | 'primary' | 'secondary' | 'info' | 'warning' | 'error'> = input<
+    'inherit' | 'primary' | 'secondary' | 'info' | 'warning' | 'error'
   >('primary');
   size: InputSignal<'lg' | 'md' | 'sm'> = input<'lg' | 'md' | 'sm'>('md');
   disabled: InputSignal<boolean> = input<boolean>(false);
