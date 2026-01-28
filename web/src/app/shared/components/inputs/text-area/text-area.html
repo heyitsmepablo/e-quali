@@ -1,0 +1,20 @@
+<label [for]="id()" class="text-area" [attr.variant]="variant()" [class.disabled]="disabled">
+  <div class="pr-2 fill-action-active">
+    <ng-content></ng-content>
+  </div>
+
+  <textarea
+    [id]="id()"
+    [placeholder]="placeholder()"
+    [(ngModel)]="innerValue"
+    (ngModelChange)="updateValue($event)"
+    (blur)="onBlur()"
+    [disabled]="disabled"
+    [name]="name()"
+    class="peer"
+  ></textarea>
+
+  @if (hasLabel()) {
+    <span class="label-text">{{ label() }}</span>
+  }
+</label>

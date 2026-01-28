@@ -92,21 +92,21 @@
   --shadow-success: 0 8px 16px 0 rgba(54, 179, 126, 0.24);
   --shadow-warning: 0 8px 16px 0 rgba(255, 171, 0, 0.24);
   --shadow-error: 0 8px 16px 0 rgba(255, 86, 48, 0.24);
-
+  --shadow-box: 0 0 2px 0 rgba(145, 158, 171, 0.2), 0 12px 24px -4px rgba(145, 158, 171, 0.12);
   --color-input-outlined: rgba(145, 158, 171, 0.32);
   --color-button-outlined: rgba(145, 158, 171, 0.32);
   /* Color Dark */
 
   --color-dark-background-default: #161c24;
   --color-dark-background-paper: #212b36;
-  --color-dark-background-neutral: rgba(145, 158, 171, 0.16)
-    --color-dark-action-active: rgba(145, 158, 171, 1)
-    --color-dark-action-hover: rgba(145, 158, 171, 0.08)
-    --color-dark-action-selected: rgba(145, 158, 171, 0.16)
-    --color-dark-action-disabled: rgba(145, 158, 171, 0.8)
-    --color-dark-action-disabled-background: rgba(145, 158, 171, 0.24)
-    --color-dark-action-focus: rgba(145, 158, 171, 0.24) --dark-shadow-z1: 0px 1px 2px
-    rgba(0, 0, 0, 0.16);
+  --color-dark-background-neutral: rgba(145, 158, 171, 0.16);
+  --color-dark-action-active: rgba(145, 158, 171, 1);
+  --color-dark-action-hover: rgba(145, 158, 171, 0.08);
+  --color-dark-action-selected: rgba(145, 158, 171, 0.16);
+  --color-dark-action-disabled: rgba(145, 158, 171, 0.8);
+  --color-dark-action-disabled-background: rgba(145, 158, 171, 0.24);
+  --color-dark-action-focus: rgba(145, 158, 171, 0.24);
+  --dark-shadow-z1: 0px 1px 2px rgba(0, 0, 0, 0.16);
   --dark-shadow-z8: 0px 8px 16px rgba(0, 0, 0, 0.16);
   --dark-shadow-z12: 0px 12px 24px -4px rgba(0, 0, 0, 0.16);
   --dark-shadow-z16: 0px 16px 32px -4px rgba(0, 0, 0, 0.16);

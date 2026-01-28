@@ -6,5 +6,8 @@
   [attr.size]="size()"
   [disabled]="disabled()"
 >
+  <div>
+    <ng-content></ng-content>
+  </div>
   <p>{{ label() }}</p>
 </button>

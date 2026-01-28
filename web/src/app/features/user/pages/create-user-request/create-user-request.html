@@ -1,0 +1,42 @@
+<div class="px-4 h-full w-full flex-col flex lg:px-10 lg:pb-32 lg:pt-10">
+  <header class="flex flex-col lg:flex-row mb-2 gap-4 lg:items-center lg:mb-10">
+    <div class="flex flex-col gap-2 lg:w-full">
+      <span class="mb-2 text-xl font-bold leading-8 lg:text-3xl">Nova Solicitação de Usuário</span>
+      <app-breadcrumb></app-breadcrumb>
+    </div>
+  </header>
+  <form method="post" class="flex flex-col w-full h-full p-6 mb-6 items-end shadow-card">
+    <div class="flex size-full gap-6 flex-col h-fit pb-6 lg:shrink-0">
+      <div class="flex flex-col gap-6">
+        <app-text-field [hasLabel]="true" label="Nome Completo" id="nome_completo"></app-text-field>
+        <app-text-field [hasLabel]="true" label="Matrícula" id="matricula"></app-text-field>
+      </div>
+      <div class="flex flex-col gap-6">
+        <app-text-field
+          [hasLabel]="true"
+          label="Data de Nascimento"
+          id="data_nascimento"
+        ></app-text-field>
+        <app-text-field [hasLabel]="true" label="CPF" id="cpf"></app-text-field>
+      </div>
+      <div class="flex flex-col gap-6">
+        <app-text-field [hasLabel]="true" label="E-mail" id="e-mail"></app-text-field>
+        <app-text-field [hasLabel]="true" label="Telefone" id="tel"></app-text-field>
+      </div>
+      <div class="flex flex-col gap-6">
+        <app-text-field [hasLabel]="true" label="Unidade" id="unidade"></app-text-field>
+        <app-text-field [hasLabel]="true" label="Setor" id="setor"></app-text-field>
+      </div>
+      <div class="div flex flex-col gap-6">
+        <app-text-field [hasLabel]="true" label="Area" id="area"></app-text-field>
+        <app-text-field [hasLabel]="true" label="Cargo" id="cargo"></app-text-field>
+      </div>
+      <app-text-area
+        id="text-area"
+        [hasLabel]="true"
+        label="Detalhes da Solicitação"
+      ></app-text-area>
+    </div>
+    <app-button label="Criar Solicitação"></app-button>
+  </form>
+</div>

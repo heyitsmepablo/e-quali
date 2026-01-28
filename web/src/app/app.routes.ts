@@ -4,6 +4,7 @@ import { ResetPassword } from './features/auth/pages/reset-password/reset-passwo
 import { DashboardLayout } from './layouts/dashboard/dashboard-layout/dashboard-layout';
 import { Home } from './features/home/home';
 import { UserRequest } from './features/user/pages/user-request/user-request';
+import { CreateUserRequest } from './features/user/pages/create-user-request/create-user-request';
 
 export const routes: Routes = [
   { path: 'login', component: Login },
@@ -20,8 +21,15 @@ export const routes: Routes = [
         children: [
           {
             path: 'solicitacao',
-            component: UserRequest,
             data: { breadcrumb: { label: 'Solicitação' } },
+            children: [
+              { path: '', component: UserRequest },
+              {
+                path: 'criar',
+                component: CreateUserRequest,
+                data: { breadcrumb: { label: 'Nova Solicitação' } },
+              },
+            ],
           },
         ],
       },

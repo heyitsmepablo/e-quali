@@ -12,11 +12,11 @@ button[size='lg'] {
 }
 
 button[size='md'] {
-  @apply gap-2 py-2 px-4;
+  @apply gap-2 py-2 px-4 text-sm;
 }
 
 button[size='sm'] {
-  @apply gap-2 py-1 px-3;
+  @apply gap-2 py-1 px-3 text-xs;
 }
 /* variants */
 button[variant='contained'] {

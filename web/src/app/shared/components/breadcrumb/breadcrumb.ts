@@ -49,29 +49,33 @@ export class Breadcrumb implements OnInit {
 
     if (children.length === 0) {
       this.breadcrumbs.set(breadcrumbs);
-
       return;
     }
 
     for (const child of children) {
       const routeURL: string = child.snapshot.url.map((segment) => segment.path).join('/');
+
       if (routeURL !== '') {
         url += `/${routeURL}`;
       }
 
       const breadcrumbData = child.snapshot.data['breadcrumb'];
 
-      // 2. Verificamos se o objeto existe e se tem um label
-      if (breadcrumbData && breadcrumbData.label) {
+      // --- A CORREÇÃO ESTÁ AQUI ---
+
+      // 1. Verifica se a URL atual é idêntica à do item anterior
+      const isDuplicateUrl =
+        breadcrumbs.length > 0 && breadcrumbs[breadcrumbs.length - 1].url === url;
+
+      // 2. Só adiciona se tiver label E NÃO for uma URL duplicada
+      if (breadcrumbData && breadcrumbData.label && !isDuplicateUrl) {
         breadcrumbs.push({
           label: breadcrumbData.label,
           url: url,
-          // 3. Extraímos o isGroup do objeto (ou false se não existir)
           isGroup: breadcrumbData.isGroup ?? false,
         });
       }
 
-      // Passa o array atualizado para o próximo nível
       this.createBreadcrumbs(child, url, breadcrumbs);
     }
   }

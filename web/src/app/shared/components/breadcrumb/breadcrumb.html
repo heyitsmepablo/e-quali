@@ -1,7 +1,7 @@
 <div class="flex flex-col">
   <nav class="flex items-center text-sm text-gray-500">
     <ol class="flex items-center gap-4">
-      @for (crumb of breadcrumbs(); track crumb.url; let last = $last) {
+      @for (crumb of breadcrumbs(); track $index; let last = $last) {
         <li class="flex items-center gap-4">
           @if (last) {
             <span class="text-text-disabled cursor-default">

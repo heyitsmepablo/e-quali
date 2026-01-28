@@ -6,6 +6,7 @@ import { TextField } from '../../../../shared/components/inputs/text-field/text-
 import { FormsModule } from '@angular/forms';
 import { mockDataUsers } from './mockData';
 import { RouterLink, RouterLinkActive } from '@angular/router';
+import { Button } from '../../../../shared/components/buttons/button/button';
 export interface User {
   id: string;
   name: string;
@@ -18,7 +19,16 @@ export interface User {
 }
 @Component({
   selector: 'app-user-request',
-  imports: [Breadcrumb, Table, CommonModule, TextField, FormsModule, RouterLink, RouterLinkActive],
+  imports: [
+    Breadcrumb,
+    Table,
+    CommonModule,
+    TextField,
+    FormsModule,
+    RouterLink,
+    RouterLinkActive,
+    Button,
+  ],
   templateUrl: './user-request.html',
   styleUrl: './user-request.css',
 })
@@ -31,8 +41,7 @@ export class UserRequest {
     { label: 'Company' },
     { label: 'Role' },
     { label: 'Verified', class: 'text-center' },
-    { label: 'Status' },
-    { label: '', class: 'w-12' }, // Coluna de ações
+    { label: 'Status', class: 'w-12' },
   ];
   status = input<string>('');
   // Seus dados
