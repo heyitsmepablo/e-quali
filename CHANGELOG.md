@@ -2,6 +2,13 @@
 
 Todas as mudanças notáveis neste projeto serão documentadas neste arquivo. Consulte [Conventional Commits](https://www.conventionalcommits.org/pt-br/v1.0.0/) para diretrizes de commits.
 
+# [1.0.0-alpha.4](https://github.com/heyitsmepablo/e-quali/compare/v1.0.0-alpha.3...v1.0.0-alpha.4) (2026-01-29)
+
+
+### Features
+
+* **web:** pagina de solicitação de usuarios + pagina de criar solicitação ([7e5c740](https://github.com/heyitsmepablo/e-quali/commit/7e5c7408eae7cb58dc555e5f6da8841c0c2aa09a))
+
 # [1.0.0-alpha.3](https://github.com/heyitsmepablo/e-quali/compare/v1.0.0-alpha.2...v1.0.0-alpha.3) (2025-12-10)
 
 
