@@ -11,6 +11,7 @@ const TEXT_AREA_ACCESSOR = {
   imports: [CommonModule, FormsModule],
   templateUrl: './text-area.html',
   styleUrl: './text-area.css',
+  providers: [TEXT_AREA_ACCESSOR],
 })
 export class TextArea implements ControlValueAccessor {
   //Inputs

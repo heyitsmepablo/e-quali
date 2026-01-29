@@ -1,0 +1,129 @@
+@reference '../../../../../styles.css';
+
+/* Estrutura Base */
+.select-field {
+  @apply relative flex px-3.5 py-3 h-14 w-full rounded-lg z-0 cursor-pointer;
+
+  /* Área do Select */
+  select {
+    @apply flex items-center text-text-primary w-full h-full bg-transparent outline-none z-2 cursor-pointer;
+    @apply appearance-none; /* Remove a seta nativa do browser */
+  }
+}
+
+.label-text {
+  @apply absolute pointer-events-none transition-all z-1 text-text-disabled;
+  /* Posição inicial (Label abaixada/Placeholder) */
+  @apply top-1/2 -translate-y-1/2 left-0;
+}
+
+/* ================= VARIANTS ================= */
+
+/* --- OUTLINED --- */
+label[variant='outlined'] {
+  @apply border border-input-outlined hover:border-text-primary focus-within:border-text-primary transition-colors;
+
+  /* Ajuste de padding para não bater no ícone da seta */
+  select {
+    @apply pr-8;
+  }
+
+  /* LABEL FLUTUANTE LÓGICA */
+  /* Quando focado OU quando tem valor válido (diferente de vazio) */
+  select:focus ~ .label-text,
+  select:valid ~ .label-text {
+    @apply -top-2.5 left-0 text-xs bg-background-paper px-1;
+    transform: none;
+  }
+
+  /* Cor do label quando focado */
+  select:focus ~ .label-text {
+    @apply text-text-primary;
+  }
+}
+
+/* --- FILLED --- */
+label[variant='filled'] {
+  @apply bg-grey-500/8 rounded-t-lg border-b border-text-disabled;
+
+  select {
+    @apply pt-4 pr-8; /* Espaço para o label em cima */
+  }
+
+  .label-text {
+    @apply left-3; /* Alinhamento inicial */
+  }
+
+  /* LABEL FLUTUANTE LÓGICA */
+  select:focus ~ .label-text,
+  select:valid ~ .label-text {
+    @apply top-2 text-xs;
+    transform: none;
+  }
+
+  select:focus ~ .label-text {
+    @apply text-text-primary;
+  }
+
+  /* Barra inferior animada (opcional, estilo Material) */
+  &::after {
+    content: '';
+    @apply absolute bottom-[-1px] left-0 w-0 h-[2px] bg-primary-main transition-all duration-300;
+  }
+  &:focus-within::after {
+    @apply w-full;
+  }
+}
+
+/* --- STANDARD --- */
+label[variant='standard'] {
+  @apply border-b border-input-outlined focus-within:border-text-primary rounded-none px-0;
+
+  select {
+    @apply pt-2 pr-6;
+  }
+
+  /* LABEL FLUTUANTE LÓGICA */
+  select:focus ~ .label-text,
+  select:valid ~ .label-text {
+    @apply -top-1.5 left-0 text-xs;
+    transform: none;
+  }
+
+  select:focus ~ .label-text {
+    @apply text-text-primary;
+  }
+}
+
+/* ================= ESTADOS ================= */
+
+/* Erro */
+:host.ng-invalid.ng-touched label {
+  @apply border-error-main;
+
+  .label-text {
+    @apply text-error-main;
+  }
+
+  /* Seta vermelha no erro */
+  .text-action-active {
+    @apply text-error-main;
+  }
+}
+
+:host.ng-invalid.ng-touched label[variant='filled'] {
+  @apply bg-error-main/8;
+}
+
+/* Desabilitado */
+:host label.disabled {
+  @apply border-action-disabled bg-action-disabled-background cursor-not-allowed opacity-60;
+
+  select {
+    @apply cursor-not-allowed text-text-disabled;
+  }
+
+  .label-text {
+    @apply text-text-disabled;
+  }
+}

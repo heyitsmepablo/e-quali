@@ -1,0 +1,48 @@
+<label [for]="id()" class="select-field" [attr.variant]="variant()" [class.disabled]="disabled">
+  <div class="pr-2 fill-action-active empty:hidden">
+    <ng-content select="[prefix]"></ng-content>
+  </div>
+
+  <div class="relative w-full h-full">
+    <select
+      [id]="id()"
+      [ngModel]="innerValue()"
+      (ngModelChange)="updateValue($event)"
+      (blur)="onTouched()"
+      [disabled]="disabled"
+      class="peer"
+      required
+    >
+      <option [ngValue]="null" disabled hidden class="text-text-disabled">
+        {{ placeholder() }}
+      </option>
+
+      @for (opt of options(); track $index) {
+        <option [value]="getValue(opt)">
+          {{ getLabel(opt) }}
+        </option>
+      }
+    </select>
+
+    <span class="label-text">{{ label() }}</span>
+
+    <div
+      class="absolute right-0 top-1/2 -translate-y-1/2 pointer-events-none text-action-active peer-focus:text-text-primary transition-colors"
+    >
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="24"
+        height="24"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        class="w-5 h-5"
+      >
+        <path d="m6 9 6 6 6-6" />
+      </svg>
+    </div>
+  </div>
+</label>

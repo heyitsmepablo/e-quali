@@ -3,7 +3,6 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 
 @Component({
   selector: 'app-checkbox',
-  standalone: true,
   templateUrl: './checkbox.html',
   styleUrl: './checkbox.css', // O CSS do tailwind/halo continua o mesmo
   providers: [
