@@ -5,7 +5,7 @@ import { CommonModule } from '@angular/common';
 import { TextField } from '../../../../shared/components/inputs/text-field/text-field';
 import { FormsModule } from '@angular/forms';
 import { mockDataUsers } from './mockData';
-import { RouterLink, RouterLinkActive } from '@angular/router';
+import { Router, RouterLink, RouterLinkActive } from '@angular/router';
 import { Button } from '../../../../shared/components/buttons/button/button';
 export interface User {
   id: string;
@@ -47,7 +47,7 @@ export class UserRequest {
   // Seus dados
   originalUsers: User[] = mockDataUsers;
   users = signal<User[]>(this.originalUsers);
-
+  private router = inject(Router);
   constructor() {
     effect(() => {
       const currentStatus = this.status();
@@ -96,5 +96,10 @@ export class UserRequest {
   deleteSelected() {
     const idsToDelete = this.selectedUsers().map((u) => u.id);
     console.log('Deletando IDs:', idsToDelete);
+  }
+
+  navigateToDetails(user: any) {
+    // Mesma lógica que estava no [routerLink]
+    this.router.navigate(['/usuario/solicitacao', user.id]);
   }
 }

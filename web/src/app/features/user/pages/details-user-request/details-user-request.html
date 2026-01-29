@@ -1,0 +1,112 @@
+<div class="flex flex-col size-full border-2 border-blue-500 px-1">
+  <app-breadcrumb></app-breadcrumb>
+  <div class="flex flex-col w-full gap-2">
+    <span class="flex w-full h-12 bg-grey-500/8 text-sm gap-2 items-center mb-5">
+      <p class="text-text-primary font-semibold">
+        Solicitação #{{ idSolicitacaoUsuario()?.padStart(4, '0') }}
+      </p>
+      <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="12" cy="12" class="fill-[#637381]" r="2" />
+      </svg>
+      <p class="text-text-secondary">Criada em 01/01/2025 as 10:30</p>
+      <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="12" cy="12" class="fill-[#637381]" r="2" />
+      </svg>
+      <span
+        class="px-2.5 py-1 rounded-md text-xs font-bold inline-flex items-center bg-success-light text-green-700 h-8"
+      >
+        Aprovado
+      </span>
+    </span>
+    <div class="flex flex-col size-full bg-background-paper shadow-card">
+      <div class="flex flex-col w-full h-fit pb-6">
+        <span
+          class="flex w-full h-12 items-center pl-4 border-b border-b-grey-500/24 mb-4 font-semibold text-text-primary"
+        >
+          <h2>Historico da Solicitação</h2>
+        </span>
+        <div class="flex flex-col gap-1">
+          <span class="flex items-center text-center">
+            <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <circle cx="12" cy="12" class="fill-success-main" r="3" />
+            </svg>
+            <small class="text-text-primary">10/01/2025 10:00 Solicitação criada por você</small>
+          </span>
+          <span class="flex items-center text-center">
+            <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <circle cx="12" cy="12" class="fill-info-main/50" r="3" />
+            </svg>
+            <small class="text-text-secondary">Aguardando analise do administrador</small>
+          </span>
+        </div>
+      </div>
+    </div>
+    <form
+      method="post"
+      class="flex flex-col w-full h-full p-6 mb-6 items-end shadow-card lg:items-center lg:w-3xl bg-background-paper"
+    >
+      <span class="flex w-full text-text-primary font-semibold h-12">
+        <h2>Usuário Solicitado</h2>
+      </span>
+      <div class="flex size-full gap-6 flex-col pb-6">
+        <div class="flex flex-col gap-6 lg:flex-row">
+          <app-text-field
+            [hasLabel]="true"
+            label="Nome Completo"
+            id="nome_completo"
+            class="lg:w-1/2"
+          ></app-text-field>
+          <app-text-field
+            class="lg:w-1/2"
+            [hasLabel]="true"
+            label="Matrícula"
+            id="matricula"
+          ></app-text-field>
+        </div>
+        <div class="flex flex-col gap-6 lg:flex-row">
+          <app-text-field
+            class="lg:w-1/2"
+            [hasLabel]="true"
+            label="Data de Nascimento"
+            id="data_nascimento"
+          ></app-text-field>
+          <app-text-field class="lg:w-1/2" [hasLabel]="true" label="CPF" id="cpf"></app-text-field>
+        </div>
+        <div class="flex flex-col gap-6 lg:flex-row">
+          <app-text-field
+            class="lg:w-1/2"
+            [hasLabel]="true"
+            label="E-mail"
+            id="e-mail"
+          ></app-text-field>
+          <app-text-field
+            class="lg:w-1/2"
+            [hasLabel]="true"
+            label="Telefone"
+            id="tel"
+          ></app-text-field>
+        </div>
+        <div class="flex flex-col gap-6 lg:flex-row">
+          <app-select class="lg:w-1/2" label="Unidade"> </app-select>
+          <app-select class="lg:w-1/2" label="Setor"> </app-select>
+        </div>
+        <div class="div flex flex-col gap-6 lg:flex-row">
+          <app-select class="lg:w-1/2" label="Area"> </app-select>
+          <app-select class="lg:w-1/2" label="Cargo"> </app-select>
+        </div>
+      </div>
+    </form>
+    <div class="flex flex-col size-full bg-background-paper shadow-card rounded-md lg:w-96 mb-10">
+      <div class="flex flex-col w-full h-fit">
+        <span
+          class="flex w-full h-12 items-center pl-4 border-b border-b-grey-500/24 mb-4 font-semibold text-text-primary"
+        >
+          <h2>Detalhes da Solicitação</h2>
+        </span>
+        <div class="flex h-1/2 flex-col gap-1 p-2 pb-4">
+          <app-text-area id="text-area"></app-text-area>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

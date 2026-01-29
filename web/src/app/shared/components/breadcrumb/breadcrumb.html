@@ -1,26 +1,37 @@
-<div class="flex flex-col">
-  <nav class="flex items-center text-sm text-gray-500">
-    <ol class="flex items-center gap-4">
-      @for (crumb of breadcrumbs(); track $index; let last = $last) {
-        <li class="flex items-center gap-4">
-          @if (last) {
-            <span class="text-text-disabled cursor-default">
-              {{ crumb.label }}
-            </span>
-          } @else {
-            <a
-              [routerLink]="crumb.isGroup ? null : crumb.url"
-              class="text-text-primary text-sm leading-6 font-normal hover:text-primary-main hover:underline transition-colors"
-            >
-              {{ crumb.label }}
-            </a>
+@let currentTitle = breadcrumbs().slice(-1)[0]?.label;
+<div class="flex flex-col lg:flex-row gap-4 lg:items-center mb-10">
+  <div class="flex flex-col gap-2 lg:w-full">
+    <span class="mb-2 text-xl font-bold leading-8 lg:text-3xl">{{ currentTitle }}</span>
+    <div class="flex flex-col">
+      <nav class="flex items-center text-sm text-gray-500">
+        <ol class="flex items-center gap-4">
+          @for (crumb of breadcrumbs(); track $index; let last = $last) {
+            <li class="flex items-center gap-4">
+              @if (last) {
+                <span class="text-text-disabled cursor-default">
+                  {{ crumb.label }}
+                </span>
+              } @else {
+                <a
+                  [routerLink]="crumb.isGroup ? null : crumb.url"
+                  class="text-text-primary text-sm leading-6 font-normal hover:text-primary-main hover:underline transition-colors"
+                >
+                  {{ crumb.label }}
+                </a>
 
-            <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <circle cx="12" cy="12" class="fill-[#637381]" r="2" />
-            </svg>
+                <svg
+                  class="w-6 h-6"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <circle cx="12" cy="12" class="fill-[#637381]" r="2" />
+                </svg>
+              }
+            </li>
           }
-        </li>
-      }
-    </ol>
-  </nav>
+        </ol>
+      </nav>
+    </div>
+  </div>
 </div>

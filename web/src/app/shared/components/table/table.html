@@ -34,6 +34,7 @@
           <tr
             class="hover:bg-gray-50/50 transition-colors"
             [class.bg-primary-main-8]="item['selected']"
+            (click)="rowClick.emit(item)"
           >
             <td class="py-3 px-4">
               <app-checkbox

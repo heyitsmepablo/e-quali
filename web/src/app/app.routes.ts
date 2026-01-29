@@ -5,6 +5,7 @@ import { DashboardLayout } from './layouts/dashboard/dashboard-layout/dashboard-
 import { Home } from './features/home/home';
 import { UserRequest } from './features/user/pages/user-request/user-request';
 import { CreateUserRequest } from './features/user/pages/create-user-request/create-user-request';
+import { DetailsUserRequest } from './features/user/pages/details-user-request/details-user-request';
 
 export const routes: Routes = [
   { path: 'login', component: Login },
@@ -28,6 +29,11 @@ export const routes: Routes = [
                 path: 'criar',
                 component: CreateUserRequest,
                 data: { breadcrumb: { label: 'Nova Solicitação' } },
+              },
+              {
+                path: ':idSolicitacaoUsuario',
+                component: DetailsUserRequest,
+                data: { breadcrumb: { label: 'Detalhes da Solicitação' } },
               },
             ],
           },

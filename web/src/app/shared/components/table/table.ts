@@ -56,6 +56,8 @@ export class Table {
   startIndex = computed(() => (this.currentPage() - 1) * this.pageSize());
   endIndex = computed(() => Math.min(this.startIndex() + this.pageSize(), this.totalItems()));
 
+  rowClick = output<any>();
+
   nextPage() {
     if (this.endIndex() < this.totalItems()) {
       this.currentPage.update((p) => p + 1);
