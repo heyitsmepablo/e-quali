@@ -4,10 +4,11 @@ import { TextField } from '../../../../shared/components/inputs/text-field/text-
 import { Select } from '../../../../shared/components/inputs/select/select';
 import { RouterLink } from '@angular/router';
 import { TextArea } from '../../../../shared/components/inputs/text-area/text-area';
+import { Button } from '../../../../shared/components/buttons/button/button';
 
 @Component({
   selector: 'app-details-user-request',
-  imports: [Breadcrumb, TextField, Select, RouterLink, TextArea],
+  imports: [Breadcrumb, TextField, Select, TextArea, Button],
   templateUrl: './details-user-request.html',
   styleUrl: './details-user-request.css',
 })

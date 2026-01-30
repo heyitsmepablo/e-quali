@@ -22,7 +22,7 @@ export const routes: Routes = [
         children: [
           {
             path: 'solicitacao',
-            data: { breadcrumb: { label: 'Solicitação' } },
+            data: { breadcrumb: { label: 'Solicitação de Usuário' } },
             children: [
               { path: '', component: UserRequest },
               {
