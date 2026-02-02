@@ -9,20 +9,21 @@ datasource db {
 }
 
 model Unidade {
-  id                Int                @id @default(autoincrement())
-  nome              String
-  sigla             String?
-  endereco          String?
-  cnes              String?
-  cnpj              String?
-  emailPrincipal    String?            @map("email_principal")
-  emailAlternativo  String?            @map("email_alternativo")
-  unidadeTipoId     Int?               @map("unidade_tipo_id")
-  criadoEm          DateTime?          @default(now()) @map("criado_em")
-  atualizadoEm      DateTime?          @updatedAt @map("atualizado_em")
-  perfilFuncional   PerfilFuncional[]
-  unidadeTipo       UnidadeTipo?       @relation(fields: [unidadeTipoId], references: [id])
-  unidadeHospitalar UnidadeHospitalar?
+  id                  Int                  @id @default(autoincrement())
+  nome                String
+  sigla               String?
+  endereco            String?
+  cnes                String?
+  cnpj                String?
+  emailPrincipal      String?              @map("email_principal")
+  emailAlternativo    String?              @map("email_alternativo")
+  unidadeTipoId       Int?                 @map("unidade_tipo_id")
+  criadoEm            DateTime?            @default(now()) @map("criado_em")
+  atualizadoEm        DateTime?            @updatedAt @map("atualizado_em")
+  perfilFuncional     PerfilFuncional[]
+  unidadeTipo         UnidadeTipo?         @relation(fields: [unidadeTipoId], references: [id])
+  unidadeHospitalar   UnidadeHospitalar?
+  solicitacaoUsuarios SolicitacaoUsuario[]
 
   @@map("unidade")
 }
@@ -53,26 +54,33 @@ model UnidadeTipo {
 }
 
 model Cargo {
-  id              Int               @id @default(autoincrement())
-  nome            String?
-  criadoEm        DateTime?         @default(now()) @map("criado_em")
-  atualizadoEm    DateTime?         @updatedAt @map("atualizado_em")
-  perfilFuncional PerfilFuncional[]
+  id                  Int                  @id @default(autoincrement())
+  nome                String?
+  criadoEm            DateTime?            @default(now()) @map("criado_em")
+  atualizadoEm        DateTime?            @updatedAt @map("atualizado_em")
+  perfilFuncional     PerfilFuncional[]
+  solicitacaoUsuarios SolicitacaoUsuario[]
 
   @@map("cargo")
 }
 
 model Usuario {
-  id                String          @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  nome              String
-  matricula         String          @unique
-  cpf               String          @unique
-  email             String?
-  perfilFuncionalId Int             @map("perfil_funcional_id")
-  criadoEm          DateTime?       @default(now()) @map("criado_em")
-  atualizadoEm      DateTime?       @updatedAt @map("atualizado_em")
-  acesso            Acesso?
-  perfilFuncional   PerfilFuncional @relation(fields: [perfilFuncionalId], references: [id])
+  id                  String               @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  nome                String
+  matricula           String               @unique
+  cpf                 String               @unique
+  email               String?
+  perfilFuncionalId   Int                  @map("perfil_funcional_id")
+  origemSolicitacaoId Int?                 @unique
+  criadoPorId         String?              @db.Uuid
+  criadoEm            DateTime?            @default(now()) @map("criado_em")
+  atualizadoEm        DateTime?            @updatedAt @map("atualizado_em")
+  acesso              Acesso?
+  solicitacaoUsuarios SolicitacaoUsuario[]
+  perfilFuncional     PerfilFuncional      @relation(fields: [perfilFuncionalId], references: [id])
+  criadoPor           Usuario?             @relation("AuditoriaCriacao", fields: [criadoPorId], references: [id])
+  usuariosCriados     Usuario[]            @relation("AuditoriaCriacao")
+  origemSolicitacao   SolicitacaoUsuario?  @relation("UsuarioGerado", fields: [origemSolicitacaoId], references: [id])
 
   @@map("usuario")
 }
@@ -104,22 +112,24 @@ model TokenDeAcesso {
 }
 
 model Setor {
-  id              Int               @id @default(autoincrement())
-  nome            String
-  criadoEm        DateTime?         @default(now()) @map("criado_em")
-  atualizadoEm    DateTime?         @updatedAt @map("atualizado_em")
-  sigla           String?
-  perfilFuncional PerfilFuncional[]
+  id                  Int                  @id @default(autoincrement())
+  nome                String
+  criadoEm            DateTime?            @default(now()) @map("criado_em")
+  atualizadoEm        DateTime?            @updatedAt @map("atualizado_em")
+  sigla               String?
+  perfilFuncional     PerfilFuncional[]
+  solicitacaoUsuarios SolicitacaoUsuario[]
 
   @@map("setor")
 }
 
 model Area {
-  id              Int               @id @default(autoincrement())
-  nome            String
-  criadoEm        DateTime?         @default(now()) @map("criado_em")
-  atualizadoEm    DateTime?         @updatedAt @map("atualizado_em")
-  perfilFuncional PerfilFuncional[]
+  id                  Int                  @id @default(autoincrement())
+  nome                String
+  criadoEm            DateTime?            @default(now()) @map("criado_em")
+  atualizadoEm        DateTime?            @updatedAt @map("atualizado_em")
+  perfilFuncional     PerfilFuncional[]
+  solicitacaoUsuarios SolicitacaoUsuario[]
 
   @@map("area")
 }
@@ -169,6 +179,44 @@ model ControleRbac {
   @@map("controle_rbac")
 }
 
+model SolicitacaoUsuario {
+  id                           Int                           @id @default(autoincrement())
+  usuarioSolicitanteId         String                        @db.Uuid
+  nome                         String
+  unidadeId                    Int
+  setorId                      Int
+  areaId                       Int?
+  cargoId                      Int
+  detalhe                      String
+  statusSolicitacao            StatusSolicitacaoUsuario
+  usuarioFinalId               String?                       @unique @db.Uuid
+  feedbackResultado            String?
+  criadoEm                     DateTime?                     @default(now()) @map("criado_em")
+  atualizadoEm                 DateTime?                     @updatedAt @map("atualizado_em")
+  usuario                      Usuario                       @relation(fields: [usuarioSolicitanteId], references: [id])
+  unidade                      Unidade                       @relation(fields: [unidadeId], references: [id])
+  area                         Area?                         @relation(fields: [areaId], references: [id])
+  setor                        Setor                         @relation(fields: [setorId], references: [id])
+  cargo                        Cargo                         @relation(fields: [cargoId], references: [id])
+  usuarioFinal                 Usuario?                      @relation("UsuarioGerado")
+  historicoSolicitacaoUsuarios HistoricoSolicitacaoUsuario[]
+
+  @@map("solicitacao_usuario")
+}
+
+model HistoricoSolicitacaoUsuario {
+  id                 Int                @id @default(autoincrement())
+  solcitacaoId       Int
+  autorId            String             @db.Uuid
+  evento             String
+  observacao         String?
+  criadoEm           DateTime?          @default(now()) @map("criado_em")
+  atualizadoEm       DateTime?          @updatedAt @map("atualizado_em")
+  solicitacaoUsuario SolicitacaoUsuario @relation(fields: [solcitacaoId], references: [id])
+
+  @@map("historico_solicitacao_usuario")
+}
+
 enum TipoServico {
   URGENCIA_EMERGENCIA
   ATENCAO_PRIMARIA
@@ -177,4 +225,10 @@ enum TipoServico {
   LABORATORIO
 
   @@map("tipo_servico")
+}
+
+enum StatusSolicitacaoUsuario {
+  APROVADO
+  PENDENTE
+  REJEITADO
 }
