@@ -4,6 +4,7 @@ import { AppModule } from './app.module';
 import { env } from 'process';
 import { DomainErrorFilter } from './filter/domain-error/domain-error.filter';
 import 'dotenv/config';
+import { ValidationPipe } from '@nestjs/common';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule, {
@@ -13,6 +14,9 @@ async function bootstrap() {
       credentials: true,
     },
   });
+
+  app.useGlobalPipes(new ValidationPipe({ transform: true, whitelist: true }));
+
   // DomainErrorFilter
 
   app.useGlobalFilters(new DomainErrorFilter());

@@ -21,9 +21,9 @@ model Unidade {
   criadoEm            DateTime?            @default(now()) @map("criado_em")
   atualizadoEm        DateTime?            @updatedAt @map("atualizado_em")
   perfilFuncional     PerfilFuncional[]
+  solicitacaoUsuarios SolicitacaoUsuario[]
   unidadeTipo         UnidadeTipo?         @relation(fields: [unidadeTipoId], references: [id])
   unidadeHospitalar   UnidadeHospitalar?
-  solicitacaoUsuarios SolicitacaoUsuario[]
 
   @@map("unidade")
 }
@@ -71,16 +71,16 @@ model Usuario {
   cpf                 String               @unique
   email               String?
   perfilFuncionalId   Int                  @map("perfil_funcional_id")
-  origemSolicitacaoId Int?                 @unique
-  criadoPorId         String?              @db.Uuid
   criadoEm            DateTime?            @default(now()) @map("criado_em")
   atualizadoEm        DateTime?            @updatedAt @map("atualizado_em")
+  criadoPorId         String?              @db.Uuid
+  origemSolicitacaoId Int?                 @unique
   acesso              Acesso?
   solicitacaoUsuarios SolicitacaoUsuario[]
-  perfilFuncional     PerfilFuncional      @relation(fields: [perfilFuncionalId], references: [id])
   criadoPor           Usuario?             @relation("AuditoriaCriacao", fields: [criadoPorId], references: [id])
   usuariosCriados     Usuario[]            @relation("AuditoriaCriacao")
   origemSolicitacao   SolicitacaoUsuario?  @relation("UsuarioGerado", fields: [origemSolicitacaoId], references: [id])
+  perfilFuncional     PerfilFuncional      @relation(fields: [perfilFuncionalId], references: [id])
 
   @@map("usuario")
 }
@@ -182,24 +182,29 @@ model ControleRbac {
 model SolicitacaoUsuario {
   id                           Int                           @id @default(autoincrement())
   usuarioSolicitanteId         String                        @db.Uuid
-  nome                         String
   unidadeId                    Int
   setorId                      Int
-  areaId                       Int?
-  cargoId                      Int
   detalhe                      String
   statusSolicitacao            StatusSolicitacaoUsuario
   usuarioFinalId               String?                       @unique @db.Uuid
   feedbackResultado            String?
   criadoEm                     DateTime?                     @default(now()) @map("criado_em")
   atualizadoEm                 DateTime?                     @updatedAt @map("atualizado_em")
-  usuario                      Usuario                       @relation(fields: [usuarioSolicitanteId], references: [id])
-  unidade                      Unidade                       @relation(fields: [unidadeId], references: [id])
-  area                         Area?                         @relation(fields: [areaId], references: [id])
-  setor                        Setor                         @relation(fields: [setorId], references: [id])
-  cargo                        Cargo                         @relation(fields: [cargoId], references: [id])
-  usuarioFinal                 Usuario?                      @relation("UsuarioGerado")
+  areaId                       Int?
+  cargoId                      Int
+  cpf                          String
+  dataNascimento               DateTime
+  email                        String
+  matricula                    String
+  telefone                     Int
+  usuarioSolicitadoNome        String
   historicoSolicitacaoUsuarios HistoricoSolicitacaoUsuario[]
+  area                         Area?                         @relation(fields: [areaId], references: [id])
+  cargo                        Cargo                         @relation(fields: [cargoId], references: [id])
+  setor                        Setor                         @relation(fields: [setorId], references: [id])
+  unidade                      Unidade                       @relation(fields: [unidadeId], references: [id])
+  usuario                      Usuario                       @relation(fields: [usuarioSolicitanteId], references: [id])
+  usuarioFinal                 Usuario?                      @relation("UsuarioGerado")
 
   @@map("solicitacao_usuario")
 }
