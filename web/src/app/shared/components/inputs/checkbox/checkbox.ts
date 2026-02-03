@@ -1,5 +1,7 @@
-import { Component, forwardRef, input, signal } from '@angular/core';
+import { Component, computed, forwardRef, input, InputSignal, signal } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
+
+let nextId: number = 0;
 
 @Component({
   selector: 'app-checkbox',
@@ -14,6 +16,14 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
   ],
 })
 export class Checkbox implements ControlValueAccessor {
+  private _uniqueId = `app-checkbox-${nextId++}`;
+
+  // Input vindo do pai (pode ser vazio)
+  id: InputSignal<string> = input<string>('');
+
+  // Computed que resolve qual ID usar
+  inputId = computed(() => this.id() || this._uniqueId);
+
   // --- ESTADO INTERNO ---
   checked = signal<boolean>(false);
   disabled = signal<boolean>(false);
@@ -31,7 +41,6 @@ export class Checkbox implements ControlValueAccessor {
   // Estilização
   size = input<'s' | 'm'>('m');
   color = input<'default' | 'primary'>('default');
-  inputId = input<string>('');
   name = input<string>('');
   indeterminate = input<boolean>(false);
 

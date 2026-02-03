@@ -45,7 +45,7 @@ export class UserRequestService {
         data: {
           ...restanteDosDados,
           statusSolicitacao: 'PENDENTE',
-          usuario: { connect: { id: solicitanteId } },
+          usuarioSolicitante: { connect: { id: solicitanteId } },
           unidade: { connect: { id: unidadeId } },
           setor: { connect: { id: setorId } },
           cargo: { connect: { id: cargoId } },
@@ -112,7 +112,7 @@ export class UserRequestService {
         detalhe: true,
         feedbackResultado: true,
         usuarioFinal: true,
-        historicoSolicitacaoUsuarios: true,
+        historicoSolicitacao: true,
         criadoEm: true,
         atualizadoEm: true,
       },

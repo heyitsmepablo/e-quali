@@ -1,0 +1,106 @@
+<form
+  [formGroup]="form"
+  (ngSubmit)="onSubmit()"
+  class="flex flex-col w-full h-full p-6 mb-6 items-end shadow-card lg:items-center lg:w-3xl"
+>
+  <div class="flex size-full gap-6 flex-col pb-6">
+    <div class="flex flex-col gap-6 lg:flex-row">
+      <app-text-field
+        class="lg:w-1/2"
+        [hasLabel]="true"
+        label="Nome Completo"
+        formControlName="nome"
+      ></app-text-field>
+
+      <app-text-field
+        class="lg:w-1/2"
+        [hasLabel]="true"
+        label="Matrícula"
+        formControlName="matricula"
+      ></app-text-field>
+    </div>
+
+    <div class="flex flex-col gap-6 lg:flex-row">
+      <app-text-field
+        class="lg:w-1/2"
+        [hasLabel]="true"
+        label="Data de Nascimento"
+        type="date"
+        formControlName="dataNascimento"
+      ></app-text-field>
+
+      <app-text-field
+        class="lg:w-1/2"
+        [hasLabel]="true"
+        label="CPF"
+        mask="000.000.000-00"
+        [specialCharacters]="['.', '-']"
+        formControlName="cpf"
+      ></app-text-field>
+    </div>
+
+    <div class="flex flex-col gap-6 lg:flex-row">
+      <app-text-field
+        class="lg:w-1/2"
+        [hasLabel]="true"
+        label="E-mail"
+        formControlName="email"
+      ></app-text-field>
+
+      <app-text-field
+        class="lg:w-1/2"
+        [hasLabel]="true"
+        label="Telefone"
+        mask="(00) 00000-0000"
+        [specialCharacters]="['(', ')', '-', ' ']"
+        formControlName="telefone"
+      ></app-text-field>
+    </div>
+
+    <div class="flex flex-col gap-6 lg:flex-row">
+      <app-select
+        class="lg:w-1/2"
+        label="Unidade"
+        [options]="unidades()"
+        formControlName="unidadeId"
+      ></app-select>
+
+      <app-select
+        class="lg:w-1/2"
+        label="Setor"
+        [options]="setores()"
+        formControlName="setorId"
+      ></app-select>
+    </div>
+
+    <div class="flex flex-col gap-6 lg:flex-row">
+      <app-select
+        class="lg:w-1/2"
+        label="Area"
+        [options]="areas()"
+        formControlName="areaId"
+      ></app-select>
+
+      <app-select
+        class="lg:w-1/2"
+        label="Cargo"
+        [options]="cargos()"
+        formControlName="cargoId"
+      ></app-select>
+    </div>
+
+    <app-text-area
+      [hasLabel]="true"
+      label="Detalhes da Solicitação"
+      formControlName="detalhes"
+    ></app-text-area>
+  </div>
+
+  <div class="flex justify-between w-full">
+    <ng-content></ng-content>
+
+    @if (!isDisabled()) {
+      <app-button label="Criar Solicitação" type="submit" [disabled]="form.invalid"></app-button>
+    }
+  </div>
+</form>

@@ -18,7 +18,7 @@ const TEXT_FIELD_ACCESSOR = {
   useExisting: forwardRef(() => TextField),
   multi: true,
 };
-
+let nextId: number = 0;
 @Component({
   selector: 'app-text-field',
   imports: [FormsModule, IconEye, NgxMaskDirective],
@@ -27,6 +27,14 @@ const TEXT_FIELD_ACCESSOR = {
   styleUrl: './text-field.css',
 })
 export class TextField implements ControlValueAccessor {
+  private _uniqueId = `app-text-field-${nextId++}`;
+
+  // Input vindo do pai (pode ser vazio)
+  id: InputSignal<string> = input<string>('');
+
+  // Computed que resolve qual ID usar
+  inputId = computed(() => this.id() || this._uniqueId);
+
   //Inputs
   value: string = '';
   label: InputSignal<string> = input<string>('Label');
@@ -37,7 +45,6 @@ export class TextField implements ControlValueAccessor {
   >('outlined');
   type: InputSignal<string> = input('text');
   showPasswordToggle: InputSignal<boolean> = input<boolean>(false);
-  id: InputSignal<string> = input('');
   name: InputSignal<string> = input('');
   mask: InputSignal<string> = input('');
   dropSpecialCharacters: InputSignal<boolean> = input<boolean>(false);

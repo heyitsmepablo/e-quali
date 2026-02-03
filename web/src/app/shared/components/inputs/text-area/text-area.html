@@ -1,10 +1,10 @@
-<label [for]="id()" class="text-area" [attr.variant]="variant()" [class.disabled]="disabled">
+<label [for]="inputId()" class="text-area" [attr.variant]="variant()" [class.disabled]="disabled">
   <div class="pr-2 fill-action-active">
     <ng-content></ng-content>
   </div>
 
   <textarea
-    [id]="id()"
+    [id]="inputId()"
     [placeholder]="placeholder()"
     [(ngModel)]="innerValue"
     (ngModelChange)="updateValue($event)"

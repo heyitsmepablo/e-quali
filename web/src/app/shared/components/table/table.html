@@ -14,7 +14,6 @@
               [indeterminate]="indeterminate()"
               (ngModelChange)="toggleAll($event)"
               [hidden]="selectionMode() === 'none'"
-              inputId="checkAllTable"
             ></app-checkbox>
           </th>
 
@@ -30,7 +29,7 @@
       </thead>
 
       <tbody>
-        @for (item of paginatedData(); track item) {
+        @for (item of paginatedData(); track item; let i = $index) {
           <tr
             class="hover:bg-gray-50/50 transition-colors"
             [class.bg-primary-main-8]="item['selected']"
@@ -42,7 +41,7 @@
                 [ngModel]="item['selected']"
                 (ngModelChange)="toggleOne(item, $event)"
                 [hidden]="selectionMode() === 'none'"
-                [inputId]="id() + '-row-' + item.id"
+                [id]="id() + '-row-' + i"
               ></app-checkbox>
             </td>
 

@@ -1,11 +1,12 @@
 import { CommonModule } from '@angular/common';
-import { Component, effect, forwardRef, input, InputSignal, signal } from '@angular/core';
+import { Component, computed, effect, forwardRef, input, InputSignal, signal } from '@angular/core';
 import { ControlValueAccessor, FormsModule, NG_VALUE_ACCESSOR } from '@angular/forms';
 const TEXT_AREA_ACCESSOR = {
   provide: NG_VALUE_ACCESSOR,
   useExisting: forwardRef(() => TextArea),
   multi: true,
 };
+let nextId: number = 0;
 @Component({
   selector: 'app-text-area',
   imports: [CommonModule, FormsModule],
@@ -14,6 +15,13 @@ const TEXT_AREA_ACCESSOR = {
   providers: [TEXT_AREA_ACCESSOR],
 })
 export class TextArea implements ControlValueAccessor {
+  private _uniqueId = `app-text-field-${nextId++}`;
+
+  // Input vindo do pai (pode ser vazio)
+  id: InputSignal<string> = input<string>('');
+  // Computed que resolve qual ID usar
+  inputId = computed(() => this.id() || this._uniqueId);
+
   //Inputs
   value: string = '';
   label: InputSignal<string> = input<string>('Label');
@@ -24,7 +32,6 @@ export class TextArea implements ControlValueAccessor {
   >('outlined');
   type: InputSignal<string> = input('text');
   showPasswordToggle: InputSignal<boolean> = input<boolean>(false);
-  id: InputSignal<string> = input('');
   name: InputSignal<string> = input('');
   mask: InputSignal<string> = input('');
   dropSpecialCharacters: InputSignal<boolean> = input<boolean>(false);

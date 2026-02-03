@@ -5,7 +5,7 @@
     class="flex w-full h-12 bg-grey-500/8 text-sm gap-3 items-center mb-6 px-4 rounded-lg border border-grey-200"
   >
     <span class="text-text-primary font-semibold">
-      Solicitação #{{ idSolicitacaoUsuario()?.padStart(4, '0') }}
+      Solicitação #{{ requestDetails().id.toString().padStart(4, '0') }}
     </span>
 
     <svg width="4" height="4" viewBox="0 0 4 4" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -85,52 +85,10 @@
       <div class="px-6 py-4 border-b border-dashed border-grey-300">
         <h2 class="font-semibold text-text-primary text-lg">Usuário Solicitado</h2>
       </div>
-
-      <form class="p-6">
-        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-          <app-text-field
-            label="Nome Completo"
-            id="nome_completo"
-            [hasLabel]="true"
-            class="w-full"
-          ></app-text-field>
-
-          <app-text-field
-            label="Matrícula"
-            id="matricula"
-            [hasLabel]="true"
-            class="w-full"
-          ></app-text-field>
-
-          <app-text-field
-            label="Data de Nascimento"
-            id="data_nascimento"
-            [hasLabel]="true"
-            class="w-full"
-          ></app-text-field>
-
-          <app-text-field label="CPF" id="cpf" [hasLabel]="true" class="w-full"></app-text-field>
-
-          <app-text-field
-            label="E-mail"
-            id="e-mail"
-            [hasLabel]="true"
-            class="w-full"
-          ></app-text-field>
-
-          <app-text-field
-            label="Telefone"
-            id="tel"
-            [hasLabel]="true"
-            class="w-full"
-          ></app-text-field>
-
-          <app-select label="Unidade" class="w-full"></app-select>
-          <app-select label="Setor" class="w-full"></app-select>
-          <app-select label="Area" class="w-full"></app-select>
-          <app-select label="Cargo" class="w-full"></app-select>
-        </div>
-      </form>
+      <app-form-user-request
+        [initialData]="requestDetails()"
+        [isDisabled]="true"
+      ></app-form-user-request>
     </main>
   </div>
   <div

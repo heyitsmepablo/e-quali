@@ -93,3 +93,55 @@ export const mockDataUsers: User[] = [
     avatarUrl: 'https://ui-avatars.com/api/?name=David+Becker&background=e2e8f0&color=475569',
   },
 ];
+
+export interface SelectOption {
+  label: string;
+  value: number | string;
+}
+
+// 1. Mocks para as Listas (Dropdowns/Selects)
+export const mockUnidades: SelectOption[] = [
+  { label: 'Hospital Municipal Djalma Marques (Socorrão I)', value: 1 },
+  { label: 'Hospital Municipal Dr. Clementino Moura (Socorrão II)', value: 2 },
+  { label: 'UPA - Zona Norte', value: 3 },
+  { label: 'Secretaria Municipal de Saúde (SEMUS)', value: 4 },
+];
+
+export const mockSetores: SelectOption[] = [
+  { label: 'Tecnologia da Informação', value: 1 },
+  { label: 'Recursos Humanos', value: 2 },
+  { label: 'Ambulatório', value: 3 },
+  { label: 'Urgência e Emergência', value: 4 },
+];
+
+export const mockAreas: SelectOption[] = [
+  { label: 'Não Aplica', value: 0 },
+  { label: 'Administrativo', value: 1 },
+  { label: 'Assistencial', value: 2 },
+  { label: 'Apoio Diagnóstico', value: 3 },
+];
+
+export const mockCargos: SelectOption[] = [
+  { label: 'Analista de Sistemas', value: 1 },
+  { label: 'Médico Plantonista', value: 2 },
+  { label: 'Enfermeiro Chefe', value: 3 },
+  { label: 'Técnico Administrativo', value: 4 },
+];
+
+// 2. Mock para preencher o formulário (Simulação de Edição)
+// Note: As chaves devem bater exatamente com o formControlName do FormBuilder
+export const mockRequestToEdit = {
+  id: 1,
+  nome: 'Guilherme Jaquison',
+  matricula: '202498765',
+  // Importante: Para inputs type="date", o formato deve ser YYYY-MM-DD
+  dataNascimento: '1995-05-20',
+  cpf: '123.456.789-00',
+  email: 'guilherme.jaquison@semus.ma.gov.br',
+  telefone: '(98) 98888-1234',
+  unidadeId: 4, // ID correspondente à SEMUS na lista acima
+  setorId: 1, // ID correspondente à TI
+  areaId: 1, // ID correspondente ao Administrativo
+  cargoId: 1, // ID correspondente ao Analista
+  detalhes: 'Solicito acesso ao módulo de gestão de leitos para integração com o sistema atual.',
+};

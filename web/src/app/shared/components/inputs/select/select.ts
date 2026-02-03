@@ -1,6 +1,8 @@
-import { Component, input, forwardRef, signal } from '@angular/core';
+import { Component, input, forwardRef, signal, InputSignal, computed } from '@angular/core';
 import { ControlValueAccessor, FormsModule, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+
+let nextId: number = 0;
 @Component({
   selector: 'app-select',
   imports: [CommonModule, FormsModule],
@@ -15,8 +17,15 @@ import { CommonModule } from '@angular/common';
   ],
 })
 export class Select implements ControlValueAccessor {
+  private _uniqueId = `app-checkbox-${nextId++}`;
+
+  // Input vindo do pai (pode ser vazio)
+  id: InputSignal<string> = input<string>('');
+
+  // Computed que resolve qual ID usar
+  inputId = computed(() => this.id() || this._uniqueId);
+
   label = input<string>('');
-  id = input<string>('');
   placeholder = input<string>(''); // Texto da opção vazia
   variant = input<'outlined' | 'filled' | 'standard'>('outlined');
 

@@ -1,11 +1,11 @@
-<label [for]="id()" class="text-field" [attr.variant]="variant()" [class.disabled]="disabled">
+<label [for]="inputId()" class="text-field" [attr.variant]="variant()" [class.disabled]="disabled">
   <div class="pr-2 fill-action-active">
     <ng-content></ng-content>
   </div>
 
   <input
     [type]="innerType()"
-    [id]="id()"
+    [id]="inputId()"
     [placeholder]="placeholder()"
     [(ngModel)]="innerValue"
     (ngModelChange)="updateValue($event)"
@@ -20,9 +20,9 @@
     <span class="label-text">{{ label() }}</span>
   }
 
-  <button class="button" type="button" (click)="showPass()">
-    @if (showPasswordToggle()) {
+  @if (showPasswordToggle()) {
+    <button class="button" type="button" (click)="showPass()">
       <app-icon-eye class="icon-eye" [on]="eyeOn"></app-icon-eye>
-    }
-  </button>
+    </button>
+  }
 </label>

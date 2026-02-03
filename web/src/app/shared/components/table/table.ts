@@ -18,6 +18,7 @@ export interface TableColumn {
   class?: string;
 }
 
+let nextId: number = 0;
 @Component({
   selector: 'app-table',
   imports: [CommonModule, FormsModule, Checkbox],
@@ -33,7 +34,7 @@ export class Table {
     this._data.set(value);
     this.currentPage.set(1);
   }
-  id = input<string>(`table-${Math.random().toString(36).substr(2, 9)}`);
+  id = input<string>(`field-${nextId++}`);
   selectionMode = input<'checkbox' | 'none'>('none');
   selectionChange = output<any[]>();
   _data = signal<any[]>([]);

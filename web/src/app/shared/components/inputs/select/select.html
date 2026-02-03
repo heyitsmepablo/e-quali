@@ -1,11 +1,16 @@
-<label [for]="id()" class="select-field" [attr.variant]="variant()" [class.disabled]="disabled">
+<label
+  [for]="inputId()"
+  class="select-field"
+  [attr.variant]="variant()"
+  [class.disabled]="disabled"
+>
   <div class="pr-2 fill-action-active empty:hidden">
     <ng-content select="[prefix]"></ng-content>
   </div>
 
   <div class="relative w-full h-full">
     <select
-      [id]="id()"
+      [id]="inputId()"
       [ngModel]="innerValue()"
       (ngModelChange)="updateValue($event)"
       (blur)="onTouched()"

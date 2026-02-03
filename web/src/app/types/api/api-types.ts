@@ -54,6 +54,54 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/user-request": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["UserRequestController_findMany"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/user-request/create": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: operations["UserRequestController_create"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/user-request/{id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["UserRequestController_findOne"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
 }
 export type webhooks = Record<string, never>;
 export interface components {
@@ -103,6 +151,62 @@ export interface components {
         };
         FirstAccessPasswordAuthResponseDto: {
             message: string;
+        };
+        ListManyUserRequestResponseDto: {
+            id: number;
+            usuarioSolicitadoNome: string;
+            unidade: {
+                id: number;
+                nome: string;
+                sigla: string | null;
+            };
+            setor: {
+                id: number;
+                nome: string;
+                sigla: string | null;
+            };
+            area?: {
+                id: number;
+                nome: string;
+            };
+            cargo: {
+                id: number;
+                nome: string;
+            };
+            statusSolicitacao: string;
+            /** Format: date-time */
+            criadoEm: string | null;
+            /** Format: date-time */
+            atualizadoEm: string | null;
+        };
+        CreateUserRequestDto: {
+            /** @default Guilherme Jaquison */
+            usuarioSolicitadoNome: string;
+            /** @default 123456 */
+            matricula: string;
+            /** @default 1 */
+            unidadeId: number;
+            /** @default 1 */
+            setorId: number;
+            areaId?: number;
+            /** @default 1 */
+            cargoId: number;
+            /** @default 12345687910 */
+            cpf: string;
+            /**
+             * Format: date-time
+             * @default 2026-02-03T18:32:56.941Z
+             */
+            dataNascimento: string;
+            /**
+             * Format: email
+             * @default test@test.com
+             */
+            email: string;
+            /** @default 98991085854 */
+            telefone: string;
+            /** @default um detalhe ficiticio aqui */
+            detalhe: string;
         };
     };
     responses: never;
@@ -174,6 +278,67 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["FirstAccessPasswordAuthResponseDto"];
+                };
+            };
+        };
+    };
+    UserRequestController_findMany: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ListManyUserRequestResponseDto"][];
+                };
+            };
+        };
+    };
+    UserRequestController_create: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["CreateUserRequestDto"];
+            };
+        };
+        responses: {
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    UserRequestController_findOne: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": Record<string, never>;
                 };
             };
         };
