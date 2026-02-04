@@ -7,131 +7,117 @@
 }
 
 .text-area {
-  /* Defina a altura fixa aqui (h-32, h-40) para o scroll funcionar quando passar disso */
-  @apply relative flex px-3.5 py-4 h-32 w-full rounded-lg z-0;
+  /* CONTAINER: Sem padding (p-0) e com overflow-hidden para arredondar cantos */
+  @apply relative flex h-32 w-full rounded-lg z-0 overflow-hidden;
 
   textarea {
-    @apply flex items-start text-text-primary w-full h-full outline-none z-2 bg-transparent;
+    @apply flex items-start text-text-primary w-full h-full outline-none z-2 bg-transparent text-justify;
 
     /* --- LÓGICA DE TEXTAREA --- */
-    @apply resize-none overflow-y-auto; /* Scroll vertical fixo */
-    @apply whitespace-pre-wrap break-words; /* Quebra de linha correta */
+    @apply resize-none overflow-y-auto overflow-x-hidden;
+    @apply whitespace-pre-wrap break-words;
+
+    /* PADDING DO TEXTO: Aqui que controlamos o espaçamento do texto.
+       O scrollbar ficará na borda do elemento, ignorando esse padding visualmente. */
+    @apply pr-3;
   }
 }
 
 .label-text {
-  @apply absolute focus:-top-3 focus:left-3.5 bg-background-paper px-1 py-0 focus:text-xs text-text-disabled transition-all z-1 pointer-events-none;
+  @apply absolute bg-background-paper px-1 py-0 text-text-disabled transition-all z-1 pointer-events-none;
 }
+
 /* ---------- */
 
 /* Size */
 .text-area-sm {
-  @apply px-2 py-2 h-20; /* Altura menor para versão small */
+  @apply h-20;
 }
 
 /* ---------- */
 
-/* Variants */
+/* ================= VARIANTS ================= */
+
+/* --- OUTLINED --- */
 label[variant='outlined'] {
   @apply border border-input-outlined hover:border-text-primary focus-within:border-text-primary transition-all;
 
-  textarea {
-    @apply self-stretch;
-  }
-
   /* Label grande (campo vazio) */
+  /* left-3 alinha com o padding p-3 do textarea */
   textarea:placeholder-shown + .label-text {
-    @apply top-4 text-base;
+    @apply top-3 left-3 text-base;
   }
 
   /* Label pequena (focado ou com valor) */
   textarea:focus + .label-text,
   textarea:not(:placeholder-shown) + .label-text {
-    @apply -top-2.5 left-3 text-xs text-text-primary;
+    @apply -top-2.5 left-2 text-xs text-text-primary;
   }
 
-  /* Label com textarea não focado */
+  /* Label desativada quando não focado */
   textarea:not(:focus) + .label-text {
     @apply text-text-disabled;
   }
 
+  /* Versão Small do Outlined */
   &.text-area-sm {
-    @apply border-text-disabled hover:border-text-primary focus-within:border-text-primary;
-
-    /* Label grande (campo vazio) */
     textarea:placeholder-shown + .label-text {
-      @apply top-2.5 text-sm;
-    }
-
-    /* Label pequena (focado ou com valor) */
-    textarea:focus + .label-text,
-    textarea:not(:placeholder-shown) + .label-text {
-      @apply -top-2.5 left-3 text-xs text-text-primary;
+      @apply top-2 left-3 text-sm;
     }
   }
 }
 
+/* --- FILLED --- */
 label[variant='filled'] {
-  @apply bg-grey-500/8 py-6 px-3;
+  @apply bg-grey-500/8;
 
   .label-text {
     @apply bg-transparent;
   }
 
+  textarea {
+    /* No filled, precisamos de mais espaço em cima por causa do label interno */
+    @apply pt-6 pb-2 px-3;
+  }
+
   /* Label grande (campo vazio) */
   textarea:placeholder-shown + .label-text {
-    @apply top-4 text-base;
+    @apply top-3 left-3 text-base;
   }
 
   /* Label pequena (focado ou com valor) */
   textarea:focus + .label-text,
   textarea:not(:placeholder-shown) + .label-text {
-    @apply top-1 left-2 text-xs text-text-primary;
+    @apply top-1 left-3 text-xs text-text-primary;
   }
 
-  /* Label com textarea não focado */
   textarea:not(:focus) + .label-text {
     @apply text-text-disabled;
   }
-
-  &.text-area-sm {
-    /* Label grande (campo vazio) */
-    textarea:placeholder-shown + .label-text {
-      @apply top-3 text-base;
-    }
-
-    /* Label pequena (focado ou com valor) */
-    textarea:focus + .label-text,
-    textarea:not(:placeholder-shown) + .label-text {
-      @apply top-1 left-2 text-xs text-text-primary;
-    }
-
-    textarea:not(:focus) + .label-text {
-      @apply text-text-disabled;
-    }
-  }
 }
 
+/* --- STANDARD --- */
 label[variant='standard'] {
-  @apply border-b border-input-outlined focus-within:border-text-primary rounded-none pb-0 pl-0.5 pr-0;
-
-  .label-text {
-    @apply left-0 bg-transparent;
-  }
+  @apply border-b border-input-outlined focus-within:border-text-primary rounded-none;
 
   textarea {
-    @apply border-none p-0;
+    /* Standard geralmente tem menos padding lateral */
+    @apply px-0 py-2;
+  }
+
+  .label-text {
+    @apply bg-transparent left-0;
   }
 
   /* Label grande (campo vazio) */
   textarea:placeholder-shown + .label-text {
-    @apply top-4 text-base -left-0.5; /* Ajustei top-7 para top-4 pois textarea é alto */
+    @apply top-2 text-base;
   }
 
   /* Label pequena (focado ou com valor) */
   textarea:focus + .label-text,
   textarea:not(:placeholder-shown) + .label-text {
-    @apply top-1 -left-0.5 text-xs text-text-primary;
+    @apply -top-2 text-xs text-text-primary;
   }
 
   textarea:not(:focus) + .label-text {
@@ -139,58 +125,38 @@ label[variant='standard'] {
   }
 }
 
-/* ---------- */
+/* ================= ESTADOS (ERRO/DISABLED) ================= */
 
-/* Estados de erro do angular */
-
-:host.ng-invalid.ng-touched label[variant='outlined'] {
-  @apply border-error-main;
-  .label-text {
-    @apply text-error-main;
+/* Estados de erro */
+:host.ng-invalid.ng-touched label {
+  &[variant='outlined'],
+  &[variant='standard'] {
+    @apply border-error-main;
   }
-}
-
-:host.ng-invalid.ng-touched label[variant='filled'] {
-  @apply bg-error-main/8;
-  .label-text {
-    @apply text-error-main;
+  &[variant='filled'] {
+    @apply bg-error-main/8;
   }
-}
-
-:host.ng-invalid.ng-touched label[variant='standard'] {
-  @apply border-error-main;
   .label-text {
     @apply text-error-main;
   }
 }
 
 /* Estados desabilitados */
-:host label[variant='outlined'].disabled {
-  @apply border-action-disabled hover:border-action-disabled bg-background-paper text-text-disabled;
-  .label-text {
-    @apply text-text-disabled;
-  }
-  textarea[disabled] {
-    @apply text-text-disabled cursor-not-allowed;
-  }
-}
+:host label.disabled {
+  @apply cursor-not-allowed opacity-70;
 
-:host label[variant='filled'].disabled {
-  @apply border-action-disabled hover:border-action-disabled bg-action-disabled-background text-text-disabled;
-  .label-text {
-    @apply text-text-disabled;
+  &[variant='outlined'] {
+    @apply border-action-disabled bg-background-paper;
   }
-  textarea[disabled] {
-    @apply text-text-disabled cursor-not-allowed;
+  &[variant='filled'] {
+    @apply bg-action-disabled-background;
   }
-}
+  &[variant='standard'] {
+    @apply border-action-disabled;
+  }
 
-:host label[variant='standard'].disabled {
-  @apply border-b border-action-disabled hover:border-action-disabled text-text-disabled rounded-none;
+  textarea,
   .label-text {
-    @apply text-text-disabled;
-  }
-  textarea[disabled] {
     @apply text-text-disabled cursor-not-allowed;
   }
 }

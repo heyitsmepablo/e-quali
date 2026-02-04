@@ -7,17 +7,13 @@
     <span class="text-text-primary font-semibold">
       Solicitação #{{ requestDetails().id.toString().padStart(4, '0') }}
     </span>
-
-    <svg width="4" height="4" viewBox="0 0 4 4" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <svg width="4" height="4" viewBox="0 0 4 4" fill="none">
       <circle cx="2" cy="2" r="2" fill="#919EAB" />
     </svg>
-
     <span class="text-text-secondary">Criada em 01/01/2025 às 10:30</span>
-
-    <svg width="4" height="4" viewBox="0 0 4 4" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <svg width="4" height="4" viewBox="0 0 4 4" fill="none">
       <circle cx="2" cy="2" r="2" fill="#919EAB" />
     </svg>
-
     <span
       class="px-2.5 py-1 rounded-md text-xs font-bold inline-flex items-center bg-warning-lighter text-warning-darker"
     >
@@ -26,14 +22,11 @@
   </div>
 
   <div class="flex flex-col lg:flex-row items-start gap-6 w-full">
-    <aside class="flex flex-col gap-13.5 w-full lg:w-96 shrink-0">
-      <div
-        class="bg-background-paper shadow-card rounded-lg overflow-hidden border border-transparent"
-      >
-        <div class="px-4 py-3 border-b border-dashed border-grey-300">
-          <h2 class="font-semibold text-text-primary text-sm">Histórico da Solicitação</h2>
-        </div>
-        <div class="p-4 flex flex-col gap-3">
+    <aside class="flex flex-col gap-6 w-full lg:w-96 shrink-0">
+      <app-card>
+        <h2 header class="font-semibold text-text-primary text-sm">Histórico da Solicitação</h2>
+
+        <div class="flex flex-col gap-3">
           <div class="flex items-start gap-3">
             <div class="mt-1 relative flex items-center justify-center">
               <span
@@ -57,48 +50,47 @@
             </div>
           </div>
         </div>
-      </div>
+      </app-card>
 
-      <div
-        class="bg-background-paper shadow-card rounded-lg overflow-hidden flex flex-col h-full border border-transparent"
-      >
-        <div class="px-4 py-3 border-b border-dashed border-grey-300">
-          <h2 class="font-semibold text-text-primary text-sm">Detalhes da Solicitação</h2>
+      <app-card class="h-full flex flex-col">
+        <h2 header class="font-semibold text-text-primary text-sm">Detalhes da Solicitação</h2>
+
+        <div class="flex flex-col h-full gap-4">
+          <app-text-area [formControl]="teste"></app-text-area>
+
+          <div class="mt-auto">
+            <app-button
+              label="Voltar"
+              variant="outlined"
+              color="inherit"
+              class="w-full block"
+            ></app-button>
+          </div>
         </div>
-        <div class="p-4">
-          <app-text-area></app-text-area>
-        </div>
-        <div class="p-4 mt-auto">
-          <app-button
-            label="Voltar"
-            variant="outlined"
-            color="inherit"
-            class="w-full block"
-          ></app-button>
-        </div>
-      </div>
+      </app-card>
     </aside>
 
-    <main
-      class="flex-1 w-full bg-background-paper shadow-card rounded-lg overflow-hidden border border-transparent"
-    >
-      <div class="px-6 py-4 border-b border-dashed border-grey-300">
-        <h2 class="font-semibold text-text-primary text-lg">Usuário Solicitado</h2>
-      </div>
-      <app-form-user-request
-        [initialData]="requestDetails()"
-        [isDisabled]="true"
-      ></app-form-user-request>
+    <main class="flex-1 w-full min-w-0">
+      <app-card class="h-full">
+        <h2 header class="font-semibold text-text-primary text-lg">Usuário Solicitado</h2>
+
+        <app-form-user-request
+          [initialData]="requestDetails()"
+          [isDisabled]="true"
+          [areas]="area()"
+          [unidades]="unidade()"
+          [setores]="setor()"
+          [cargos]="cargo()"
+          [hiddenDetailInput]="true"
+        ></app-form-user-request>
+      </app-card>
     </main>
   </div>
-  <div
-    class="bg-background-paper shadow-card rounded-lg overflow-hidden flex flex-col h-full border border-transparent mt-10 lg:ml-[25.5rem]"
-  >
-    <div class="px-4 py-3 border-b border-dashed border-grey-300">
-      <h2 class="font-semibold text-text-primary text-sm">Detalhes da Solicitação</h2>
-    </div>
-    <div class="p-4">
-      <p>Sua solicitação ainda está em analise</p>
-    </div>
+
+  <div class="flex flex-col mt-10 lg:ml-[25.5rem]">
+    <app-card>
+      <h2 header class="font-semibold text-text-primary text-lg">Detalhes da Solicitação</h2>
+      <p>Sua solicitação ainda está em análise</p>
+    </app-card>
   </div>
 </div>

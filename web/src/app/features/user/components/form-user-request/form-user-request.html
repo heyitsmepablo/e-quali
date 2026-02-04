@@ -1,7 +1,7 @@
 <form
   [formGroup]="form"
   (ngSubmit)="onSubmit()"
-  class="flex flex-col w-full h-full p-6 mb-6 items-end shadow-card lg:items-center lg:w-3xl"
+  class="flex flex-col w-full h-full px-6 pt-6 mb-6 items-end lg:items-center lg:w-full"
 >
   <div class="flex size-full gap-6 flex-col pb-6">
     <div class="flex flex-col gap-6 lg:flex-row">
@@ -90,6 +90,7 @@
     </div>
 
     <app-text-area
+      [hidden]="hiddenDetailInput()"
       [hasLabel]="true"
       label="Detalhes da Solicitação"
       formControlName="detalhes"

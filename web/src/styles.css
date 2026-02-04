@@ -120,6 +120,30 @@
   --transition-grid-rows: grid-template-rows;
 }
 
+@layer base {
+  /* Largura da barra */
+  ::-webkit-scrollbar {
+    width: 8px;
+    height: 8px; /* Para scroll horizontal */
+  }
+
+  /* Fundo da barra (Track) */
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  /* A parte que se move (Thumb) */
+  ::-webkit-scrollbar-thumb {
+    background-color: var(--color-gray-300); /* Usando variáveis do tema */
+    border-radius: 9999px;
+  }
+
+  /* Hover no Thumb */
+  ::-webkit-scrollbar-thumb:hover {
+    background-color: var(--color-gray-400);
+  }
+}
+
 /* Apply Default Font */
 html {
   font-family: var(--font-sans);

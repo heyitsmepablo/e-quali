@@ -22,6 +22,10 @@ export class Select implements ControlValueAccessor {
   // Input vindo do pai (pode ser vazio)
   id: InputSignal<string> = input<string>('');
 
+  hasValue = computed(() => {
+    const v = this.innerValue();
+    return v !== null && v !== undefined && v !== '';
+  });
   // Computed que resolve qual ID usar
   inputId = computed(() => this.id() || this._uniqueId);
 

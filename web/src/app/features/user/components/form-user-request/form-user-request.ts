@@ -64,6 +64,8 @@ export class FormUserRequest {
   // --- Formulário ---
   form: FormGroup;
 
+  hiddenDetailInput = input<boolean>(false);
+
   constructor() {
     this.form = this.fb.group({
       nome: ['', Validators.required],

@@ -3,6 +3,7 @@
   class="select-field"
   [attr.variant]="variant()"
   [class.disabled]="disabled"
+  [class.has-value]="hasValue()"
 >
   <div class="pr-2 fill-action-active empty:hidden">
     <ng-content select="[prefix]"></ng-content>

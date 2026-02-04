@@ -1,0 +1,12 @@
+<div
+  class="flex flex-col w-full bg-background-paper shadow-card rounded-lg overflow-hidden border border-transparent"
+>
+  <div class="px-4 py-3 border-b border-dashed border-grey-300 empty:hidden">
+    <ng-content select="[header]"></ng-content>
+  </div>
+
+  <div class="p-4 flex-1">
+    <ng-content body></ng-content>
+    <ng-content></ng-content>
+  </div>
+</div>

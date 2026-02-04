@@ -29,9 +29,12 @@ label[variant='outlined'] {
   }
 
   /* LABEL FLUTUANTE LÓGICA */
-  /* Quando focado OU quando tem valor válido (diferente de vazio) */
+  /* 1. Quando focado */
+  /* 2. Quando é válido (browser detection) */
+  /* 3. Quando tem valor (nossa lógica via classe .has-value) - CORREÇÃO DO BUG */
   select:focus ~ .label-text,
-  select:valid ~ .label-text {
+  select:valid ~ .label-text,
+  &.has-value .label-text {
     @apply -top-2.5 left-0 text-xs bg-background-paper px-1;
     transform: none;
   }
@@ -56,7 +59,8 @@ label[variant='filled'] {
 
   /* LABEL FLUTUANTE LÓGICA */
   select:focus ~ .label-text,
-  select:valid ~ .label-text {
+  select:valid ~ .label-text,
+  &.has-value .label-text {
     @apply top-2 text-xs;
     transform: none;
   }
@@ -85,7 +89,8 @@ label[variant='standard'] {
 
   /* LABEL FLUTUANTE LÓGICA */
   select:focus ~ .label-text,
-  select:valid ~ .label-text {
+  select:valid ~ .label-text,
+  &.has-value .label-text {
     @apply -top-1.5 left-0 text-xs;
     transform: none;
   }
@@ -117,8 +122,10 @@ label[variant='standard'] {
 
 /* Desabilitado */
 :host label.disabled {
-  @apply border-action-disabled bg-action-disabled-background cursor-not-allowed opacity-60;
-
+  @apply border-action-disabled bg-action-disabled-background cursor-not-allowed;
+  &.has-value {
+    @apply bg-background-paper;
+  }
   select {
     @apply cursor-not-allowed text-text-disabled;
   }
