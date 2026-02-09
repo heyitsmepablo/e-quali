@@ -12,8 +12,8 @@ export interface UserTableRow {
   setor: string;
   cargo: string;
   status: string;
-  criadoEm: string;
-  atualizadoEm: string;
+  criadoEm: string | null;
+  atualizadoEm: string | null;
 }
 @Component({
   selector: 'app-user-table',
@@ -22,6 +22,7 @@ export interface UserTableRow {
   styleUrl: './user-table.css',
 })
 export class UserTable {
+  isLoading = input<boolean>(false);
   searchTerm: string = '';
   // Defina as colunas
   tableColumns = [

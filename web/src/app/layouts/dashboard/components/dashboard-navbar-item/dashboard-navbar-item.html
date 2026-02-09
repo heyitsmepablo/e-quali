@@ -8,7 +8,7 @@
     'bg-action-focus hover:bg-action-hover': isOpen(),
     'bg-primary-main/8 hover:bg-primary-main/16 ': isActiveParent(),
   }"
-  (click)="toggle()"
+  (click)="toggle(); item().children ? null : clickEmmiter()"
 >
   <div
     [ngClass]="{
@@ -63,6 +63,7 @@
                 'text-text-primary font-semibold   ': rlaSub.isActive,
                 'text-text-secondary font-normal  ': !rlaSub.isActive,
               }"
+              (click)="clickEmmiter()"
             >
               <svg
                 class="w-6 h-6 transition-transform duration-300"

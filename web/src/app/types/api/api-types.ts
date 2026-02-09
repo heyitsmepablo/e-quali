@@ -195,7 +195,7 @@ export interface components {
             cpf: string;
             /**
              * Format: date-time
-             * @default 2026-02-03T18:32:56.941Z
+             * @default 2026-02-09T19:02:08.026Z
              */
             dataNascimento: string;
             /**
@@ -207,6 +207,58 @@ export interface components {
             telefone: string;
             /** @default um detalhe ficiticio aqui */
             detalhe: string;
+        };
+        UnidadeResponseDto: {
+            id: number;
+            nome: string;
+            sigla: string | null;
+        };
+        SetorResponseDto: {
+            id: number;
+            nome: string;
+            sigla: string | null;
+        };
+        CargoResponseDto: {
+            id: number;
+            nome: string;
+        };
+        AreaResponseDto: {
+            id: number;
+            nome: string;
+        };
+        HistoricoSolicitacaoResponseDto: {
+            id: number;
+            solcitacaoId: number;
+            evento: string;
+            observacao: string | null;
+            categoria: string;
+            /** Format: date-time */
+            criadoEm: string | null;
+            /** Format: date-time */
+            atualizadoEm: string | null;
+            autorId: string;
+        };
+        UserRequestFindOneResponseDto: {
+            id: number;
+            statusSolicitacao: string;
+            usuarioSolicitadoNome: string;
+            matricula: string;
+            cpf: string;
+            /** Format: date-time */
+            dataNascimento: string;
+            email: string;
+            telefone: string;
+            detalhe?: string;
+            feedbackResultado?: string | null;
+            /** Format: date-time */
+            criadoEm: string | null;
+            /** Format: date-time */
+            atualizadoEm: string | null;
+            unidade: components["schemas"]["UnidadeResponseDto"];
+            setor: components["schemas"]["SetorResponseDto"];
+            cargo: components["schemas"]["CargoResponseDto"];
+            area?: components["schemas"]["AreaResponseDto"] | null;
+            historicoSolicitacao: components["schemas"]["HistoricoSolicitacaoResponseDto"][];
         };
     };
     responses: never;
@@ -338,7 +390,7 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": Record<string, never>;
+                    "application/json": components["schemas"]["UserRequestFindOneResponseDto"];
                 };
             };
         };

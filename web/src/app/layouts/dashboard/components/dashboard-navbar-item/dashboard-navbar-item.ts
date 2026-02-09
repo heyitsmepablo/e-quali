@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, DestroyRef, inject, input, OnInit, signal } from '@angular/core';
+import { Component, DestroyRef, inject, input, OnInit, output, signal } from '@angular/core';
 import { NavigationEnd, Router, RouterLink, RouterLinkActive, Event } from '@angular/router';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { NavItem } from '../../../../shared/interfaces/nav-item.interface';
@@ -14,7 +14,7 @@ import { filter } from 'rxjs';
 export class DashboardNavbarItem implements OnInit {
   isOpen = signal(false);
   item = input<NavItem>({ title: 'Title' });
-
+  clickItemNav = output();
   private router = inject(Router);
   private destroyRef = inject(DestroyRef);
 
@@ -41,6 +41,11 @@ export class DashboardNavbarItem implements OnInit {
   toggle() {
     this.isOpen.update((v) => !v);
   }
+
+  clickEmmiter() {
+    this.clickItemNav.emit();
+  }
+
   private checkActiveState() {
     if (this.item().children && this.item().path) {
       const active = this.router.url.includes(this.item().path!);

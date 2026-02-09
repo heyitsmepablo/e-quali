@@ -10,6 +10,7 @@ import { TextField } from '../../../../shared/components/inputs/text-field/text-
 
 // Interfaces (Exemplo - adapte para seus tipos reais)
 export interface UserRequestFormValues {
+  id: number;
   nome?: string;
   matricula?: string;
   dataNascimento?: string;
@@ -20,7 +21,7 @@ export interface UserRequestFormValues {
   setorId?: number | null;
   areaId?: number | null;
   cargoId?: number | null;
-  detalhes: string;
+  detalhe?: string | null | undefined;
 }
 
 export interface SelectOption {
@@ -78,7 +79,7 @@ export class FormUserRequest {
       setorId: [null, Validators.required],
       areaId: [null], // Opcional segundo seu DTO anterior
       cargoId: [null, Validators.required],
-      detalhes: ['', Validators.required],
+      detalhe: ['', Validators.required],
     });
 
     // Efeito: Monitora se deve desabilitar o formulário

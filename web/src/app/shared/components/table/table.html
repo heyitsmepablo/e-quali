@@ -13,6 +13,7 @@
               [ngModel]="allSelected()"
               [indeterminate]="indeterminate()"
               (ngModelChange)="toggleAll($event)"
+              [disabled]="isLoading()"
               [hidden]="selectionMode() === 'none'"
             ></app-checkbox>
           </th>
@@ -29,45 +30,63 @@
       </thead>
 
       <tbody>
-        @for (item of paginatedData(); track item; let i = $index) {
-          <tr
-            class="hover:bg-gray-50/50 transition-colors"
-            [class.bg-primary-main-8]="item['selected']"
-            (click)="rowClick.emit(item)"
-          >
-            <td class="py-3 px-4">
-              <app-checkbox
-                [binary]="true"
-                [ngModel]="item['selected']"
-                (ngModelChange)="toggleOne(item, $event)"
-                [hidden]="selectionMode() === 'none'"
-                [id]="id() + '-row-' + i"
-              ></app-checkbox>
-            </td>
+        @if (isLoading()) {
+          @for (item of skeletonRows(); track $index) {
+            <tr class="animate-pulse border-b border-b-grey-500/16 border-gray-100 last:border-0">
+              <td class="py-3 px-4">
+                <div class="w-4 h-4 bg-gray-200 rounded"></div>
+              </td>
 
-            <ng-container
-              [ngTemplateOutlet]="rowTemplate"
-              [ngTemplateOutletContext]="{ $implicit: item }"
-            ></ng-container>
-          </tr>
-        }
-        @if (paginatedData().length === 0) {
-          <tr>
-            <td [attr.colspan]="columns.length + 1" class="py-8 text-center text-gray-500">
-              Nenhum dado encontrado.
-            </td>
-          </tr>
+              @for (col of columns; track $index) {
+                <td class="py-4 px-4">
+                  <div class="h-4 bg-gray-200 rounded w-full"></div>
+                </td>
+              }
+            </tr>
+          }
+        } @else {
+          @for (item of paginatedData(); track item; let i = $index) {
+            <tr
+              class="hover:bg-gray-50/50 transition-colors border-b border-gray-100 last:border-0"
+              [class.bg-primary-main-8]="item['selected']"
+              (click)="rowClick.emit(item)"
+            >
+              <td class="py-3 px-4">
+                <app-checkbox
+                  [binary]="true"
+                  [ngModel]="item['selected']"
+                  (ngModelChange)="toggleOne(item, $event)"
+                  [hidden]="selectionMode() === 'none'"
+                  [id]="id() + '-row-' + i"
+                ></app-checkbox>
+              </td>
+
+              <ng-container
+                [ngTemplateOutlet]="rowTemplate"
+                [ngTemplateOutletContext]="{ $implicit: item }"
+              ></ng-container>
+            </tr>
+          }
+
+          @if (paginatedData().length === 0) {
+            <tr>
+              <td [attr.colspan]="columns.length + 1" class="py-8 text-center text-gray-500">
+                Nenhum dado encontrado.
+              </td>
+            </tr>
+          }
         }
       </tbody>
     </table>
   </div>
 
   <div class="border-t border-grey-200 py-3 pr-2 pl-6 flex items-center justify-end gap-4 sm:gap-6">
-    <div class="flex items-center gap-2 text-sm text-gray-600">
+    <div class="flex items-center gap-2 text-sm text-gray-600" [class.opacity-50]="isLoading()">
       <span>Rows per page:</span>
       <select
         class="bg-transparent font-medium focus:outline-none cursor-pointer"
         [ngModel]="pageSize()"
+        [disabled]="isLoading()"
         (ngModelChange)="changePageSize($event)"
       >
         <option [value]="5">5</option>
@@ -76,14 +95,18 @@
       </select>
     </div>
 
-    <span class="text-sm text-gray-600">
-      {{ startIndex() + 1 }}-{{ endIndex() }} of {{ totalItems() }}
+    <span class="text-sm text-gray-600" [class.opacity-50]="isLoading()">
+      @if (isLoading()) {
+        Carregando...
+      } @else {
+        {{ startIndex() + 1 }}-{{ endIndex() }} of {{ totalItems() }}
+      }
     </span>
 
     <div class="flex items-center gap-1">
       <button
         class="p-1 rounded-full hover:bg-gray-100 disabled:opacity-30 disabled:cursor-not-allowed text-gray-500"
-        [disabled]="currentPage() === 1"
+        [disabled]="currentPage() === 1 || isLoading()"
         (click)="prevPage()"
       >
         <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -98,7 +121,7 @@
 
       <button
         class="p-1 rounded-full hover:bg-gray-100 disabled:opacity-30 disabled:cursor-not-allowed text-gray-500"
-        [disabled]="endIndex() === totalItems()"
+        [disabled]="endIndex() === totalItems() || isLoading()"
         (click)="nextPage()"
       >
         <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">

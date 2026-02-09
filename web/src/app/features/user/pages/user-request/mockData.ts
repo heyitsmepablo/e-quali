@@ -176,4 +176,5 @@ export const mockRequestToEdit = {
   areaId: 1, // ID correspondente ao Administrativo
   cargoId: 1, // ID correspondente ao Analista
   detalhes: 'Solicito acesso ao módulo de gestão de leitos para integração com o sistema atual.',
+  feedBackresultado: 'Analise pronta',
 };

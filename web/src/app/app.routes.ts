@@ -21,6 +21,11 @@ export const routes: Routes = [
         data: { breadcrumb: { label: 'Usuário', isGroup: true } },
         children: [
           {
+            path: '',
+            pathMatch: 'full',
+            redirectTo: 'solicitacao', // Redireciona para /usuario/solicitacao
+          },
+          {
             path: 'solicitacao',
             data: { breadcrumb: { label: 'Solicitação de Usuário' } },
             children: [

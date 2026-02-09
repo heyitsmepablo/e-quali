@@ -1,6 +1,7 @@
 <app-table
   [columns]="tableColumns"
   [data]="users()"
+  [isLoading]="isLoading()"
   (search)="handleSearch($event)"
   (rowClick)="navigateToDetails($event)"
 >
@@ -107,9 +108,9 @@
       <span
         class="px-2.5 py-1.5 rounded-lg text-xs font-bold inline-flex items-center"
         [ngClass]="{
-          'bg-success-lighter text-success-dark': row.status === 'aprovado',
-          'bg-error-lighter text-error-dark': row.status === 'rejeitado',
-          'bg-warning-lighter text-warning-dark': row.status === 'pendente',
+          'bg-success-lighter text-success-dark': row.status.toLowerCase() === 'aprovado',
+          'bg-error-lighter text-error-dark': row.status.toLowerCase() === 'rejeitado',
+          'bg-warning-lighter text-warning-dark': row.status.toLowerCase() === 'pendente',
         }"
       >
         {{ row.status }}

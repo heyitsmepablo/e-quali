@@ -7,6 +7,7 @@ import {
   Post,
 } from '@nestjs/common';
 import { CreateUserRequestDto } from 'src/service/user/user-request/dtos/create.dto';
+import { UserRequestFindOneResponseDto } from 'src/service/user/user-request/dtos/findOne.dto';
 import { UserRequestService } from 'src/service/user/user-request/user-request.service';
 
 @Controller('user-request')
@@ -23,7 +24,9 @@ export class UserRequestController {
   }
 
   @Get(':id')
-  async findOne(@Param('id', new ParseIntPipe()) requestId: number) {
+  async findOne(
+    @Param('id', new ParseIntPipe()) requestId: number,
+  ): Promise<UserRequestFindOneResponseDto> {
     return await this.userRequestService.findOne(requestId);
   }
 }

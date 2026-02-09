@@ -1,8 +1,9 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import PrismaSingleton from 'src/singleton/prisma-singleton';
 import { CreateUserRequestDto } from './dtos/create.dto';
 import { ListManyUserRequestResponseDto } from './dtos/listMany.dto';
 import { EventoSolicitacao } from './user-request.enum';
+import { UserRequestFindOneResponseDto } from './dtos/findOne.dto';
 
 @Injectable()
 export class UserRequestService {
@@ -93,7 +94,7 @@ export class UserRequestService {
     return dbResponse;
   }
 
-  async findOne(id: number) {
+  async findOne(id: number): Promise<UserRequestFindOneResponseDto> {
     const requestDetails = await this.#database.solicitacaoUsuario.findUnique({
       where: { id },
       select: {
@@ -117,6 +118,12 @@ export class UserRequestService {
         atualizadoEm: true,
       },
     });
+
+    // CORREÇÃO AQUI:
+    if (!requestDetails) {
+      throw new NotFoundException(`Solicitação com ID ${id} não encontrada.`);
+    }
+
     return requestDetails;
   }
 }
