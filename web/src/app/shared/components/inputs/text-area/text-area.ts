@@ -1,12 +1,15 @@
 import { CommonModule } from '@angular/common';
-import { Component, computed, effect, forwardRef, input, InputSignal, signal } from '@angular/core';
+import { Component, computed, effect, forwardRef, input, InputSignal, signal } from '@angular/core'; // Adicione signal
 import { ControlValueAccessor, FormsModule, NG_VALUE_ACCESSOR } from '@angular/forms';
+
 const TEXT_AREA_ACCESSOR = {
   provide: NG_VALUE_ACCESSOR,
   useExisting: forwardRef(() => TextArea),
   multi: true,
 };
+
 let nextId: number = 0;
+
 @Component({
   selector: 'app-text-area',
   imports: [CommonModule, FormsModule],
@@ -17,56 +20,44 @@ let nextId: number = 0;
 export class TextArea implements ControlValueAccessor {
   private _uniqueId = `app-text-field-${nextId++}`;
 
-  // Input vindo do pai (pode ser vazio)
-  id: InputSignal<string> = input<string>('');
-  // Computed que resolve qual ID usar
+  // Inputs
+  id = input<string>('');
   inputId = computed(() => this.id() || this._uniqueId);
 
-  //Inputs
-  value: string = '';
-  label: InputSignal<string> = input<string>('Label');
-  hasLabel: InputSignal<boolean> = input<boolean>(false);
-  placeholder: InputSignal<string> = input<string>('');
-  variant: InputSignal<'outlined' | 'filled' | 'standard'> = input<
-    'outlined' | 'filled' | 'standard'
-  >('outlined');
-  type: InputSignal<string> = input('text');
-  showPasswordToggle: InputSignal<boolean> = input<boolean>(false);
-  name: InputSignal<string> = input('');
-  mask: InputSignal<string> = input('');
-  dropSpecialCharacters: InputSignal<boolean> = input<boolean>(false);
-  specialCharacters: InputSignal<string[]> = input(['']);
-  //Values Internos
-  disabled: boolean = false;
+  // ... outros inputs (label, placeholder, etc mantidos igual) ...
+  label = input<string>('Label');
+  hasLabel = input<boolean>(false);
+  placeholder = input<string>('');
+  variant = input<'outlined' | 'filled' | 'standard'>('outlined');
+  type = input('text');
+  showPasswordToggle = input<boolean>(false);
+  name = input('');
+  mask = input(''); // Nota: mask não funciona nativamente no textarea sem uma lib externa
+
+  // --- MUDANÇA AQUI: Transforme disabled em Signal ---
+  disabled = signal(false);
+
   eyeOn: boolean = true;
-  innerValue: string | Record<string, any> = '';
+  innerValue: string = ''; // Removi o Record<string,any> para simplificar, textarea é string
   innerType = signal(this.type());
   private usingForms = false;
 
   constructor() {
     effect(() => {
-      // if (!this.usingForms) {
-      //   this.innerValue = this.value();
-      // }
       this.innerType.set(this.type());
     });
   }
-  // Funções auxiliares
 
-  showPass(): void {
-    const newType = this.innerType() === 'password' ? 'text' : 'password';
-    this.innerType.set(newType);
-    this.eyeOn = !this.eyeOn;
-  }
-
-  // Funções do CVA
+  // CVA Implementation
   onChange: (value: string) => void = () => {};
   onTouched: () => void = () => {};
 
   writeValue(obj: any): void {
     this.usingForms = true;
-    this.innerValue = obj;
+    // Boa prática: tratar null/undefined para não quebrar o ngModel
+    this.innerValue = obj || '';
   }
+
   registerOnChange(fn: any): void {
     this.onChange = fn;
   }
@@ -75,8 +66,9 @@ export class TextArea implements ControlValueAccessor {
     this.onTouched = fn;
   }
 
+  // --- MUDANÇA AQUI: Atualiza o Signal ---
   setDisabledState(isDisabled: boolean): void {
-    this.disabled = isDisabled;
+    this.disabled.set(isDisabled);
   }
 
   onBlur(): void {
@@ -84,10 +76,10 @@ export class TextArea implements ControlValueAccessor {
   }
 
   updateValue(event: any) {
-    const newValue: string = `${this.innerValue}`;
-    this.value = newValue;
+    // O evento do ngModelChange já passa o valor novo, não precisa pegar this.innerValue
+    this.innerValue = event;
     if (this.usingForms) {
-      this.onChange(newValue);
+      this.onChange(event);
     }
   }
 }

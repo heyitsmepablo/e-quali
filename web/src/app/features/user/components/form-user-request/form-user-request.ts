@@ -1,6 +1,6 @@
 import { Component, effect, inject, input, output } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { RouterLink } from '@angular/router';
+
 
 // Componentes UI
 import { Button } from '../../../../shared/components/buttons/button/button';
@@ -72,12 +72,12 @@ export class FormUserRequest {
       nome: ['', Validators.required],
       matricula: ['', Validators.required],
       dataNascimento: ['', Validators.required],
-      cpf: ['', [Validators.required]], // Ideal adicionar validador de CPF aqui
+      cpf: ['', [Validators.required]], 
       email: ['', [Validators.required, Validators.email]],
       telefone: ['', Validators.required],
       unidadeId: [null, Validators.required],
       setorId: [null, Validators.required],
-      areaId: [null], // Opcional segundo seu DTO anterior
+      areaId: [null],
       cargoId: [null, Validators.required],
       detalhe: ['', Validators.required],
     });

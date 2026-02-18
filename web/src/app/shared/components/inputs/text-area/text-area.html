@@ -1,4 +1,4 @@
-<label [for]="inputId()" class="text-area" [attr.variant]="variant()" [class.disabled]="disabled">
+<label [for]="inputId()" class="text-area" [attr.variant]="variant()" [class.disabled]="disabled()">
   <div class="pr-2 fill-action-active">
     <ng-content></ng-content>
   </div>
@@ -9,7 +9,7 @@
     [(ngModel)]="innerValue"
     (ngModelChange)="updateValue($event)"
     (blur)="onBlur()"
-    [disabled]="disabled"
+    [disabled]="disabled()"
     [name]="name()"
     class="peer"
   ></textarea>

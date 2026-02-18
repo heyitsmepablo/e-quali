@@ -195,7 +195,7 @@ export interface components {
             cpf: string;
             /**
              * Format: date-time
-             * @default 2026-02-09T19:02:08.026Z
+             * @default 2026-02-18T15:25:47.457Z
              */
             dataNascimento: string;
             /**
@@ -370,7 +370,9 @@ export interface operations {
                 headers: {
                     [name: string]: unknown;
                 };
-                content?: never;
+                content: {
+                    "application/json": Record<string, never>;
+                };
             };
         };
     };

@@ -5,7 +5,8 @@ import { FormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
 import { Button } from '../../../../shared/components/buttons/button/button';
 import { UserTable, UserTableRow } from '../../components/user-table/user-table';
-import { UserRequestService } from '../../services/user-request-service/user-request-service';
+import { UserRequestService } from '../../services/user-request/user-request-service';
+
 
 @Component({
   selector: 'app-user-request',

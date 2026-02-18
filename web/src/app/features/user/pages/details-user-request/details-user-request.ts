@@ -1,6 +1,6 @@
-import { Component, inject, input, OnInit, signal } from '@angular/core';
+import { Component, effect, inject, input, OnInit, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
 
 // Components
@@ -13,15 +13,13 @@ import {
   UserRequestFormValues,
 } from '../../components/form-user-request/form-user-request';
 
-// Services & Adapters
-import {
-  UserRequestDetailsResponse,
-  UserRequestService,
-} from '../../services/user-request-service/user-request-service';
-import { UserRequestAdapter } from '../../components/form-user-request/adapter/form-user-request-adapter';
-
 // Mocks (Se puder, mova isso para o Service no futuro)
 import { mockAreas, mockCargos, mockSetores, mockUnidades } from '../user-request/mockData';
+import {
+  UserRequestRequestDetailsResponse,
+  UserRequestService,
+} from '../../services/user-request/user-request-service';
+import { UserRequestAdapter } from '../../adapters/user-request-adatpter';
 
 @Component({
   selector: 'app-details-user-request',
@@ -48,9 +46,9 @@ export class DetailsUserRequest implements OnInit {
 
   // State Signals
   isLoading = signal(true);
-  apiData = signal<UserRequestDetailsResponse | null>(null);
+  apiData = signal<UserRequestRequestDetailsResponse | null>(null);
   requestDetailsFormValues = signal<UserRequestFormValues | null>(null);
-
+  detalheSolicitacao = new FormControl('');
   // Options Signals (Mocks)
   unidade = signal(mockUnidades);
   setor = signal(mockSetores);
@@ -59,6 +57,7 @@ export class DetailsUserRequest implements OnInit {
 
   async ngOnInit(): Promise<void> {
     await this.fetchRequestDetails();
+    this.detalheSolicitacao.disable(); // Agora o campo fica somente leitura
   }
 
   async fetchRequestDetails() {
@@ -67,11 +66,13 @@ export class DetailsUserRequest implements OnInit {
     try {
       const data = await this.userRequestService.requestDetails(this.idSolicitacaoUsuario());
 
+      // CORREÇÃO: Chamar o método disable() e popular o valor
+      this.detalheSolicitacao.setValue(data.detalhe ?? '');
+
       this.apiData.set(data);
       this.requestDetailsFormValues.set(UserRequestAdapter.toFormValues(data));
     } catch (error) {
       console.error('Erro ao carregar solicitações:', error);
-      // Aqui você poderia adicionar um Toast/Notification de erro
     } finally {
       this.isLoading.set(false);
     }

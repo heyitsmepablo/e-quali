@@ -7,26 +7,41 @@
 }
 
 .text-area {
-  /* CONTAINER: Sem padding (p-0) e com overflow-hidden para arredondar cantos */
-  @apply relative flex h-32 w-full rounded-lg z-0 overflow-hidden;
+  /* REMOVIDO: overflow-hidden */
+  /* Isso permite que a scrollbar do filho seja renderizada corretamente */
+  @apply relative flex h-32 w-full rounded-lg z-0;
 
   textarea {
     @apply flex items-start text-text-primary w-full h-full outline-none z-2 bg-transparent text-justify;
+
+    /* ADICIONADO: rounded-lg */
+    /* Como removemos o corte do pai, o filho precisa ser arredondado para o texto/seleção não "vazar" nos cantos */
+    @apply rounded-lg;
 
     /* --- LÓGICA DE TEXTAREA --- */
     @apply resize-none overflow-y-auto overflow-x-hidden;
     @apply whitespace-pre-wrap break-words;
 
-    /* PADDING DO TEXTO: Aqui que controlamos o espaçamento do texto.
-       O scrollbar ficará na borda do elemento, ignorando esse padding visualmente. */
+    /* PADDING DO TEXTO */
     @apply pr-3;
+
+    /* (Opcional) Estilização básica de scrollbar para garantir visibilidade e consistência */
+    &::-webkit-scrollbar {
+      width: 8px;
+    }
+    &::-webkit-scrollbar-thumb {
+      @apply bg-grey-300 rounded-full;
+    }
+    &::-webkit-scrollbar-track {
+      @apply bg-transparent;
+    }
   }
 }
 
 .label-text {
+  /* Mantido */
   @apply absolute bg-background-paper px-1 py-0 text-text-disabled transition-all z-1 pointer-events-none;
 }
-
 /* ---------- */
 
 /* Size */
